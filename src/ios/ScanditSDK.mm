@@ -473,7 +473,7 @@
     
 	CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                                       messageAsString:@"Canceled"];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId]; 
     self.hasPendingOperation = NO;
 }
 
