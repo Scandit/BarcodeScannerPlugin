@@ -134,6 +134,10 @@ To generate a sample project, use the following command line commands:
 Changelog
 ------------------------
 
+**Scandit SDK Phonegap/Cordova Plugin for iOS and Android (4.1.0) - Oct 28st 2014**
+
+ * upgraded to support Cordova 4.0+
+
 **Scandit SDK Phonegap/Cordova Plugin for iOS and Android (4.1.0) - Aug 21st 2014**
 
  * upgraded to Scandit SDK for iOS 4.1.3 and Scandit SDK for Android 4.1.2 (see release notes in download section of your Scandit SDK for details)
