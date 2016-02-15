@@ -72,17 +72,19 @@ public class PhonegapParamParser {
                 if (bundle.getSerializable(paramPortraitMargins) != null
                         && bundle.getSerializable(paramPortraitMargins) instanceof List) {
                     List<Object> list = (List<Object>) bundle.getSerializable(paramPortraitMargins);
-                    if (list.size() == 4 && UIParamParser.checkClassOfListObjects(list, Integer.class)) {
-                        portraitMargins = new Rect((Integer) list.get(0), (Integer) list.get(1),
-                                (Integer) list.get(2), (Integer) list.get(3));
+                    if (list.size() == 4 &&
+                                    (UIParamParser.checkClassOfListObjects(list, Integer.class) ||
+                                     UIParamParser.checkClassOfListObjects(list, String.class))) {
+                        portraitMargins = new Rect(UIParamParser.getDp(list.get(0)), UIParamParser.getDp(list.get(1)),
+                                UIParamParser.getDp(list.get(2)), UIParamParser.getDp(list.get(3)));
                     }
                 } else if (bundle.getString(paramPortraitMargins) != null) {
                     String portraitMarginsString = bundle.getString(paramPortraitMargins);
                     String[] split = portraitMarginsString.split("[/]");
                     if (split.length == 4) {
                         try {
-                            portraitMargins = new Rect(Integer.valueOf(split[0]), Integer.valueOf(split[1]),
-                                    Integer.valueOf(split[2]), Integer.valueOf(split[3]));
+                            portraitMargins = new Rect(UIParamParser.getDp(split[0]), UIParamParser.getDp(split[1]),
+                                    UIParamParser.getDp(split[2]), UIParamParser.getDp(split[3]));
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
                         }
@@ -96,17 +98,19 @@ public class PhonegapParamParser {
                 if (bundle.getSerializable(paramLandscapeMargins) != null
                         && bundle.getSerializable(paramLandscapeMargins) instanceof List) {
                     List<Object> list = (List<Object>) bundle.getSerializable(paramLandscapeMargins);
-                    if (list.size() == 4 && UIParamParser.checkClassOfListObjects(list, Integer.class)) {
-                        landscapeMargins = new Rect((Integer) list.get(0), (Integer) list.get(1),
-                                (Integer) list.get(2), (Integer) list.get(3));
+                    if (list.size() == 4 &&
+                            (UIParamParser.checkClassOfListObjects(list, Integer.class) ||
+                             UIParamParser.checkClassOfListObjects(list, String.class))) {
+                        landscapeMargins = new Rect(UIParamParser.getDp(list.get(0)), UIParamParser.getDp(list.get(1)),
+                                UIParamParser.getDp(list.get(2)), UIParamParser.getDp(list.get(3)));
                     }
                 } else if (bundle.getString(paramLandscapeMargins) != null) {
                     String landscapeMarginsString = bundle.getString(paramLandscapeMargins);
                     String[] split = landscapeMarginsString.split("[/]");
                     if (split.length == 4) {
                         try {
-                            landscapeMargins = new Rect(Integer.valueOf(split[0]), Integer.valueOf(split[1]),
-                                    Integer.valueOf(split[2]), Integer.valueOf(split[3]));
+                            landscapeMargins = new Rect(UIParamParser.getDp(split[0]), UIParamParser.getDp(split[1]),
+                                    UIParamParser.getDp(split[2]), UIParamParser.getDp(split[3]));
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
                         }

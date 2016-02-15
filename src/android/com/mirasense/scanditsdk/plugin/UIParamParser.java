@@ -2,6 +2,7 @@ package com.mirasense.scanditsdk.plugin;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 
@@ -9,6 +10,7 @@ import com.scandit.barcodepicker.BarcodePicker;
 import com.scandit.barcodepicker.ScanOverlay;
 
 import java.io.Serializable;
+import java.lang.NumberFormatException;
 import java.util.List;
 
 /**
@@ -69,10 +71,11 @@ public class UIParamParser {
 
         if (bundleContainsListKey(bundle, paramTorchButtonMarginsAndSize)) {
             List<Object> marginsAndSize = (List<Object>)bundle.getSerializable(paramTorchButtonMarginsAndSize);
-            if (checkClassOfListObjects(marginsAndSize, Integer.class) && marginsAndSize.size() == 4) {
+            if ((checkClassOfListObjects(marginsAndSize, Integer.class) || checkClassOfListObjects(marginsAndSize, String.class))
+                            && marginsAndSize.size() == 4) {
                 picker.getOverlayView().setTorchButtonMarginsAndSize(
-                        (Integer)marginsAndSize.get(0), (Integer)marginsAndSize.get(1),
-                        (Integer)marginsAndSize.get(2), (Integer)marginsAndSize.get(3));
+                        getDp(marginsAndSize.get(0)), getDp(marginsAndSize.get(1)),
+                        getDp(marginsAndSize.get(2)), getDp(marginsAndSize.get(3)));
             } else {
                 Log.e("ScanditSDK", "Failed to parse torch button margins and size - wrong type");
             }
@@ -97,10 +100,11 @@ public class UIParamParser {
 
         if (bundleContainsListKey(bundle, paramCameraSwitchButtonMarginsAndSize)) {
             List<Object> marginsAndSize = (List<Object>)bundle.getSerializable(paramCameraSwitchButtonMarginsAndSize);
-            if (checkClassOfListObjects(marginsAndSize, Integer.class) && marginsAndSize.size() == 4) {
+            if ((checkClassOfListObjects(marginsAndSize, Integer.class) || checkClassOfListObjects(marginsAndSize, String.class))
+                            && marginsAndSize.size() == 4) {
                 picker.getOverlayView().setCameraSwitchButtonMarginsAndSize(
-                        (Integer) marginsAndSize.get(0), (Integer) marginsAndSize.get(1),
-                        (Integer) marginsAndSize.get(2), (Integer) marginsAndSize.get(3));
+                        getDp(marginsAndSize.get(0)), getDp(marginsAndSize.get(1)),
+                        getDp(marginsAndSize.get(2)), getDp(marginsAndSize.get(3)));
             } else {
                 Log.e("ScanditSDK", "Failed to parse camera switch button margins and size - wrong type");
             }
@@ -221,10 +225,37 @@ public class UIParamParser {
     public static boolean checkClassOfListObjects(List<Object> list, Class<?> aClass) {
         for (Object obj : list) {
             if (!aClass.isInstance(obj)) {
-                Log.e("ScanditSDK", "array contains wrong class - " + obj.getClass().getName());
                 return false;
             }
         }
         return true;
+    }
+
+    // Converts px to dp if String ends with 'px'
+    public static Integer getDp(Object obj) {
+        if (obj instanceof Number) {
+            return ((Number) obj).intValue();
+        } else if (obj.getClass().equals(String.class)) {
+            String str = (String) obj;
+            if (str.substring(Math.max(str.length() - 2, 0)).equals("px")) {
+                try {
+                    int px = Integer.parseInt(str.substring(0, str.length() - 2));
+                    return (int) ( (int)px * 1f / (ScanditSDK.DISPLAY.densityDpi / 160f));
+                } catch (NumberFormatException e) {
+                    Log.e("ScanditSDK", "Can not recognize dp value of String " + str + " - returning 0");
+                    return 0;
+                }
+            } else {
+                try {
+                    return Integer.parseInt(str);
+                } catch (NumberFormatException e) {
+                    Log.e("ScanditSDK", "Can not recognize dp value of String " + str + " - returning 0");
+                    return 0;
+                }
+            }
+        } else {
+            Log.e("ScanditSDK", "Can not recognize dp value - returning 0");
+            return 0;
+        }
     }
 }
