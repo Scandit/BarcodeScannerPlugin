@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<!-- CSP support mode (required for Windows Universal apps): https://docs.angularjs.org/api/ng/directive/ngCsp -->
+<html lang="en" ng-app="app" ng-csp>
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- JS dependencies (order matters!) -->
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/onsen/js/onsenui.js"></script>
+
+    <!-- CSS dependencies -->
+    <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
+    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components-blue-basic-theme.css" />
+
+    <!-- CSP support mode (required for Windows Universal apps) -->
+    <link rel="stylesheet" href="lib/angular/angular-csp.css" />
+
+
+    <title>Scandit Phonegap Extended Sample</title>
+    
+    <script src="index.js"></script>
+    <script src="home.js"></script>
+    <script src="settings.js"></script>
+    <script src="pickers.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+<body ng-controller="AppController">
+    <!-- Cordova reference -->
+    <script src="cordova.js"></script>
+    <!-- -->
+
+    <ons-tabbar var=mainTabbar ons-postchange="onTabChange();">
+        <ons-tab active="true" page="home.html">
+            <div class="tab">
+                <ons-icon icon="ion-home" class="tab-icon"></ons-icon>
+                <div class="tab-label">Scan</div>
+            </div>
+        </ons-tab>
+
+        <ons-tab page="settings.html">
+            <div class="tab">
+                <ons-icon icon="ion-gear-a" class="tab-icon"></ons-icon>
+                <div class="tab-label">Settings</div>
+            </div>
+        </ons-tab>
+
+        <ons-tab page="pickers.html">
+            <div class="tab">
+                <ons-icon icon="ion-ios-browsers-outline" class="tab-icon"></ons-icon>
+                <div class="tab-label">Pickers</div>
+            </div>
+        </ons-tab>
+    </ons-tabbar>
+
+</body>
+</html>

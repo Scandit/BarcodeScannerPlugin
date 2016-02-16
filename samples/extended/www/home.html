@@ -1,0 +1,10 @@
+﻿<ons-page style="height:100%; width:100%">
+    <div id="scanResults" ng-style="{'display': paused ? 'block' : 'none'}" style="width:100%; position:absolute; bottom:0">
+        <div style="text-align:center"><span>Scanned Code: </span><span>{{scannedCode}}</span></div>
+        <div style="padding: 10px 9px">
+            <ons-button modifier="large" ng-click="resumePicker();" style="margin: 0 auto;">
+                Continue Scanning
+            </ons-button>
+        </div>
+    </div>
+</ons-page>

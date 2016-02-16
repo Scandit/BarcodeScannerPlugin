@@ -1,0 +1,96 @@
+﻿<ons-page ng-controller="SettingsController">
+    <ons-toolbar>
+        <div class="center">Settings</div>
+    </ons-toolbar>
+
+    <ons-button modifier="large" ng-click="save()">Save Settings</ons-button>
+    
+    <div class="settings-header">Symbologies</div>
+    
+    <ons-list modifier="inset" class="settings-list">
+        <ons-list-item ng-repeat="s in symbologies track by $index">
+            {{s.title}}
+            <ons-switch modifier="list-item" ng-model="s.enabled"></ons-switch>
+        </ons-list-item>
+    </ons-list>
+    <div class="settings-header">Scan Feedback</div>
+
+    <ons-list modifier="inset" class="settings-list">
+        <ons-list-item>
+            Beep <ons-switch modifier="list-item" ng-model="ui.beep"></ons-switch>
+        </ons-list-item>
+        <ons-list-item>
+            Vibrate <ons-switch modifier="list-item" ng-model="ui.vibrate"></ons-switch>
+        </ons-list-item>
+   </ons-list>
+    <div class="settings-header">UI Style</div>
+
+    <ons-list modifier="inset" class="settings-list">
+        <ons-list-item>
+            <label class="radio-button">
+                <input type="radio" name="ui-style" ng-model="ui.style" value="default">
+                <div class="radio-button__checkmark"></div>
+                Default&nbsp;&nbsp;
+            </label>
+            <label class="radio-button">
+                <input type="radio" name="ui-style" ng-model="ui.style" value="laser">
+                <div class="radio-button__checkmark"></div>
+                Laser&nbsp;&nbsp;
+            </label>
+            <label class="radio-button">
+                <input type="radio" name="ui-style" ng-model="ui.style" value="none">
+                <div class="radio-button__checkmark"></div>
+                None
+            </label>
+        </ons-list-item>
+        <ons-list-item>
+            Search Bar <ons-switch modifier="list-item" ng-model="ui.searchBar"></ons-switch>
+        </ons-list-item>
+        <ons-list-item>
+            Torch <ons-switch modifier="list-item" ng-model="ui.torch"></ons-switch>
+        </ons-list-item>
+        <ons-list-item ng-style="{'opacity': ui.torch ? 1.0 : 0.5}">
+            Torch Button Left Offset: {{ui.torch_xmargin}} <input modifier="list-item" type="range" class="range" style="width: 100%" min="0" max="100" step="1" ng-model="ui.torch_xmargin" ng-disabled="!(ui.torch)"></ons-switch>
+        </ons-list-item>
+        <ons-list-item ng-style="{'opacity': ui.torch ? 1.0 : 0.5}">
+            Torch Button Top Offset: {{ui.torch_ymargin}} <input modifier="list-item" type="range" class="range" style="width: 100%" min="0" max="100" step="1" ng-model="ui.torch_ymargin" ng-disabled="!(ui.torch)"></ons-switch>
+        </ons-list-item>
+        <ons-list-item>
+            Camera Switch Button:<br/>
+            <label class="radio-button">
+                <input type="radio" name="ui-cameraSwitch" ng-model="ui.cameraSwitch" value="always">
+                <div class="radio-button__checkmark"></div>
+               Always
+            </label>
+            <label class="radio-button">
+                <input type="radio" name="ui-cameraSwitch" ng-model="ui.cameraSwitch" value="tablet">
+                <div class="radio-button__checkmark"></div>
+                On Tablet
+            </label>
+            <label class="radio-button">
+                <input type="radio" name="ui-cameraSwitch" ng-model="ui.cameraSwitch" value="never">
+                <div class="radio-button__checkmark"></div>
+                Never
+            </label>
+        </ons-list-item>
+        <ons-list-item ng-style="{'opacity': ui.cameraSwitch !=  'never' ? 1.0 : 0.5}">
+            Camera Button Right Offset: {{ui.cameraSwitch_xmargin}} <input modifier="list-item" type="range" class="range" style="width: 100%" min="0" max="100" step="1" ng-model="ui.cameraSwitch_xmargin" ng-disabled="(ui.cameraSwitch == 'never')"></ons-switch>
+        </ons-list-item>
+        <ons-list-item ng-style="{'opacity': ui.cameraSwitch != 'never' ? 1.0 : 0.5}">
+            Camera Button Top Offset: {{ui.cameraSwitch_ymargin}} <input modifier="list-item" type="range" class="range" style="width: 100%" min="0" max="100" step="1" ng-model="ui.cameraSwitch_ymargin" ng-disabled="(ui.cameraSwitch == 'never')"></ons-switch>
+        </ons-list-item>
+        <ons-list-item>
+            Viewfinder Width: {{ui.viewfinder_width}} <input modifier="list-item" type="range" class="range" style="width: 100%" min="0" max="1" step="0.01" ng-model="ui.viewfinder_width"></ons-switch>
+        </ons-list-item>
+        <ons-list-item>
+            Viewfinder Height: {{ui.viewfinder_height}} <input modifier="list-item" type="range" class="range" style="width: 100%" min="0" max="1" step="0.01" ng-model="ui.viewfinder_height"></ons-switch>
+        </ons-list-item>
+        <ons-list-item>
+            Viewfinder Landscape Width: {{ui.viewfinderLandscape_width}} <input modifier="list-item" type="range" class="range" style="width: 100%" min="0" max="1" step="0.01" ng-model="ui.viewfinderLandscape_width"></ons-switch>
+        </ons-list-item>
+        <ons-list-item>
+            Viewfinder Landscape Height: {{ui.viewfinderLandscape_height}} <input modifier="list-item" type="range" class="range" style="width: 100%" min="0" max="1" step="0.01" ng-model="ui.viewfinderLandscape_height"></ons-switch>
+        </ons-list-item>
+    </ons-list>
+    <br />
+</ons-page>
