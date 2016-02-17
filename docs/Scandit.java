@@ -12,14 +12,14 @@ public class Scandit {
 	 * @since 4.11.0
 	 */
 	public class Point {
-		public double x;
-		public double y;
+		public number x;
+		public number y;
 		
 		/**
 		 * @param x The x coordinate.
 		 * @param y the y coordinate.
 		 */
-		public Point(double x, double y);
+		public Point(number x, number y);
 	}
 
 	/**
@@ -28,10 +28,10 @@ public class Scandit {
 	 * @since 4.11.0
 	 */
 	public class Rect {
-		public double x;
-		public double y;
-		public double width;
-		public double height;
+		public number x;
+		public number y;
+		public number width;
+		public number height;
 		
 		/**
 		 * @param x The x coordinate.
@@ -39,7 +39,7 @@ public class Scandit {
 		 * @param width The rectangle's width.
 		 * @param height The rectangle's height.
 		 */
-		public Rect(double x, double y, double width, double height);
+		public Rect(number x, number y, number width, number height);
 	}
 	
 	/**
@@ -304,8 +304,15 @@ public class Scandit {
          * fully configured. Once it is shown make sure to call
          * {@link startScanning() startScanning()} if you want to start the video feed and scan for
          * barcodes.
+         * The success callback takes a {@link ScanSession} as parameter containing the information
+         * about the scanned codes. The manual callback takes a String as parameter containing the
+         * data.
+         *
+         * @param success callback for successfull scan
+         * @param manual callback for manual scan using search bar
+         * @param failure callback if operation fails
          */
-        public void show();
+        public void show(function success, function manual, function failure);
         
         /**
          * Cancels the picker by stopping it and removing it from the screen. If the picker is not
@@ -345,7 +352,9 @@ public class Scandit {
 	     * @brief Sets the margins of the barcode picker.
 	     *
 	     * Non-zero margins cause the barcode picker to be added as a subview on top of the webview
-	     * instead of as full screen in a new view controller or activity.
+	     * instead of as full screen in a new view controller or activity. Margins can either be
+	     * specified in pixel density independent platform dependent units by passing integers
+	     * or in percents by passing strings ending with '%%'
 	     *
 	     * @param portraitMargins Margins for when the device is in portrait or upside-down portrait 
 	     *        orientation. Can be null to indicate no margins.
@@ -356,7 +365,7 @@ public class Scandit {
 	     *
 	     * @since 4.11.0
 	     */
-		public void setMargins(Margins portraitMargins, Margins landscapeMargins, double animationDuration);
+		public void setMargins(Margins portraitMargins, Margins landscapeMargins, number animationDuration);
 
     	/**
     	 * @brief Asynchronously pause the scanning process while keeping the camera preview running.
@@ -649,7 +658,7 @@ public class Scandit {
     	/**
     	 * The percentage of the max zoom (between 0 and 1).
     	 */
-    	public float relativeZoom;
+    	public number relativeZoom;
     
     	/**
     	 * Maximum number of codes to be decoded every frame. 
@@ -751,7 +760,7 @@ public class Scandit {
 		 *
 		 * @param enabled Whether the beep is enabled.
 		 */
-		public void setBeepEnabled(enabled);
+		public void setBeepEnabled(boolean enabled);
 
 		/**
 		 * Enables or disables the vibration when a code was recognized. If the phone's ring mode
@@ -763,7 +772,7 @@ public class Scandit {
 		 *
 		 * @param enabled Whether vibrate is enabled.
 		 */
-		public void setVibrateEnabled(enabled);
+		public void setVibrateEnabled(boolean enabled);
 		///@}
 
 
@@ -782,7 +791,7 @@ public class Scandit {
 		 *
 		 * @param enabled Whether the torch button should be shown.
 		 */
-		public void setTorchEnabled(enabled);
+		public void setTorchEnabled(boolean enabled);
 
 		/**
 		 * @brief Sets the position at which the button to enable the torch is drawn.
@@ -909,8 +918,8 @@ public class Scandit {
 		 * recognized. It only changes the size of the box drawn onto the scan screen. To restrict the
 		 * active scanning area, use the methods listed below.
 		 *
-		 * @see ScanSettings.setScanningHotSpot(float, float)
-		 * @see ScanSettings.setScanningHotSpotHeight(float)
+		 * @see ScanSettings.setScanningHotSpot(number, number)
+		 * @see ScanSettings.setScanningHotSpotHeight(number)
 		 *
 		 * By default the width is 0.8, height is 0.4, landscapeWidth is 0.6, landscapeHeight is 0.4
 		 *
@@ -922,7 +931,7 @@ public class Scandit {
 		 * @param landscapeHeight Height of the viewfinder rectangle in landscape orientation.
 		 */
 		public void setViewfinderDimension(
-				double width, double height, double landscapeWidth, double landscapeHeight);
+				number width, number height, number landscapeWidth, number landscapeHeight);
 
 		/**
 		 * Sets the color of the viewfinder before a bar code has been recognized
@@ -958,7 +967,10 @@ public class Scandit {
 		///@{
 		
 		/**
-		 * Shows (or hides) a search bar at the top of the scan screen.
+		 * Shows (or hides) a search bar at the top of the scan screen. When data is
+		 * submitted from the search bar the callback specified in
+		 * {@link BarcodePicker.show BarcodePicker.show} is calledfloat passed as
+		 * parameter in a string.
 		 *
 		 * @since 4.11.0
 		 *

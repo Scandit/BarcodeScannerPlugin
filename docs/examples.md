@@ -1,7 +1,22 @@
 Example code     {#cordova-examples}
 ===================================
 
-To get you started we have prepared two examples that quickly show you how to use the scanner.
+## Build the sample apps
+
+In order to build the simple or extended sample apps you must import one of them upon creation of your project as follows:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
+    phonegap create helloworld --copy-from <path-to-repository>/samples/simple/www/
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+or
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
+    phonegap create helloworld --copy-from <path-to-repository>/samples/extended/www/
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Note that you will still need to add the platform and plugin as described in {@link cordova-integrate here}.
+
 
 ## Simple Fullscreen
 
