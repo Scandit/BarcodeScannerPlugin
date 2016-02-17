@@ -75,7 +75,7 @@ angular.module('app').controller('AppController', function ($scope) {
 
 
 function initPicker(scanSettings, margins, lMargins) {
-    Scandit.License.setAppKey("qJj+ATIXBjcRgtlJGSWqfGLXfOPXY/WPsjImrbmV7Uo");
+    Scandit.License.setAppKey("--- ENTER YOUR SCANDIT APP KEY HERE ---");
     
     // Instantiate the barcode picker by using the settings defined above.
     var picker = new Scandit.BarcodePicker(scanSettings);
