@@ -17,7 +17,7 @@ The plugin allows you to display it as a cropped and/or scaled subview such that
 picker.setMargins(new Scandit.Margins(0, 0, 0, 200), new Scandit.Margins(0, 0, 200, 0), 0);
 ~~~~~~~~~~~~~~~~
 
-This code would show the scanner with a 200 unit bottom margin in portrait orientation and a 200 unit right margin in landscape orientation. The units used depend on the platform, but are independent of the pixel density. The margin can also be specified in percent, e.g. following code will make the picker occupy the upper half of the screen:
+This code will show the scanner with a 200 unit bottom margin in portrait orientation and a 200 unit right margin in landscape orientation. The units used depend on the platform, but are independent of the pixel density. The margin can also be specified in percent, e.g. following code will make the picker occupy the upper half of the screen:
 
 ~~~~~~~~~~~~~~~~{.java}
 picker.setMargins(new Scandit.Margins('0%', '0%', '0%', '50%'), new Scandit.Margins('0%', '0%', '0%', '50%'), 0);
@@ -29,7 +29,7 @@ It is possible to adjust these margins while the scanner is running by using the
 picker.setMargins(new Scandit.Margins(0, 0, 0, 100), new Scandit.Margins(0, 0, 100, 0), 0.5);
 ~~~~~~~~~~~~~~~~
 
-This code would reduce the margins to 100 units and animate that change over 0.5 seconds.
+This code will reduce the margins to 100 units and animate that change over 0.5 seconds.
 
 
 ### Closing the scanner
