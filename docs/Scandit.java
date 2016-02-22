@@ -308,9 +308,9 @@ public class Scandit {
          * about the scanned codes. The manual callback takes a String as parameter containing the
          * data.
          *
-         * @param success callback for successfull scan
-         * @param manual callback for manual scan using search bar
-         * @param failure callback if operation fails
+	 * @param success callback to be invoked whenever codes have been successfully scanned. The callback receives the scan session as the first and only argument which contains a list of recognized codes.
+	 * @param manual callback to be invoked when the user enters a text in the search bar. The entered text is passed as the first argument to the callback. If you do not use the search bar, you may pass null.
+	 * @param failure callback to be invoked upon failure, or when cancel is called on the picker. The callback is passed a reason for failure.
          */
         public void show(function success, function manual, function failure);
         
