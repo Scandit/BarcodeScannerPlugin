@@ -969,8 +969,8 @@ public class Scandit {
 		/**
 		 * Shows (or hides) a search bar at the top of the scan screen. When data is
 		 * submitted from the search bar the callback specified in
-		 * {@link BarcodePicker.show BarcodePicker.show} is calledfloat passed as
-		 * parameter in a string.
+		 * {@link BarcodePicker.show BarcodePicker.show} is called and the barcode is
+		 * passed as a string.
 		 *
 		 * @since 4.11.0
 		 *
