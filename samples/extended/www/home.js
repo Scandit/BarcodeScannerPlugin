@@ -1,6 +1,12 @@
 ﻿(function (exports) {
 
     exports.loadTabHome = function ($scope) {
+	if ($scope.ready) {
+	    $scope.stopPicker();
+	} else {
+	    document.addEventListener('deviceready', $scope.stopPicker);
+	}
+
         $scope.setMargin("0%", "0%", "0%", "50%");
         $scope.setLandscapeMargin("0%", "0%", "0%", "50%");
         var scanResults = document.getElementById('scanResults');
