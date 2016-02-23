@@ -37,7 +37,9 @@
         var list = JSON.parse(localStorage.ui);
         for (i in ui) {
             if (list[i] !== null && list[i] !== undefined) {
-                ui[i] = list[i];
+	        if (typeof ui[i] === typeof list[i]) {  
+                    ui[i] = list[i];
+		}
             }
         }
     }
@@ -45,8 +47,9 @@
         list = JSON.parse(localStorage.symbologies);
         for (sym in SYMBOLOGIES) {
             for (sym2 in list) {
-                if (SYMBOLOGIES[sym]["title"] === list[sym2]["title"]) {
-                    SYMBOLOGIES[sym] = list[sym2];
+                if (SYMBOLOGIES[sym]["title"] === list[sym2]["title"]
+		    && typeof list[sym2]["enabled"] === "boolean") {
+                        SYMBOLOGIES[sym] = list[sym2];
                 }
             }
         }
@@ -55,6 +58,10 @@
     app.controller("SettingsController", function ($scope) {
         $scope.symbologies = SYMBOLOGIES
         $scope.ui = ui;
+        $scope.saveSettings = function () {
+            localStorage.setItem("ui", JSON.stringify($scope.ui));
+            localStorage.setItem("symbologies", JSON.stringify($scope.symbologies));
+        }
     });
 
     exports.getScanSettings = function () {
@@ -105,11 +112,6 @@
         } else {
             document.addEventListener('deviceready', $scope.stopPicker);
         }
-    }
-
-    exports.saveSettings = function ($scope) {
-        localStorage.setItem("ui", JSON.stringify($scope.ui));
-        localStorage.setItem("symbologies", JSON.stringify($scope.symbologies));
     }
 
 })(this);

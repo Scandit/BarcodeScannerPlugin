@@ -58,7 +58,6 @@ angular.module('app').controller('AppController', function ($scope) {
    };
    
    $scope.onTabChange = function () {
-       saveSettings(this);
        if (mainTabbar.getActiveTabIndex() === 0) {
            loadTabHome($scope);
        } else if (mainTabbar.getActiveTabIndex() === 1) {
