@@ -75,8 +75,13 @@ function initPicker(scanSettings, margins, lMargins) {
     
     // Instantiate the barcode picker by using the settings defined above.
     var picker = new Scandit.BarcodePicker(scanSettings);
-    picker.setMargins(new Scandit.Margins(margins[0], margins[1], margins[2], margins[3]),
-                      new Scandit.Margins(lMargins[0], lMargins[1], lMargins[2], lMargins[3]));
+    if ((parseInt(margins[0])>0) || (parseInt(margins[1])>0)
+        || (parseInt(margins[2])>0) || (parseInt(margins[3])>0)
+        || (parseInt(lMargins[0])>0) || (parseInt(lMargins[1])>0)
+        || (parseInt(lMargins[2])>0) || (parseInt(lMargins[3])>0)) {
+        picker.setMargins(new Scandit.Margins(margins[0], margins[1], margins[2], margins[3]),
+                          new Scandit.Margins(lMargins[0], lMargins[1], lMargins[2], lMargins[3]));
+    }
     // when continuous mode is false, scanning stops after the first code
     // has been successfully scanned. Set this property to true to continue
     // scanning. In that case it is up to you to stop/pause the scanning
