@@ -1,17 +1,17 @@
-<ons-page>
-        <ons-list-header>Alternative Picker Configurations</ons-list-header>
-        <ons-scroller>
-            <ons-list>
-                <ons-list-item modifier="tappable" onclick="customPicker(0,0,0,0);">Fullscreen Picker</ons-list-item>
-                <ons-list-item modifier="tappable" onclick="customPicker(40,40,40,40)">Cropped Picker</ons-list-item>
-                <ons-list-item modifier="tappable" onclick="customPicker(40,0,40,0)">L/R Cropped Picker</ons-list-item>
-                <ons-list-item modifier="tappable" onclick="customPicker(1,60,1,60)">T/B Cropped Picker</ons-list-item>
-            </ons-list>
-            <rr />
-            <div ng-style="{'display': scannedCode === '' ? 'none' : 'block'}">
-                <div style="text-align:center">
-                        <span>Scanned Code: </span><span>{{scannedCode}}</span>
-                </div>
+<ons-page onclick="hide()">
+    <ons-list-header>Alternative Picker Configurations</ons-list-header>
+    <ons-scroller>
+        <ons-list id="pickerchoices">
+            <ons-list-item modifier="tappable" onclick="customPicker(0,0,0,0);">Fullscreen Picker</ons-list-item>
+            <ons-list-item modifier="tappable" onclick="customPicker(40,40,40,40)">Cropped Picker</ons-list-item>
+            <ons-list-item modifier="tappable" onclick="customPicker(40,0,40,0)">L/R Cropped Picker</ons-list-item>
+            <ons-list-item modifier="tappable" onclick="customPicker(1,60,1,60)">T/B Cropped Picker</ons-list-item>
+        </ons-list>
+        <br />
+        <div ng-style="{'display': scannedCode === '' ? 'none' : 'block'}">
+            <div style="text-align:center">
+                    <span>Scanned Code: </span><span>{{scannedCode}}</span>
             </div>
-        </ons-scroller>
-    </ons-page>
+        </div>
+    </ons-scroller>
+</ons-page>
