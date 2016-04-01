@@ -6,6 +6,11 @@
         } else {
             document.addEventListener('deviceready', $scope.stopPicker);
         }
+        var pickers = document.getElementById("pickerchoices");
+        pickers.children[0].onclick = function () { customPicker(0, 0, 0, 0); };
+        pickers.children[1].onclick = function () { customPicker(40, 40, 40, 40); };
+        pickers.children[2].onclick = function () { customPicker(40, 0, 40, 0); };
+        pickers.children[3].onclick = function () { customPicker(1, 60, 1, 60); };
     }
 
     exports.customPicker = function (marginLeft, marginTop, marginRight, marginBottom) {
