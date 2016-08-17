@@ -50,7 +50,12 @@
 	                       <feature name="SBSScanCasePlugin">          
 					<param name="ios-package" value="SBSScanCasePlugin"/>          
 				</feature>      
-		  </config-file>      
+		  </config-file>
+		  
+		  <!-- Declare Camera Usage for iOS10+ -->
+		  <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+      			<string>Scandit</string>
+ 		  </config-file>
 
 		  <!-- Resource Bundle for Scandit SDK -->
 		  <resource-file src="src/ios/scanditsdk-community-ios_4.0.0/ScanditBarcodeScanner.bundle"/>	  
