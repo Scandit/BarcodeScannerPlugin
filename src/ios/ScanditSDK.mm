@@ -20,14 +20,15 @@
 #import "SBSTypeConversion.h"
 #import "SBSPickerStateMachine.h"
 #import <ScanditBarcodeScanner/ScanditBarcodeScanner.h>
-
+#import <ScanditBarcodeScanner/SBSTextRecognition.h>
 
 @interface SBSLicense ()
 + (void)setFrameworkIdentifier:(NSString *)frameworkIdentifier;
 @end
 
-@interface ScanditSDK () <SBSScanDelegate, SBSOverlayControllerDidCancelDelegate,
-                          ScanditSDKSearchBarDelegate, SBSPickerStateDelegate>
+@interface ScanditSDK () <SBSScanDelegate, SBSOverlayControllerDidCancelDelegate, ScanditSDKSearchBarDelegate,
+                          SBSPickerStateDelegate, SBSTextRecognitionDelegate>
+
 @property (nonatomic, copy) NSString *callbackId;
 @property (readwrite, assign) BOOL hasPendingOperation;
 @property (nonatomic, assign) BOOL continuousMode;
@@ -178,6 +179,7 @@
             // Set this class as the delegate for the overlay controller. It will now receive events when
             // a barcode was successfully scanned, manually entered or the cancel button was pressed.
             self.picker.scanDelegate = self;
+            self.picker.textRecognitionDelegate = self;
             self.picker.overlayController.cancelDelegate = self;
         
             BOOL showAsSubView =
@@ -353,12 +355,7 @@
 #pragma mark - SBSScanDelegate methods
 
 - (void)barcodePicker:(SBSBarcodePicker *)picker didScan:(SBSScanSession *)session {
-    [self scannedSession:session];
-}
-
-- (void)scannedSession:(SBSScanSession *)session {
     CDVPluginResult *pluginResult = [self resultForSession:session];
-    
 
     int nextState = [self sendPluginResultBlocking:pluginResult];
     if (!self.continuousMode) {
@@ -419,8 +416,8 @@
     if (self.legacyMode) {
         [self.commandDelegate sendPluginResult:result callbackId:self.callbackId];
         return 0;
-        
     }
+
     if (![NSThread isMainThread]) {
         [self.didScanCondition lock];
         self.didScanCallbackFinish = NO;
@@ -437,7 +434,6 @@
         [NSString stringWithFormat:command, self.callbackId, result.argumentsAsJSON];
     [self.commandDelegate evalJs:commandSubst scheduledOnRunLoop:NO];
     return self.nextState;
-
 }
 
 - (void)switchToNextScanState:(int)nextState withSession:(SBSScanSession *)session {
@@ -453,6 +449,46 @@
         }
         [self.pickerStateMachine setDesiredState:SBSPickerStatePaused];
     }
+}
+
+#pragma mark - SBSTextRecognitionDelegate
+
+- (SBSBarcodePickerState)barcodePicker:(SBSBarcodePicker *)picker
+                      didRecognizeText:(SBSRecognizedText *)text {
+    NSDictionary *dict = @{ @"jsonString": text.text };
+    CDVPluginResult *pluginResult = [self createResultForEvent:@"didRecognizeText" value:dict];
+    int nextState = [self sendPluginResultBlocking:pluginResult];
+    if (!self.continuousMode) {
+        nextState = SBSPickerStateStopped;
+    }
+
+    if (!self.continuousMode) {
+        dispatch_main_sync_safe(^{
+            if (self.modallyPresented) {
+                [self.viewController dismissViewControllerAnimated:YES completion:nil];
+            } else {
+                [self.picker removeFromParentViewController];
+                [self.picker.view removeFromSuperview];
+                [self.picker didMoveToParentViewController:nil];
+            }
+            self.pickerStateMachine = nil;
+            self.hasPendingOperation = NO;
+        });
+    }
+
+    return SBSBarcodePickerStateStopped;
+}
+
+- (SBSBarcodePickerState)switchRecognitionTextToNextState:(int)nextState {
+    SBSBarcodePickerState state = SBSBarcodePickerStateActive;
+    if (nextState == 2) {
+        state = SBSBarcodePickerStateStopped;
+        [self.pickerStateMachine setDesiredState:SBSPickerStateStopped];
+    } else if (nextState == 1) {
+        state = SBSBarcodePickerStatePaused;
+        [self.pickerStateMachine setDesiredState:SBSPickerStatePaused];
+    }
+    return state;
 }
 
 #pragma mark - SBSOverlayControllerDidCancelDelegate

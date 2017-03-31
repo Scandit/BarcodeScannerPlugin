@@ -20,11 +20,7 @@ const static NSString* kSBSScanCaseDidScanEvent = @"didScan";
 
 
 
-@interface SBSScanCasePlugin () <SBSScanCaseDelegate> {
-
-
-    
-}
+@interface SBSScanCasePlugin () <SBSScanCaseDelegate>
 
 // Id for master callback The callback is provided by us and dispatches
 // to the correct user-callback in JS.

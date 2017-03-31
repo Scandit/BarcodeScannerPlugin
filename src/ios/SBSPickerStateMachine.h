@@ -16,9 +16,9 @@
 typedef enum {
     // NOTE: enum values must match values defined in the JS portion of the plugin
     // (see barcodepicker.js)
+    SBSPickerStatePaused = 1,
     SBSPickerStateStopped = 2,
-     SBSPickerStatePaused = 1,
-     SBSPickerStateActive = 3
+    SBSPickerStateActive = 3
 } SBSPickerState;
 
 

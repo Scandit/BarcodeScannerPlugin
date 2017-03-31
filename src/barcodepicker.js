@@ -38,7 +38,6 @@ BarcodePicker.Orientation = {
 }
 
 BarcodePicker.State = {
-    NONE : 1,
     PAUSED : 1,
     STOPPED : 2,
     ACTIVE : 3
