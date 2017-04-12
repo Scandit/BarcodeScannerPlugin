@@ -461,6 +461,12 @@
     if (!self.continuousMode) {
         nextState = SBSPickerStateStopped;
     }
+    SBSBarcodePickerState state = [self switchRecognitionTextToNextState:nextState];
+
+    NSArray* newlyRecognized = session.newlyRecognizedCodes;
+    if (self.rejectedCodeIds.count > 0) {
+        text.rejected = YES;
+    }
 
     if (!self.continuousMode) {
         dispatch_main_sync_safe(^{
