@@ -62,10 +62,8 @@ function ScanSettings() {
     this.symbologies[Barcode.Symbology.MAXICODE] = new SymbologySettings();
     
     this.symbologies[Barcode.Symbology.FIVE_DIGIT_ADD_ON] = new SymbologySettings();
-    this.symbologies[Barcode.Symbology.FIVE_DIGIT_ADD_ON].activeSymbolCounts = [5];
     
     this.symbologies[Barcode.Symbology.TWO_DIGIT_ADD_ON] = new SymbologySettings();
-    this.symbologies[Barcode.Symbology.TWO_DIGIT_ADD_ON].activeSymbolCounts = [2];
 
     this.symbologies[Barcode.Symbology.KIX] = new SymbologySettings();
     this.symbologies[Barcode.Symbology.KIX].activeSymbolCounts = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];

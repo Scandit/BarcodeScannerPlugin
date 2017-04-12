@@ -52,6 +52,15 @@ public interface IPickerController {
     void updateUI(Bundle overlayOptions);
 
     /**
+     * @brief Update the Layout
+     *
+     * @param layoutOptions The layout options. Currently this is only supported when using the
+     *                      subview picker. The paramters of the full-screen picker can not be
+     *                      changed for the full-screen picker while the picker is running.
+     */
+    void updateLayout(Bundle layoutOptions);
+
+    /**
      * Enable/disable the torch
      *
      * @param enabled Whether the torch should be enabled.

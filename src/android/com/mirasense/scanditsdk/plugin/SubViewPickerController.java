@@ -73,6 +73,7 @@ public class SubViewPickerController
 
     @Override
     public void setState(final int state) {
+        super.setState(state);
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -206,6 +207,18 @@ public class SubViewPickerController
             @Override
             public void run() {
                 internalUpdateUI(overlayOptions, null);
+            }
+        });
+    }
+
+    @Override
+    public void updateLayout(final Bundle layoutOptions) {
+        final Activity pluginActivity = mPlugin.cordova.getActivity();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                PhonegapParamParser.updateLayout(pluginActivity, mPickerStateMachine.getPicker(),
+                        layoutOptions, mScreenDimensions);
             }
         });
     }
@@ -414,6 +427,7 @@ public class SubViewPickerController
         }
 
         mPickerStateMachine.setState(nextState);
+        Marshal.rejectRecognizedTexts(recognizedText, mRejectedCodeIds);
         if (nextState == PickerStateMachine.STOPPED) {
             return TextRecognitionListener.PICKER_STATE_STOPPED;
         } else if (nextState == PickerStateMachine.PAUSED) {

@@ -3,6 +3,7 @@ var ScanOverlay = cordova.require("com.mirasense.scanditsdk.plugin.ScanOverlay")
 var ScanSettings = cordova.require("com.mirasense.scanditsdk.plugin.ScanSettings");
 var ScanSession = cordova.require("com.mirasense.scanditsdk.plugin.ScanSession");
 var Barcode = cordova.require("com.mirasense.scanditsdk.plugin.Barcode");
+var RecognizedText = cordova.require("com.mirasense.scanditsdk.plugin.RecognizedText");
 var Constraints = cordova.require("com.mirasense.scanditsdk.plugin.Constraints");
 
 function BarcodePicker(scanSettings) {
@@ -118,11 +119,12 @@ BarcodePicker.prototype.show = function () {
         }
         if (event === 'didRecognizeText') {
             picker.executingCallback = true;
-            var text = args[1];
+            var originalRecognizedText = args[1];
+            var recognizedText = new RecognizedText(originalRecognizedText.text);
             if (callbacks.didRecognizeText) {
                 var desiredState = null;
                 try {
-                   desiredState = callbacks.didRecognizeText(text) || BarcodePicker.State.ACTIVE;
+                   desiredState = callbacks.didRecognizeText(recognizedText) || BarcodePicker.State.ACTIVE;
                 } catch(e) {
                    console.log('event ' + eventName + ' failed:' + e);
                 }
@@ -136,7 +138,11 @@ BarcodePicker.prototype.show = function () {
             } else if (picker.pausedDuringCallback) {
                 nextStep = BarcodePicker.State.PAUSED;
             }
-            cordova.exec(null, null, "ScanditSDK", "finishDidScanCallback", [nextStep]);
+            var rejectedCodes;
+            if (recognizedText.rejected) {
+                rejectedCodes = [1];
+            }
+            cordova.exec(null, null, "ScanditSDK", "finishDidScanCallback", [nextStep, rejectedCodes]);
             picker.executingCallback = false;
         }
         if (event === 'didChangeState') {

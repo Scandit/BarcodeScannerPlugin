@@ -28,7 +28,7 @@ Instead of installing the windows platform with `cordova platform add windows`, 
 
 ~~~~~~~~~~~~~~~~{.java}
 git clone https://github.com/apache/cordova-windows --branch rel/4.4.2
-cordova create myapp
+cordova create myapp --id "com.scandit.sample"
 cd myapp
 cordova platform add ..\cordova-windows
 cordova plugin add ..\path\to\unzipped-barcode-scanner-plugin

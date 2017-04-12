@@ -273,25 +273,26 @@ public class ScanditSDK extends CordovaPlugin {
         }
     }
     
-    private void updateOverlay(JSONArray data) {
-        if (data.length() > 0) {
-            // We extract all options and add them to the intent extra bundle.
-            try {
-                final Bundle overlayOptions = new Bundle();
-                setOptionsOnBundle(data.getJSONObject(0), overlayOptions);
-                
-                mWorker.getHandler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPickerController.updateUI(overlayOptions);
-                    }
-                });
-                
-            } catch (JSONException e) {
-                Log.e("ScanditSDK", "The show call received too few arguments and has to return without starting.");
-                e.printStackTrace();
-            }
+    private void updateOverlay(final JSONArray data) {
+        if (data.length() < 1) {
+            Log.e("ScanditSDK", "The updateOverlay call received too few arguments and has to return without starting.");
+            return;
         }
+
+        mWorker.getHandler().post(new Runnable() {
+            @Override
+            public void run() {
+                if (mPickerController != null) {
+                    final Bundle bundle = new Bundle();
+                    try {
+                        setOptionsOnBundle(data.getJSONObject(0), bundle);
+                        mPickerController.updateUI(bundle);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
     
     private void cancel(JSONArray data) {
@@ -332,13 +333,14 @@ public class ScanditSDK extends CordovaPlugin {
         mWorker.getHandler().post(new Runnable() {
             @Override
             public void run() {
-                if (mPickerController == null) return;
-                final Bundle bundle = new Bundle();
-                try {
-                    setOptionsOnBundle(data.getJSONObject(0), bundle);
-                    mPickerController.updateUI(bundle);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (mPickerController != null) {
+                    final Bundle bundle = new Bundle();
+                    try {
+                        setOptionsOnBundle(data.getJSONObject(0), bundle);
+                        mPickerController.updateLayout(bundle);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

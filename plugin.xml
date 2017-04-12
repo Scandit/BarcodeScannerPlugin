@@ -23,6 +23,9 @@
     <js-module src="src/quadrilateral.js" name="Quadrilateral">
         <clobbers target="Scandit.Quadrilateral" />
     </js-module>
+    <js-module name="RecognizedText" src="src/recognizedtext.js">
+      <clobbers target="Scandit.RecognizedText"/>
+    </js-module>
     <js-module src="src/rect.js" name="Rect">
         <clobbers target="Scandit.Rect" />
     </js-module>

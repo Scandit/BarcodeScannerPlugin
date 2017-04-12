@@ -5,7 +5,7 @@
  * @since 4.11.0
  */
 public class Scandit {
-	
+
 	/**
 	 * A convenience class for points with an x and y coordinate.
 	 *
@@ -14,7 +14,7 @@ public class Scandit {
 	public class Point {
 		public number x;
 		public number y;
-		
+
 		/**
 		 * @param x The x coordinate.
 		 * @param y the y coordinate.
@@ -32,7 +32,7 @@ public class Scandit {
 		public number y;
 		public number width;
 		public number height;
-		
+
 		/**
 		 * @param x The x coordinate.
 		 * @param y The y coordinate.
@@ -41,7 +41,7 @@ public class Scandit {
 		 */
 		public Rect(number x, number y, number width, number height);
 	}
-	
+
 	/**
 	 * @brief A 2-dimensional polygon with 4 corners.
 	 *
@@ -65,7 +65,7 @@ public class Scandit {
 		 */
 		public Point bottomRight;
     }
-    
+
     /**
      * @brief Constraints for the scanner view. Margins have higher priority than width and height,
      * for example if the horizontal margins and the width are all set, the width is ignored. If the
@@ -111,9 +111,9 @@ public class Scandit {
          * in percent, it is set to the desired percentage of the screen height.
          */
         public number height;
-        
+
     }
-	
+
 	/**
 	 * @brief Margins for a view.
      * @deprecated Replaced by Scandit.Constraints.
@@ -125,7 +125,7 @@ public class Scandit {
 		public int top;
 		public int right;
 		public int left;
-		
+
 		/**
 		 * @param left The left margin.
 		 * @param top The top margin.
@@ -149,7 +149,7 @@ public class Scandit {
 		public Margins(String left, String top, String right, String bottom);
 
 	}
-	
+
 	/**
 	 * @brief Represents a recognized/localized barcode/2D code.
 	 *
@@ -279,7 +279,7 @@ public class Scandit {
             /**
             * @brief Code could be part of a composite code.
             *
-            * This flag is set by linear (1d) symbologies that have no composite flag support 
+            * This flag is set by linear (1d) symbologies that have no composite flag support
             * but can be part of a composite code like the EAN/UPC symbology family.
             */
             UNKNOWN,
@@ -308,10 +308,10 @@ public class Scandit {
              */
              GS1_TYPE_C,
         };
-		
+
 		/**
-		 * The symbology of a recognized barcode. Codes for which {@link isRecognized()} returns 
-		 * false, {@link SYMBOLOGY_UNKNOWN} is returned. For all other codes, the symbology of the 
+		 * The symbology of a recognized barcode. Codes for which {@link isRecognized()} returns
+		 * false, {@link SYMBOLOGY_UNKNOWN} is returned. For all other codes, the symbology of the
 		 * recognized code is returned.
 		 */
 		public Symbology symbology;
@@ -354,9 +354,9 @@ public class Scandit {
         /**
          * @brief The data contained in the barcode/2D code, for example the 13 digit number of an EAN13 code.
          *
-         * The data is stored as an array of integers, where each item in the array corresponds 
-         * to the char code. Use this property instead of {@link data} if your application 
-         * expects to scan codes containing binary data that can not be represented as UTF-8 
+         * The data is stored as an array of integers, where each item in the array corresponds
+         * to the char code. Use this property instead of {@link data} if your application
+         * expects to scan codes containing binary data that can not be represented as UTF-8
          * strings.
          */
         public int[] rawData;
@@ -365,11 +365,11 @@ public class Scandit {
         /**
          * @brief the composite flag of the barcode
          *
-         * For codes that have been localized but not recognized, CompositeFlag.UNKNOWN is 
+         * For codes that have been localized but not recognized, CompositeFlag.UNKNOWN is
          * returned.
          */
 		public CompositeFlag compositeFlag;
-		
+
 		/**
 		 * @brief The location of the code in the image.
 		 *
@@ -397,7 +397,7 @@ public class Scandit {
 	 * @since 4.11.0
 	 */
 	public class BarcodePicker {
-	
+
 		/**
 		 * Orientation of the device.
 		 */
@@ -413,7 +413,7 @@ public class Scandit {
 			 */
 			PORTRAIT_UPSIDE_DOWN,
 			/**
-			 * Landscape right orientation - for phones the natural bottom of the device is on the 
+			 * Landscape right orientation - for phones the natural bottom of the device is on the
 			 * right, for tablets this is the natural orientation.
 			 */
 			LANDSCAPE_RIGHT,
@@ -426,7 +426,7 @@ public class Scandit {
 
 
         /**
-         * @brief List of states the picker can be in. Used as arguments for the didChangeState 
+         * @brief List of states the picker can be in. Used as arguments for the didChangeState
          *     callback.
          *
          * @since 4.15
@@ -437,30 +437,30 @@ public class Scandit {
 		     */
 		    STOPPED,
             /**
-             * @brief The picker is in active state. The camera preview is running and barcode scanning 
+             * @brief The picker is in active state. The camera preview is running and barcode scanning
              *    is active.
              */
             ACTIVE,
             /**
-             * @brief The picker is in paused state. The camera preview is running and barcode scanning 
+             * @brief The picker is in paused state. The camera preview is running and barcode scanning
              *     is inactive.
              */
             PAUSED
         };
-        
+
         /**
          * Visibly shows the picker to the user. This should be called after the picker has been
          * fully configured. Once it is shown make sure to call
          * {@link startScanning() startScanning()} if you want to start the video feed and scan for
          * barcodes.
          *
-         * @param didScan callback to be invoked whenever codes have been successfully scanned. 
-         *    The callback receives the scan session as the first and only argument which contains 
-         *    a list of recognized codes. 
-         * @param didManualSearch callback to be invoked when the user enters a text in the search bar. 
-         *    The entered text is passed as the first argument to the callback. If you do not 
-         *    use the search bar, you may pass null. 
-         * @param didCancel callback to be invoked upon failure, or when cancel is called on the 
+         * @param didScan callback to be invoked whenever codes have been successfully scanned.
+         *    The callback receives the scan session as the first and only argument which contains
+         *    a list of recognized codes.
+         * @param didManualSearch callback to be invoked when the user enters a text in the search bar.
+         *    The entered text is passed as the first argument to the callback. If you do not
+         *    use the search bar, you may pass null.
+         * @param didCancel callback to be invoked upon failure, or when cancel is called on the
          *    picker. The callback is passed a reason for failure as the only argument.
          * @param didRecognizeText callback to be invoked whenever text has been successfully
          *    recognized. The callback receives the {@link RecognizedText} as the first and only
@@ -472,27 +472,27 @@ public class Scandit {
         /**
          * Visibly shows the picker to the user. This should be called after the picker has been
          * fully configured. Once it is shown make sure to call
-         * {@link startScanning() startScanning()} if you want to start the video feed and scan 
+         * {@link startScanning() startScanning()} if you want to start the video feed and scan
          * for barcodes.
          *
-         * @param callbacks A dictionary containing one or more callbacks that are invoked when a 
-         *    certain events happens. Supported names for the callbacks are didScan, didChangeState, 
-         *    didCancel and didManualSearch. The behavior of didScan, didCancel, didManualSearch 
-         *    is as defined in the documentation for {@link show(function,function,function)}. 
-         *    didChangeState is a callback that gets invoked whenever the picker changes state, 
-         *    e.g. when the picker changes from stopped to active, or from active to paused. The 
-         *    argument to the callback is the new state (see {@link BarcodePicker.State} for 
+         * @param callbacks A dictionary containing one or more callbacks that are invoked when a
+         *    certain events happens. Supported names for the callbacks are didScan, didChangeState,
+         *    didCancel and didManualSearch. The behavior of didScan, didCancel, didManualSearch
+         *    is as defined in the documentation for {@link show(function,function,function)}.
+         *    didChangeState is a callback that gets invoked whenever the picker changes state,
+         *    e.g. when the picker changes from stopped to active, or from active to paused. The
+         *    argument to the callback is the new state (see {@link BarcodePicker.State} for
          *    possible values).
          */
         public void show(object callbacks);
 
-        
+
         /**
          * Cancels the picker by stopping it and removing it from the screen. If the picker is not
          * in continuous mode this will happen automatically when a code is recognized.
          */
         public void cancel();
-		
+
     	/**
     	 * @brief Reconfigure the barcode picker with new settings
     	 *
@@ -504,7 +504,7 @@ public class Scandit {
     	 * @since 4.11.0
     	 */
 	    public void applyScanSettings(ScanSettings settings);
-	    
+
 	    /**
 	     * @brief Allows to scan multiple codes without closing the scanner.
 	     *
@@ -513,14 +513,14 @@ public class Scandit {
 	     * @since 4.11.0
 	     */
 	    public boolean continuousMode;
-	    
+
 	    /**
 	     * @brief The orientations to which the barcode picker is allowed to rotate to.
 	     *
 	     * @since 4.11.0
 	     */
 	    public Orientation[] orientations;
-        
+
         /**
          * @brief Sets the view constraints of the barcode picker.
          *
@@ -540,23 +540,23 @@ public class Scandit {
          * @since 4.11.0
          */
         public void setConstraints(Constraints portraitConstraints, Constraints, landscapeConstraints, number animationDuration);
-	    
+
 	    /**
          * @deprecated Replaced by setConstraints(portraitConstraints, landscapeConstraints, animationDuration)
          * to allow more customization.
 	     * @brief Sets the margins of the barcode picker.
 	     *
 	     * A call to this function causes the barcode picker to be added as a subview on top of the webview
-	     * instead of as full screen in a new view controller or activity. 
+	     * instead of as full screen in a new view controller or activity.
 	     *
-	     * Margins may either be specified using absolute, device-independent pixel units, or in percent 
+	     * Margins may either be specified using absolute, device-independent pixel units, or in percent
 	     * of the screen size. See {@link Margins(String,String,String,String)} for details.
 	     *
-	     * @param portraitMargins Margins for when the device is in portrait or upside-down portrait 
+	     * @param portraitMargins Margins for when the device is in portrait or upside-down portrait
 	     *        orientation. Can be null to indicate no margins.
-	     * @param landscapeMargins Margins for when the device is in landscape left or right 
+	     * @param landscapeMargins Margins for when the device is in landscape left or right
 	     *		  orientation. Can be null to indicate no margins.
-	     * @param animationDuration The duration the margin change takes to animate. At 0 it will 
+	     * @param animationDuration The duration the margin change takes to animate. At 0 it will
 	     *        instantly change.
 	     *
 	     * @since 4.11.0
@@ -626,7 +626,7 @@ public class Scandit {
     	 * @since 4.11.0
 		 */
 	    public ScanOverlay getOverlayView();
-	    
+
 		/**
 		 * @brief Converts a point of an Barcode's location into this picker's coordinate system.
 		 *
@@ -651,7 +651,7 @@ public class Scandit {
      * @brief Settings to configure the decoding process
      */
 	public class ScanSettings {
-    	
+
 		/**
 		 * The possible recognition modes.
 		 *
@@ -688,7 +688,7 @@ public class Scandit {
 			 */
 			LONG
 		}
-	
+
     	/**
     	 * Camera facing direction.
     	 */
@@ -815,7 +815,7 @@ public class Scandit {
     	 * @param deviceName A device name.
     	 */
     	public String deviceName;
-    	
+
     	/**
     	 * Hash containing the symbology settings for each available symbology.
     	 */
@@ -850,7 +850,7 @@ public class Scandit {
     	 * @since 4.11.0
     	 */
     	public void setSymbologyEnabled(int symbology, boolean enabled);
-    
+
     	/**
     	 * The picker first gives preference to cameras of the specified direction. When
     	 * the device has no such camera, cameras of the opposite face are tried as
@@ -886,9 +886,9 @@ public class Scandit {
     	 * The percentage of the max zoom (between 0 and 1).
     	 */
     	public number relativeZoom;
-    
+
     	/**
-    	 * Maximum number of codes to be decoded every frame. 
+    	 * Maximum number of codes to be decoded every frame.
     	 * The value is set to 1 if a negative value is supplied.
     	 */
 		public int maxNumberOfCodesPerFrame;
@@ -910,9 +910,9 @@ public class Scandit {
         /**
          * @brief Whether code rejection is enabled
          *
-         * Property indicating whether code rejection is enabled. This feature 
-         * allows you to implement custom integrity checks for recognized barcodes by 
-         * rejecting codes that don't satisfy additional criteria. By default, code 
+         * Property indicating whether code rejection is enabled. This feature
+         * allows you to implement custom integrity checks for recognized barcodes by
+         * rejecting codes that don't satisfy additional criteria. By default, code
          * rejection is disabled.
          *
          * @see {@link ScanSession.rejectCode(Barcode)}
@@ -997,6 +997,16 @@ public class Scandit {
          * The recognized text.
          */
         public String text;
+
+        /**
+         * Whether this code is rejected or not.
+         *
+         * If beeping/vibration is enabled, the device will beep and vibrate whenever text has been
+         * recognized. Set this property to true to suppress beeping/vibration. Use this functionality
+         * if you want to perform additional checks on the recognized text that can not be expressed
+         * through a regular expression.
+         */
+        public boolean rejected;
     }
 
 
@@ -1053,10 +1063,10 @@ public class Scandit {
 		 * @brief The GUI style drawn to display the indicator where the code should be scanned and the
 		 *   visualization of recognized codes.
 		 *
-		 * @param guiStyle Must be one of 
-         * {@link ScanOverlay.GuiStyle.DEFAULT Scandit.ScanOverlay.GuiStyle.DEFAULT}, 
+		 * @param guiStyle Must be one of
+         * {@link ScanOverlay.GuiStyle.DEFAULT Scandit.ScanOverlay.GuiStyle.DEFAULT},
          * {@link ScanOverlay.GuiStyle.LASER Scandit.ScanOverlay.GuiStyle.LASER} or
-         * {@link ScanOverlay.GuiStyle.NONE Scandit.ScanOverlay.GuiStyle.NONE}. By default this is 
+         * {@link ScanOverlay.GuiStyle.NONE Scandit.ScanOverlay.GuiStyle.NONE}. By default this is
          * Scandit.ScanOverlay.GuiStyle.DEFAULT.
 		 *
 		 * @since 4.11.0
@@ -1125,13 +1135,13 @@ public class Scandit {
 		 * @param height Height in points.
 		 */
 		public void setTorchButtonMarginsAndSize(int leftMargin, int topMargin, int width, int height);
-		
+
 		/**
 		 * @brief Sets the accessibility label and hint for the torch button while the torch is off.
 		 *
 		 * The accessibility label and hint give vision-impaired users voice over guidance for the torch
 		 * button while the torch is turned on. The default label is "Torch Switch (Currently Off)", the
-		 * default hint "Double-tap to switch the torch on". The hint is only set on iOS devices as Android 
+		 * default hint "Double-tap to switch the torch on". The hint is only set on iOS devices as Android
 		 * does not support it.
 		 *
 		 * @since 4.11.0
@@ -1146,7 +1156,7 @@ public class Scandit {
 		 *
 		 * The accessibility label and hint give vision-impaired users voice over guidance for the torch
 		 * button while the torch is turned on. The default label is "Torch Switch (Currently On)", the
-		 * default hint "Double-tap to switch the torch off". The hint is only set on iOS devices as Android 
+		 * default hint "Double-tap to switch the torch off". The hint is only set on iOS devices as Android
 		 * does not support it.
 		 *
 		 * @since 4.11.0
@@ -1170,9 +1180,9 @@ public class Scandit {
 		 *
 		 * @since 4.11.0
 		 *
-		 * @param visibility The visibility of the camera switch button 
+		 * @param visibility The visibility of the camera switch button
          *                   ({@link ScanOverlay.CameraSwitchVisibility.NEVER Scandit.ScanOverlay.CameraSwitchVisibility.NEVER},
-		 *                   {@link ScanOverlay.CameraSwitchVisibility.ON_TABLET Scandit.ScanOverlay.CameraSwitchVisibility.ON_TABLET}, 
+		 *                   {@link ScanOverlay.CameraSwitchVisibility.ON_TABLET Scandit.ScanOverlay.CameraSwitchVisibility.ON_TABLET},
          *                   {@link ScanOverlay.CameraSwitchVisibility.ALWAYS Scandit.ScanOverlay.CameraSwitchVisibility.ALWAYS})
 		 */
 		public void setCameraSwitchVisibility(CameraSwitchVisibility visibility);
@@ -1197,7 +1207,7 @@ public class Scandit {
 		 * camera is active.
 		 *
 		 * The accessibility label and hint give vision-impaired users voice over guidance for the camera
-		 * switch button while the back-facing camera is active. The default label is "Camera Switch 
+		 * switch button while the back-facing camera is active. The default label is "Camera Switch
 		 * (Currently back-facing)", the default hint "Double-tap to switch to the front-facing camera".
 		 * The hint is only set on iOS devices as Android does not support it.
 		 *
@@ -1213,7 +1223,7 @@ public class Scandit {
 		 * camera is active.
 		 *
 		 * The accessibility label and hint give vision-impaired users voice over guidance for the camera
-		 * switch button while the front-facing camera is active. The default label is "Camera Switch 
+		 * switch button while the front-facing camera is active. The default label is "Camera Switch
 		 * (Currently front-facing)", the default hint "Double-tap to switch to the back-facing camera".
 		 * The hint is only set on iOS devices as Android does not support it.
 		 *
@@ -1284,13 +1294,13 @@ public class Scandit {
 		 *  Customize the search bar.
 		 */
 		///@{
-		
+
 		/**
 		 * Shows (or hides) a search bar at the top of the scan screen.
  		 *
-		 * The search bar allows the user to manually enter the data of a barcode. When the 
-		 * user finished entering data, the manual callback provided to the 
-		 * {@link BarcodePicker.show BarcodePicker.show} method is invoked with the entered 
+		 * The search bar allows the user to manually enter the data of a barcode. When the
+		 * user finished entering data, the manual callback provided to the
+		 * {@link BarcodePicker.show BarcodePicker.show} method is invoked with the entered
 		 * data as a string.
 		 *
 		 * @since 4.11.0
@@ -1322,13 +1332,13 @@ public class Scandit {
 		 */
 		public void setSearchBarPlaceholderText(String text);
 		///@}
-        
-        
+
+
         /** @name Tool Bar Configuration
          *  Customize the tool bar (iOS only).
          */
         ///@{
-        
+
         /**
          * Sets the button caption of the cancel button on the tool bar.
          *
@@ -1340,8 +1350,8 @@ public class Scandit {
          */
         public void setToolBarButtonCaption(String caption);
         ///@}
-        
-        
+
+
 		/** @name Non-Official Methods
 		 */
 		///@{
@@ -1360,13 +1370,13 @@ public class Scandit {
 		public void setProperty(String key, Object value);
 		///@}
     }
-    
-    
+
+
     /**
      * @brief Holds settings specific to a particular symbology (1d, 2d)
      */
     public class SymbologySettings {
-    
+
     	/**
     	 * Checksums for the symbology.
     	 */
@@ -1400,7 +1410,7 @@ public class Scandit {
 			 */
     		MOD_1110,
 		}
-		
+
 		/**
 		 * Extensions for the symbology.
 		 */
@@ -1412,15 +1422,15 @@ public class Scandit {
 			/**
 			 * Full-ASCII Code39 extension.
 			 */
-			FULL_ASCII, 
+			FULL_ASCII,
 			/**
-			 * Remove leading zero of UPCA codes. When enabled, the leading zero of UPCA codes is 
-			 * removed. When false (the default), the leading zero is returned as part of the 
+			 * Remove leading zero of UPCA codes. When enabled, the leading zero of UPCA codes is
+			 * removed. When false (the default), the leading zero is returned as part of the
 			 * barcode data string.
 			 */
 			REMOVE_LEADING_ZERO
 		}
-		
+
 
     	/**
     	 * Enables/disables decoding of dark codes on bright background only. If color-
@@ -1444,7 +1454,7 @@ public class Scandit {
     	 * @since 4.11.0
     	 */
     	public boolean colorInvertedEnabled;
-    
+
     	/**
     	 * An array of all active custom extensions for the symbology.
     	 *
@@ -1482,8 +1492,8 @@ public class Scandit {
     	 */
     	public int[] activeSymbolCounts;
     }
-    
-    
+
+
 	/**
 	 * The scan session holds all barcodes that were decoded in the current
 	 * session. These codes are available as {@link getAllRecognizedCodes()}.
@@ -1525,7 +1535,7 @@ public class Scandit {
 		public Barcode[] newlyRecognizedCodes;
 
 		/**
-		 * List of barcodes that have been localized in the last frame. This list does not include 
+		 * List of barcodes that have been localized in the last frame. This list does not include
 		 * barcodes that have been successfully recognized.
 		 *
 		 * @since 4.11.0
@@ -1548,7 +1558,7 @@ public class Scandit {
 		 * @since 4.11.0
 		 */
 		public Barcode[] allRecognizedCodes;
-		
+
 		/**
 		 * @brief Immediately Pauses barcode recognition, but keeps camera preview open.
 		 *

@@ -299,6 +299,7 @@ public class FullScreenPickerActivity
         int nextState = ResultRelay.relayResult(bundle);
 
         mPickerStateMachine.setState(nextState);
+        Marshal.rejectRecognizedTexts(recognizedText, mRejectedCodeIds);
         if (nextState == PickerStateMachine.STOPPED) {
             return TextRecognitionListener.PICKER_STATE_STOPPED;
         } else if (nextState == PickerStateMachine.PAUSED) {

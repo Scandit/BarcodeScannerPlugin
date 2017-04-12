@@ -14,6 +14,7 @@ package com.mirasense.scanditsdk.plugin;
 import android.os.Bundle;
 
 import com.scandit.barcodepicker.ScanSession;
+import com.scandit.barcodepicker.ocr.RecognizedText;
 import com.scandit.recognition.Barcode;
 
 import org.apache.cordova.PluginResult;
@@ -80,6 +81,12 @@ public class Marshal {
                     session.rejectCode(code);
                 }
             }
+        }
+    }
+
+    public static void rejectRecognizedTexts(RecognizedText recognizedText, ArrayList<Long> rejectedCodeIds) {
+        if (rejectedCodeIds != null && !rejectedCodeIds.isEmpty()) {
+            recognizedText.setRejected(true);
         }
     }
 

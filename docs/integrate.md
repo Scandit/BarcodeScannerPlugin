@@ -16,7 +16,7 @@ Choose a plan (e.g., free “Enterprise” or "Community" plan) at http://www.sc
 If you do not have a Phonegap project yet, you should create a new one. You can either use the cordova or phonegap command-line interfaces. In this guide, we use the phonegap command. You can just exchange it with cordova if you prefer to use it.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
-    phonegap create helloworld
+    phonegap create helloworld --id "com.scandit.helloworld"
     cd helloworld
     phonegap platform add ios
     phonegap platform add android

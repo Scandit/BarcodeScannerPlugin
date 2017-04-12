@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 class FullscreenPickerController extends PickerControllerBase implements ResultRelay.Callback {
+
     FullscreenPickerController(CordovaPlugin plugin, CallbackContext callbacks) {
         super(plugin, callbacks);
     }
@@ -48,6 +49,7 @@ class FullscreenPickerController extends PickerControllerBase implements ResultR
 
     @Override
     public void setState(int state) {
+        super.setState(state);
         FullScreenPickerActivity.setState(state);
     }
 
