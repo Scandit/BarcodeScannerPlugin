@@ -16,8 +16,6 @@
 
 @interface SBSPickerStateMachine ()
 
-
-
 @end
 
 @implementation SBSPickerStateMachine
@@ -61,8 +59,7 @@
     if (self.state == SBSPickerStatePaused) {
         [self.picker resumeScanning];
         self.state = SBSPickerStateActive;
-    }
-    if (self.state == SBSPickerStateStopped) {
+    } else if (self.state == SBSPickerStateStopped) {
         [self.picker startScanningInPausedState:NO completionHandler:^{
             self.state = SBSPickerStateActive;
         }];
@@ -74,8 +71,7 @@
         [self.picker startScanningInPausedState:YES completionHandler:^{
             self.state = SBSPickerStatePaused;
         }];
-    }
-    if (self.state == SBSPickerStateActive) {
+    } else if (self.state == SBSPickerStateActive) {
         [self.picker pauseScanning];
         self.state = SBSPickerStatePaused;
     }
@@ -90,18 +86,15 @@
 }
 
 - (void)startScanningInPausedState:(BOOL)paused; {
-    if (paused) {
-        _desiredState = SBSPickerStatePaused;
-        [self.picker startScanningInPausedState:YES completionHandler:^{
-            self.state = SBSPickerStatePaused;
-        }];
-    } else {
-        _desiredState = SBSPickerStateActive;
-        [self.picker startScanningInPausedState:NO completionHandler:^{
-            self.state = SBSPickerStateActive;
-        }];
-    }
-
+    /*
+     We don't use transitionToActiveState, because we wants to make sure to call startScanning instead of resumeScanning.
+     In contrast to resumeScanning, startScanning clears the current barcode scanner session.
+     */
+    SBSPickerState state = paused ? SBSPickerStatePaused : SBSPickerStateActive;
+    _desiredState = state;
+    [self.picker startScanningInPausedState:paused completionHandler:^{
+        self.state = state;
+    }];
 }
 
 @end
