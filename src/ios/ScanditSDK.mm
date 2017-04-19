@@ -34,7 +34,7 @@
 @property (nonatomic, assign) BOOL continuousMode;
 @property (nonatomic, assign) BOOL modallyPresented;
 @property (nonatomic, strong) SBSPickerStateMachine *pickerStateMachine;
-@property (nonatomic, strong) dispatch_queue_t queue;
+@property (nonatomic, readonly) dispatch_queue_t queue;
 @property (nonatomic, assign) BOOL legacyMode;
 @property (nonatomic, strong) NSArray *rejectedCodeIds;
 
@@ -51,12 +51,14 @@
 @synthesize hasPendingOperation;
 
 - (dispatch_queue_t)queue {
-    if (!_queue) {
-        self.queue = dispatch_queue_create("scandit_barcode_scanner_plugin", NULL);
+    static dispatch_queue_t queue;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        queue = dispatch_queue_create("scandit_barcode_scanner_plugin", NULL);
         dispatch_queue_t high = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, NULL);
-        dispatch_set_target_queue(_queue, high);
-    }
-    return _queue;
+        dispatch_set_target_queue(queue, high);
+    });
+    return queue;
 }
 
 - (ScanditSDKRotatingBarcodePicker*)picker {
