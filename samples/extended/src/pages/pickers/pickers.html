@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Pickers</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content (click)="stopScanning()">
+  <ion-list>
+    <ion-item (click)="startFullscreenScanner($event)">
+      Fullscreen Picker
+    </ion-item>
+
+    <ion-item (click)="startCroppedScanner($event)">
+      Cropped Picker
+    </ion-item>
+
+    <ion-item (click)="startLRCroppedScanner($event)">
+      L/R Cropped Picker
+    </ion-item>
+
+    <ion-item (click)="startTBCroppedScanner($event)">
+      T/B Cropped Picker
+    </ion-item>
+  </ion-list>
+
+  <p text-center no-margin *ngIf="scannedCodes && scannedCodes.length > 0">Scanned Code:</p>
+  <p text-center no-margin *ngFor="let scannedCode of scannedCodes">({{scannedCode.symbology.toUpperCase()}}) {{scannedCode.data}}</p>
+</ion-content>

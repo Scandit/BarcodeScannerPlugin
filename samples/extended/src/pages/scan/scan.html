@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Scan</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding-bottom padding-left padding-right>
+  <div id="scannerPlaceholder" [style.height]="scannerPlaceholderHeight"></div>
+
+  <div>
+    <p text-center no-margin *ngIf="!scannedCodes">Scan a Code</p>
+    <p text-center no-margin *ngIf="scannedCodes && scannedCodes.length > 0">Scanned Code:</p>
+    <p text-center no-margin *ngFor="let scannedCode of scannedCodes">({{scannedCode.symbology.toUpperCase()}}) {{scannedCode.data}}</p>
+  </div>
+  <button ion-button block [disabled]="isScanning" (click)="continueScanning()">Continue Scanning</button>
+</ion-content>

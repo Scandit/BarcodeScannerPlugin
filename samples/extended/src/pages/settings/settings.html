@@ -1,0 +1,302 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="scanSettings && scanSettings.symbologies && uiSettings">
+    <ion-list-header>Symbologies</ion-list-header>
+    <ion-item>
+      <ion-label>EAN-13 & UPC-A</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['ean13'].enabled" (ionChange)="scanSettings.symbologies['upca'].enabled = scanSettings.symbologies['ean13'].enabled"
+        item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>EAN-8</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['ean8'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>UPC-E</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['upce'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>2-Digit Add-On</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['two-digit-add-on'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>5-Digit Add-On</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['five-digit-add-on'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Code 11</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['code11'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Code 25</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['code25'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Code 39</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['code39'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Code 93</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['code93'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Code 128</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['code128'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Interleaved-Two-Five (ITF)</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['itf'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>MSI Plessey</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['msi-plessey'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item class="item-segment" *ngIf="scanSettings.symbologies['msi-plessey'].enabled">
+      <ion-label>MSI Plessey Checksum</ion-label>
+      <ion-segment margin-bottom item-content color="primary" [(ngModel)]="scanSettings.symbologies['msi-plessey'].checksums[0]">
+        <ion-segment-button value="">None</ion-segment-button>
+        <ion-segment-button value="mod10">Mod10</ion-segment-button>
+        <ion-segment-button value="mod11">Mod11</ion-segment-button>
+        <ion-segment-button value="mod1010">Mod1010</ion-segment-button>
+        <ion-segment-button value="mod1110">Mod1110</ion-segment-button>
+      </ion-segment>
+    </ion-item>
+    <ion-item>
+      <ion-label>GS1 DataBar</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['databar'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>GS1 DataBar Limited</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['databar-limited'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>GS1 DataBar Expanded</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['databar-expanded'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Codabar</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['codabar'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>QR Code</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['qr'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Color-Inverted QR Code</ion-label>
+      <ion-toggle [disabled]="!scanSettings.symbologies['qr'].enabled" [(ngModel)]="scanSettings.symbologies['qr'].colorInvertedEnabled"
+        item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Data Matrix</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['data-matrix'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Color Inverted Data Matrix</ion-label>
+      <ion-toggle [disabled]="!scanSettings.symbologies['data-matrix'].enabled" [(ngModel)]="scanSettings.symbologies['data-matrix'].colorInvertedEnabled"
+        item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>PDF417</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['pdf417'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>MicroPDF417</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['micropdf417'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Aztec</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['aztec'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>MaxiCode</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['maxicode'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>RM4SCC</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['rm4scc'].enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>KIX</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['kix'].enabled" item-right></ion-toggle>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="scanSettings && scanSettings.symbologies && uiSettings">
+    <ion-list-header>Scanning Area</ion-list-header>
+    <ion-item>
+      <ion-label>Restrict Scanning Area</ion-label>
+      <ion-toggle item-right [(ngModel)]="scanningArea.restricted"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        Hot Spot Width
+        <ion-badge [color]="scanningArea.restricted ? 'primary' : 'primaryDimmed'">{{scanningArea.width.toFixed(2)}}</ion-badge>
+      </ion-label>
+      <ion-range item-right [disabled]="!scanningArea.restricted" [ngModel]="scanningArea.width * 100" (ngModelChange)="scanningArea.width = $event / 100" min="10" max="100">
+        <ion-label range-left>0.1</ion-label>
+        <ion-label range-right>1</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-label>Hot Spot Height
+        <ion-badge [color]="scanningArea.restricted ? 'primary' : 'primaryDimmed'">{{scanningArea.height.toFixed(2)}}</ion-badge>
+      </ion-label>
+      <ion-range item-right [disabled]="!scanningArea.restricted" [ngModel]="scanningArea.height * 100" (ngModelChange)="scanningArea.height = $event / 100" min="5" max="95">
+        <ion-label range-left>0.05</ion-label>
+        <ion-label range-right>0.95</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-label>Hot Spot Y
+        <ion-badge [color]="scanningArea.restricted ? 'primary' : 'primaryDimmed'">{{scanningArea.y.toFixed(2)}}</ion-badge>
+      </ion-label>
+      <ion-range item-right [disabled]="!scanningArea.restricted" [ngModel]="scanningArea.y * 100" (ngModelChange)="scanningArea.y = $event / 100" min="10" max="90">
+        <ion-label range-left>0.1</ion-label>
+        <ion-label range-right>0.9</ion-label>
+      </ion-range>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="scanSettings && scanSettings.symbologies && uiSettings">
+    <ion-list-header>Viewfinder</ion-list-header>
+    <ion-item class="item-segment">
+      <ion-label>GUI Style</ion-label>
+      <ion-segment item-content color="primary" [(ngModel)]="viewfinderStyle">
+        <ion-segment-button value="default">
+          Frame
+        </ion-segment-button>
+        <ion-segment-button value="laser">
+          Laser
+        </ion-segment-button>
+        <ion-segment-button value="none">
+          Hidden
+        </ion-segment-button>
+      </ion-segment>
+    </ion-item>
+    <ion-item>
+      <ion-label>Width (Portrait)
+        <ion-badge [color]="viewfinderStyle === 'none' ? 'primaryDimmed' : 'primary'">{{uiSettings.viewfinder.portrait.width.toFixed(2)}}</ion-badge>
+      </ion-label>
+      <ion-range item-right [disabled]="viewfinderStyle === 'none'" [ngModel]="uiSettings.viewfinder.portrait.width * 100" (ngModelChange)="uiSettings.viewfinder.portrait.width = $event / 100" min="10" max="95">
+        <ion-label range-left>0.1</ion-label>
+        <ion-label range-right>0.95</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-label>Height (Portrait)
+        <ion-badge [color]="viewfinderStyle !== 'default' ? 'primaryDimmed' : 'primary'">{{uiSettings.viewfinder.portrait.height.toFixed(2)}}</ion-badge>
+      </ion-label>
+      <ion-range item-right [disabled]="viewfinderStyle !== 'default'" [ngModel]="uiSettings.viewfinder.portrait.height * 100"
+        (ngModelChange)="uiSettings.viewfinder.portrait.height = $event / 100" min="5" max="80">
+        <ion-label range-left>0.05</ion-label>
+        <ion-label range-right>0.8</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-label>Width (Landscape)
+        <ion-badge [color]="viewfinderStyle === 'none' ? 'primaryDimmed' : 'primary'">{{uiSettings.viewfinder.landscape.width.toFixed(2)}}</ion-badge>
+      </ion-label>
+      <ion-range item-right [disabled]="viewfinderStyle === 'none'" [ngModel]="uiSettings.viewfinder.landscape.width * 100" (ngModelChange)="uiSettings.viewfinder.landscape.width = $event / 100" min="10" max="95">
+        <ion-label range-left>0.1</ion-label>
+        <ion-label range-right>0.95</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-label>Height (Landscape)
+        <ion-badge [color]="viewfinderStyle !== 'default' ? 'primaryDimmed' : 'primary'">{{uiSettings.viewfinder.landscape.height.toFixed(2)}}</ion-badge>
+      </ion-label>
+      <ion-range item-right [disabled]="viewfinderStyle !== 'default'" [ngModel]="uiSettings.viewfinder.landscape.height * 100"
+        (ngModelChange)="uiSettings.viewfinder.landscape.height = $event / 100" min="5" max="80">
+        <ion-label range-left>0.05</ion-label>
+        <ion-label range-right>0.8</ion-label>
+      </ion-range>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="scanSettings && scanSettings.symbologies && uiSettings">
+    <ion-list-header>Searchbar</ion-list-header>
+    <ion-item>
+      <ion-label>Searchbar</ion-label>
+      <ion-toggle [(ngModel)]="uiSettings.searchBar" item-right></ion-toggle>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="scanSettings && scanSettings.symbologies && uiSettings">
+    <ion-list-header>Feedback</ion-list-header>
+    <ion-item>
+      <ion-label>Beep</ion-label>
+      <ion-toggle [(ngModel)]="uiSettings.feedback.beep" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Vibrate</ion-label>
+      <ion-toggle [(ngModel)]="uiSettings.feedback.vibrate" item-right></ion-toggle>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="scanSettings && scanSettings.symbologies && uiSettings">
+    <ion-list-header>Torch Button</ion-list-header>
+    <ion-item>
+      <ion-label>Visible</ion-label>
+      <ion-toggle [(ngModel)]="uiSettings.torch.enabled" item-right></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Torch Button Left Offset
+        <ion-badge>{{uiSettings.torch.offset.left}}</ion-badge>
+      </ion-label>
+      <ion-range item-right [(ngModel)]="uiSettings.torch.offset.left" min="0" max="50">
+        <ion-label range-left>0</ion-label>
+        <ion-label range-right>50</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-label>Torch Button Top Offset
+        <ion-badge>{{uiSettings.torch.offset.top}}</ion-badge>
+      </ion-label>
+      <ion-range item-right [(ngModel)]="uiSettings.torch.offset.top" min="0" max="50">
+        <ion-label range-left>0</ion-label>
+        <ion-label range-right>50</ion-label>
+      </ion-range>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="scanSettings && scanSettings.symbologies && uiSettings">
+    <ion-list-header>Camera Switch Button</ion-list-header>
+    <ion-item class="item-segment">
+      <ion-label>Visibility</ion-label>
+      <ion-segment item-content color="primary" [(ngModel)]="cameraSwitchVisibility">
+        <ion-segment-button value="always">
+          Always
+        </ion-segment-button>
+        <ion-segment-button value="onTablet">
+          On Tablet
+        </ion-segment-button>
+        <ion-segment-button value="never">
+          Never
+        </ion-segment-button>
+      </ion-segment>
+    </ion-item>
+    <ion-item>
+      <ion-label>Camera Button Right Offset
+        <ion-badge [color]="cameraSwitchVisibility !== 'never' ? 'primary' : 'primaryDimmed'">{{uiSettings.cameraSwitch.offset.right}}</ion-badge>
+      </ion-label>
+      <ion-range item-right [(ngModel)]="uiSettings.cameraSwitch.offset.right" [disabled]="cameraSwitchVisibility === 'never'" min="0" max="50">
+        <ion-label range-left>0</ion-label>
+        <ion-label range-right>50</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-label>Camera Button Top Offset
+        <ion-badge [color]="cameraSwitchVisibility !== 'never' ? 'primary' : 'primaryDimmed'">{{uiSettings.cameraSwitch.offset.top}}</ion-badge>
+      </ion-label>
+      <ion-range item-right [(ngModel)]="uiSettings.cameraSwitch.offset.top" [disabled]="cameraSwitchVisibility === 'never'" min="0" max="50">
+        <ion-label range-left>0</ion-label>
+        <ion-label range-right>50</ion-label>
+      </ion-range>
+    </ion-item>
+  </ion-list>
+</ion-content>

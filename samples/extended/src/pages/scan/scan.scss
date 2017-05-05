@@ -1,0 +1,13 @@
+page-scan {
+  ion-content > .scroll-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #scannerPlaceholder {
+    background-color: transparent;
+    width: 100vw;
+  }
+}
