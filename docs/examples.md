@@ -5,19 +5,29 @@ For barcode scanner usage examples, you can either use one of the sample apps in
 
 ## Build the sample apps
 
-In order to build the simple or extended sample apps you must import one of them upon creation of your project as follows:
+In order to build the simple or extended sample apps you must import one of them upon creation of your project as follows.
+
+Note that you will still need to add the platform and plugin as described in {@link cordova-integrate here}. You will also need to replace the app key in the samples with your application key.
+
+### Simple sample
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
-    phonegap create helloworld --id "com.scandit.helloworld" --template <path-to-repository>/samples/simple/www/
+> phonegap create helloworld --id "com.scandit.helloworld" --template <path-to-repository>/samples/simple/www/
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-or
+### Extended sample
+
+For the extended sample, the application key is in `<path-to-repository>/samples/extended/src/providers/scanner.ts`, in the `setAppKey` method. After setting the application key, running `npm run build` is necessary for the build files in the `www` folder to be updated — the recommendation is to add the app key before running the commands below.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
-    phonegap create helloworld --id "com.scandit.helloworld" --template <path-to-repository>/samples/extended/www/
+> cd <path-to-repository>/samples/extended
+> npm install
+> npm run build
+> cd <path-to-folder-to-contain-cordova-project>
+> phonegap create helloworld --id "com.scandit.helloworld" --link-to <path-to-repository>/samples/extended/www
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Note that you will still need to add the platform and plugin as described in {@link cordova-integrate here}. You will also need to replace the app key in the samples with your application key. For the extended sample, the application key is in www/index.js.
+Note that the `--link-to` option will symlink to the specified www directory without creating a copy. For more information, see https://cordova.apache.org/docs/en/latest/reference/cordova-cli/#cordova-create-command.
 
 
 ## Simple Fullscreen
