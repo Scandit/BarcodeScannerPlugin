@@ -40,7 +40,7 @@ The scanning process is managed by the {@link Scandit.BarcodePicker BarcodePicke
 ~~~~~~~~~~~~~~~~{.java}
 
 // Set your license key.
-Scandit.License.setAppKey("--- ENTER YOUR SCANDIT LICENSE KEY HERE ---");
+Scandit.License.setAppKey("-- ENTER YOUR SCANDIT LICENSE KEY HERE --");
 
 var settings = new Scandit.ScanSettings();
 settings.setSymbologyEnabled(Scandit.Barcode.Symbology.EAN13, true);
