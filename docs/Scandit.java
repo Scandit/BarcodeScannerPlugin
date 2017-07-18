@@ -514,6 +514,10 @@ public class Scandit {
          * {@link startScanning() startScanning()} if you want to start the video feed and scan
          * for barcodes.
          *
+         * \code
+         * picker.show({ didScan : function(session) {}, ...  })
+         * \endcode
+         *
          * @param callbacks An object containing one or more callbacks that are invoked when a
          *    certain events happens.
          */
