@@ -11,6 +11,9 @@
     <js-module src="src/barcodepicker.js" name="BarcodePicker">
         <clobbers target="Scandit.BarcodePicker" />
     </js-module>
+    <js-module src="src/callbacks.js" name="Callbacks">
+        <clobbers target="Scandit.Callbacks" />
+    </js-module>
     <js-module src="src/license.js" name="License">
         <clobbers target="Scandit.License" />
     </js-module>
@@ -23,7 +26,10 @@
     <js-module src="src/quadrilateral.js" name="Quadrilateral">
         <clobbers target="Scandit.Quadrilateral" />
     </js-module>
-    <js-module name="RecognizedText" src="src/recognizedtext.js">
+    <js-module src="src/textrecognitionsettings.js" name="TextRecognitionSettings">
+      <clobbers target="Scandit.TextRecognitionSettings"/>
+    </js-module>
+    <js-module src="src/recognizedtext.js" name="RecognizedText">
       <clobbers target="Scandit.RecognizedText"/>
     </js-module>
     <js-module src="src/rect.js" name="Rect">
@@ -44,7 +50,7 @@
     <js-module src="src/scancase.js" name="ScanCase">
         <clobbers target="Scandit.ScanCase" />
     </js-module>
-    <js-module name="Constraints" src="src/constraints.js">
+    <js-module src="src/constraints.js" name="Constraints">
         <clobbers target="Scandit.Constraints"/>
     </js-module>
     <platform name="ios">

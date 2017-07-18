@@ -386,6 +386,45 @@ public class Scandit {
 		public Quadrilateral location;
 	}
 
+    /**
+     * @brief A class that holds all the callbacks available in the BarcodePicker.
+     * <p>
+     * This class is passed when showing the {@link BarcodePicker}
+     */
+    public class Callbacks {
+        /*
+         * @brief Callback to be invoked whenever codes have been successfully scanned.
+         *
+         * The callback receives the scan session as the first and only argument which contains
+         * a list of recognized codes. Zero or more callbacks can be set.
+         */
+        public function didScan;
+        /*
+         * @brief Callback to be invoked when the user enters a text in the search bar.
+         *
+         * The entered text is passed as the first argument to the callback. If you do not
+         * use the search bar, you may pass null.
+         */
+        public function didManualSearch;
+        /*
+         * @brief Callback to be invoked upon failure, or when cancel is called on the
+         * picker. The callback is passed a reason for failure as the only argument.
+         */
+        public function didCancel;
+        /*
+         * @brief Callback to be invoked whenever text has been successfully recognized.
+         *
+         * The callback receives the {@link RecognizedText} as the first and only argument.
+         */
+        public function didRecognizeText;
+        /**
+         * @brief Callback that gets invoked whenever the picker changes state, e.g. when the
+         * picker changes from stopped to active, or from active to paused. The argument to the
+         * callback is the new state (see {@link BarcodePicker.State} for possible values).
+         */
+        public function didChangeState;
+    }
+
 	/**
 	 * @brief The main class for scanning barcodes with the Scandit Barcode Scanner.
 	 *<p>
@@ -475,16 +514,10 @@ public class Scandit {
          * {@link startScanning() startScanning()} if you want to start the video feed and scan
          * for barcodes.
          *
-         * @param callbacks A dictionary containing one or more callbacks that are invoked when a
-         *    certain events happens. Supported names for the callbacks are didScan, didChangeState,
-         *    didCancel and didManualSearch. The behavior of didScan, didCancel, didManualSearch
-         *    is as defined in the documentation for {@link show(function,function,function)}.
-         *    didChangeState is a callback that gets invoked whenever the picker changes state,
-         *    e.g. when the picker changes from stopped to active, or from active to paused. The
-         *    argument to the callback is the new state (see {@link BarcodePicker.State} for
-         *    possible values).
+         * @param callbacks An object containing one or more callbacks that are invoked when a
+         *    certain events happens.
          */
-        public void show(object callbacks);
+        public void show(Callbacks callbacks);
 
 
         /**
@@ -973,7 +1006,7 @@ public class Scandit {
          *
          * \since 5.3.0
          */
-        public Pattern regex;
+        public String regex;
 
         /**
          * White list of recognizable characters. If the white list is non-null, a recognition result
