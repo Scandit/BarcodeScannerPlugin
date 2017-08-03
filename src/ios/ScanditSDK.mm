@@ -322,11 +322,13 @@ SBSPickerStateDelegate, SBSTextRecognitionDelegate, SBSProcessFrameDelegate>
 }
 
 - (SBSScanSettings *)updateScanSettings:(SBSScanSettings *)scanSettings withSettings:(NSDictionary *)settings {
-    NSString *recognitionMode = settings[@"recognitionMode"];
-    if (recognitionMode != nil && [recognitionMode isKindOfClass:[NSString class]] && [recognitionMode isEqualToString:@"text"]) {
-        scanSettings.recognitionMode = SBSRecognitionModeText;
-    } else {
-        scanSettings.recognitionMode = SBSRecognitionModeCode;
+    if ([scanSettings respondsToSelector:@selector(setRecognitionMode:)]) {
+        NSString *recognitionMode = settings[@"recognitionMode"];
+        if (recognitionMode != nil && [recognitionMode isKindOfClass:[NSString class]] && [recognitionMode isEqualToString:@"text"]) {
+            scanSettings.recognitionMode = SBSRecognitionModeText;
+        } else {
+            scanSettings.recognitionMode = SBSRecognitionModeCode;
+        }
     }
 
     NSNumber *matrixScanEnabled = settings[@"matrixScanEnabled"];
