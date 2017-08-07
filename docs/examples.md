@@ -27,13 +27,13 @@ For the extended sample, the license key is in `<path-to-repository>/samples/ext
 > cordova create helloworld --id "com.scandit.helloworld" --link-to <path-to-repository>/samples/extended/www
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Note that the `--link-to` option will symlink to the specified www directory without creating a copy. For more information, see https://cordova.apache.org/docs/en/latest/reference/cordova-cli/#cordova-create-command.
+
 ### MatrixScan sample
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
 > cordova create helloworld --id "com.scandit.helloworld" --template <path-to-repository>/samples/matrixscan/www/
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Note that the `--link-to` option will symlink to the specified www directory without creating a copy. For more information, see https://cordova.apache.org/docs/en/latest/reference/cordova-cli/#cordova-create-command.
 
 ## Simple Fullscreen
 
