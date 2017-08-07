@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list radio-group [(ngModel)]="scanMode" no-margin-bottom>
+    <ion-list-header color="light">Mode</ion-list-header>
+    <ion-item>
+      <ion-label>IBAN</ion-label>
+      <ion-radio value="iban"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>GS1 AI</ion-label>
+      <ion-radio value="gs1"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Scan a price</ion-label>
+      <ion-radio value="price"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-list radio-group [(ngModel)]="scanPosition">
+    <ion-list-header color="light">Scan Position</ion-list-header>
+    <ion-item>
+      <ion-label>Top</ion-label>
+      <ion-radio value="top"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Center</ion-label>
+      <ion-radio value="center"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Bottom</ion-label>
+      <ion-radio value="bottom"></ion-radio>
+    </ion-item>
+  </ion-list>
+</ion-content>

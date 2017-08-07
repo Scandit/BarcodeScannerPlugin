@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Text Recognition</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openSettings()">
+        Settings
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div id="scannerPlaceholder" [style.height]="scannerPlaceholderHeight"></div>
+    <ion-card>
+      <ion-card-content>
+        {{scanResult}}
+      </ion-card-content>
+    </ion-card>
+</ion-content>
