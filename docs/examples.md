@@ -33,6 +33,8 @@ For the extended sample, the license key is in `<path-to-repository>/samples/ext
 > cordova create helloworld --id "com.scandit.helloworld" --template <path-to-repository>/samples/matrixscan/www/
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Note that the `--link-to` option will symlink to the specified www directory without creating a copy. For more information, see https://cordova.apache.org/docs/en/latest/reference/cordova-cli/#cordova-create-command.
+
 ## Simple Fullscreen
 
 This shows the simplest way of using the plugin. The scanner is opened full screen and is closed as soon as a barcode is scanned, returning the result to a function specified by you.
