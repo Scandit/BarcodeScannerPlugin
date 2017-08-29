@@ -237,10 +237,10 @@
             NSArray *vfSizeArray = (NSArray *)viewfinderSize;
             if ([vfSizeArray count] == 4 && [self array:vfSizeArray
                               onlyContainObjectsOfClass:[NSNumber class]]) {
-                [picker.overlayController setViewfinderHeight:[vfSizeArray[1] floatValue]
-                                                        width:[vfSizeArray[0] floatValue]
-                                              landscapeHeight:[vfSizeArray[3] floatValue]
-                                               landscapeWidth:[vfSizeArray[2] floatValue]];
+                [picker.overlayController setViewfinderWidth:[vfSizeArray[0] floatValue]
+                                                      height:[vfSizeArray[1] floatValue]
+                                              landscapeWidth:[vfSizeArray[2] floatValue]
+                                             landscapeHeight:[vfSizeArray[3] floatValue]];
             }
         } else {
             NSLog(@"SBS Plugin: failed to parse viewfinder size - wrong type");
