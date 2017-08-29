@@ -124,6 +124,10 @@
       <ion-label>KIX</ion-label>
       <ion-toggle [(ngModel)]="scanSettings.symbologies['kix'].enabled" item-right></ion-toggle>
     </ion-item>
+    <ion-item>
+      <ion-label>DotCode</ion-label>
+      <ion-toggle [(ngModel)]="scanSettings.symbologies['dotcode'].enabled" item-right></ion-toggle>
+    </ion-item>
   </ion-list>
 
   <ion-list *ngIf="scanSettings && scanSettings.symbologies && uiSettings">
