@@ -241,6 +241,10 @@ public class Scandit {
     		 * @brief Aztec 2D barcode symbology. Only available in the Professional and Enterprise Packages.
     		 */
 			AZTEC,
+			/**
+			 * @brief DotCode 2D barcode symbology. Only available in the Professional and Enterprise Packages.
+			 */
+			DOTCODE,
     		/**
     		 * @brief Maxicode 2D barcode symbology. Only available in the Professional and Enterprise Packages.
     		 */

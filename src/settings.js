@@ -60,6 +60,8 @@ function ScanSettings() {
     this.symbologies[Barcode.Symbology.CODABAR].activeSymbolCounts = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
     
     this.symbologies[Barcode.Symbology.AZTEC] = new SymbologySettings();
+
+    this.symbologies[Barcode.Symbology.DOTCODE] = new SymbologySettings();
     
     this.symbologies[Barcode.Symbology.MAXICODE] = new SymbologySettings();
     
