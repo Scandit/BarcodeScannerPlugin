@@ -160,7 +160,7 @@ public class Scandit {
 	 */
 	public class Barcode {
 	    /**
-	     * @brief An enumeration of all supported barcode symbologies
+	     * @brief An enumeration of all supported barcode symbologies. The availability of a symbology depends on your license and contract. For example, community licenses only include EAN8, EAN13, UPCA, UPCE and QR.
 	     */
 		public enum Symbology  {
     		/**
@@ -184,25 +184,25 @@ public class Scandit {
     		 */
 			UPCE,
     		/**
-    		 * @brief Code 11 barcode symbology. Only available in the Professional and Enterprise Packages.
+    		 * @brief Code 11 barcode symbology.
     		 */
 			CODE11,
     		/**
-    		 * @brief Code 128 1D barcode symbology, including GS1-Code128. Only available in the
-    		 *    Professional and Enterprise Packages.
+    		 * @brief Code 128 1D barcode symbology, including GS1-Code128.
+    		 *
     		 */
 			CODE128,
     		/**
-    		 * @brief Code39 barcode symbology. Only available in the Professional and Enterprise Packages.
+    		 * @brief Code39 barcode symbology.
     		 */
 			CODE39,
     		/**
-    		 * @brief Code 93 barcode symbology. Only available in the Professional and Enterprise Packages.
+    		 * @brief Code 93 barcode symbology.
     		 */
 			CODE93,
     		/**
-    		 * @brief Interleaved-Two-of-Five (ITF) 1D barcode symbology. Only available in the Professional and
-    		 * Enterprise Packages.
+    		 * @brief Interleaved-Two-of-Five (ITF) 1D barcode symbology.
+    		 *
     		 */
 			ITF,
     		/**
@@ -210,43 +210,43 @@ public class Scandit {
     		 */
 			QR,
     		/**
-    		 * @brief Datamatrix 2D barcode symbology. Only available in the Professional and Enterprise Packages.
+    		 * @brief Datamatrix 2D barcode symbology.
     		 */
 			DATA_MATRIX,
     		/**
-    		 * @brief PDF417 barcode symbology. Only available in the Professional and Enterprise Packages.
+    		 * @brief PDF417 barcode symbology.
     		 */
 			PDF417,
     		/**
-    		 * @brief MSI Plessey 1D barcode symbology. Only available in the Professional and Enterprise Packages.
+    		 * @brief MSI Plessey 1D barcode symbology.
     		 */
 			MSI_PLESSEY,
     		/**
-    		 * @brief Databar 1D barcode symbology. Only available in the Professional and Enterprise Packages.
+    		 * @brief Databar 1D barcode symbology.
     		 */
 			GS1_DATABAR,
     		/**
-    		 * @brief Databar Limited 1D barcode symbology. Only available in the Professional and Enterprise Packages.
+    		 * @brief Databar Limited 1D barcode symbology.
     		 */
 			GS1_DATABAR_LIMITED,
     		/**
-    		 * @brief Databar Expanded 1D barcode symbology. Only available in the Professional and Enterprise Packages.
+    		 * @brief Databar Expanded 1D barcode symbology.
     		 */
 			GS1_DATABAR_EXPANDED,
     		/**
-    		 * @brief Codabar 1D barcode symbology. Only available in the Professional and Enterprise Packages.
+    		 * @brief Codabar 1D barcode symbology.
     		 */
 			CODABAR,
     		/**
-    		 * @brief Aztec 2D barcode symbology. Only available in the Professional and Enterprise Packages.
+    		 * @brief Aztec 2D barcode symbology.
     		 */
 			AZTEC,
 			/**
-			 * @brief DotCode 2D barcode symbology. Only available in the Professional and Enterprise Packages.
+			 * @brief DotCode 2D barcode symbology.
 			 */
 			DOTCODE,
     		/**
-    		 * @brief Maxicode 2D barcode symbology. Only available in the Professional and Enterprise Packages.
+    		 * @brief Maxicode 2D barcode symbology.
     		 */
 			MAXICODE,
     		/**
@@ -256,7 +256,7 @@ public class Scandit {
     		 * as well: \ref SYMBOLOGY_EAN13, \ref SYMBOLOGY_UPCA, \ref SYMBOLOGY_UPCE, or
     		 * \ref SYMBOLOGY_EAN8 and the maximum number of codes per frame has to be set to at least 2.
     		 *
-    		 * Only available in the Professional and Enterprise Packages.
+    		 *
     		 */
 			FIVE_DIGIT_ADD_ON,
     		/**
@@ -266,7 +266,7 @@ public class Scandit {
     		 * as well: \ref SYMBOLOGY_EAN13, \ref SYMBOLOGY_UPCA, \ref SYMBOLOGY_UPCE, or
     		 * \ref SYMBOLOGY_EAN8 and the maximum number of codes per frame has to be set to at least 2.
     		 *
-    		 * Only available in the Professional and Enterprise Packages.
+    		 *
     		 */
 			TWO_DIGIT_ADD_ON
 		}
@@ -1311,7 +1311,7 @@ public class Scandit {
 		/**
 		 * Sets the color of the viewfinder before a bar code has been recognized
 		 *
-		 * Note: This feature is only available with the Scandit SDK Enterprise Packages.
+		 *
 		 *
 		 * By default this is: white (1.0, 1.0, 1.0)
 		 *
@@ -1324,7 +1324,7 @@ public class Scandit {
 		/**
 		 * Sets the color of the viewfinder once the bar code has been recognized.
 		 * <p>
-		 * Note: This feature is only available with the Scandit SDK Enterprise Packages.
+		 *
 		 *
 		 * By default this is: light blue (0.222, 0.753, 0.8)
 		 *
