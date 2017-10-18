@@ -186,23 +186,27 @@ public class Scandit {
              */
             UPCE,
             /**
-             * @brief Code 11 barcode symbology. 
+             * @brief Code 11 barcode symbology.
              */
             CODE11,
             /**
-             * @brief Code 128 1D barcode symbology, including GS1-Code128. 
+             * @brief Code 25 barcode symbology.
              */
-            CODE128,
+            CODE25,
             /**
-             * @brief Code39 barcode symbology. 
+             * @brief Code39 barcode symbology.
              */
             CODE39,
             /**
-             * @brief Code 93 barcode symbology. 
+             * @brief Code 93 barcode symbology.
              */
             CODE93,
             /**
-             * @brief Interleaved-Two-of-Five (ITF) 1D barcode symbology. 
+             * @brief Code 128 1D barcode symbology, including GS1-Code128.
+             */
+            CODE128,
+            /**
+             * @brief Interleaved-Two-of-Five (ITF) 1D barcode symbology.
              */
             ITF,
             /**
