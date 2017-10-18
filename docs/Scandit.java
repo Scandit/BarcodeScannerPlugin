@@ -159,9 +159,9 @@ public class Scandit {
      */
     public class Barcode {
         /**
-         * @brief An enumeration of all supported barcode symbologies. 
+         * @brief An enumeration of all supported barcode symbologies.
          *
-         * The availability of a symbology depends on your license and contract. For example, community 
+         * The availability of a symbology depends on your license and contract. For example, community
          * licenses only include EAN8, EAN13, UPCA, UPCE and QR.
          */
         public enum Symbology  {
@@ -186,23 +186,23 @@ public class Scandit {
              */
             UPCE,
             /**
-             * @brief Code 11 barcode symbology. 
+             * @brief Code 11 barcode symbology.
              */
             CODE11,
             /**
-             * @brief Code 128 1D barcode symbology, including GS1-Code128. 
+             * @brief Code 128 1D barcode symbology, including GS1-Code128.
              */
             CODE128,
             /**
-             * @brief Code39 barcode symbology. 
+             * @brief Code39 barcode symbology.
              */
             CODE39,
             /**
-             * @brief Code 93 barcode symbology. 
+             * @brief Code 93 barcode symbology.
              */
             CODE93,
             /**
-             * @brief Interleaved-Two-of-Five (ITF) 1D barcode symbology. 
+             * @brief Interleaved-Two-of-Five (ITF) 1D barcode symbology.
              */
             ITF,
             /**
@@ -210,43 +210,43 @@ public class Scandit {
              */
             QR,
             /**
-             * @brief Datamatrix 2D barcode symbology. 
+             * @brief Datamatrix 2D barcode symbology.
              */
             DATA_MATRIX,
             /**
-             * @brief PDF417 barcode symbology. 
+             * @brief PDF417 barcode symbology.
              */
             PDF417,
             /**
-             * @brief MSI Plessey 1D barcode symbology. 
+             * @brief MSI Plessey 1D barcode symbology.
              */
             MSI_PLESSEY,
             /**
-             * @brief Databar 1D barcode symbology. 
+             * @brief Databar 1D barcode symbology.
              */
             GS1_DATABAR,
             /**
-             * @brief Databar Limited 1D barcode symbology. 
+             * @brief Databar Limited 1D barcode symbology.
              */
             GS1_DATABAR_LIMITED,
             /**
-             * @brief Databar Expanded 1D barcode symbology. 
+             * @brief Databar Expanded 1D barcode symbology.
              */
             GS1_DATABAR_EXPANDED,
             /**
-             * @brief Codabar 1D barcode symbology. 
+             * @brief Codabar 1D barcode symbology.
              */
             CODABAR,
             /**
-             * @brief Aztec 2D barcode symbology. 
+             * @brief Aztec 2D barcode symbology.
              */
             AZTEC,
             /**
-             * @brief DotCode 2D barcode symbology. 
+             * @brief DotCode 2D barcode symbology.
              */
             DOTCODE,
             /**
-             * @brief Maxicode 2D barcode symbology. 
+             * @brief Maxicode 2D barcode symbology.
              */
             MAXICODE,
             /**
@@ -392,31 +392,38 @@ public class Scandit {
      * This class is passed when showing the {@link BarcodePicker}
      */
     public class Callbacks {
-        /*
+        /**
          * @brief Callback to be invoked whenever codes have been successfully scanned.
          *
          * The callback receives the scan session as the first and only argument which contains
          * a list of recognized codes. Zero or more callbacks can be set.
          */
         public function didScan;
-        /*
+        /**
          * @brief Callback to be invoked when the user enters a text in the search bar.
          *
          * The entered text is passed as the first argument to the callback. If you do not
          * use the search bar, you may pass null.
          */
         public function didManualSearch;
-        /*
+        /**
          * @brief Callback to be invoked upon failure, or when cancel is called on the
          * picker. The callback is passed a reason for failure as the only argument.
          */
         public function didCancel;
-        /*
+        /**
          * @brief Callback to be invoked whenever text has been successfully recognized.
          *
          * The callback receives the {@link RecognizedText} as the first and only argument.
          */
         public function didRecognizeText;
+        /**
+         * @brief Callback to be invoked whenever a new code is being tracked by Matrix Scan.
+         *
+         * The callback receives the matrix scan session as the first and only argument which
+         * contains a list fo newly tracked codes.
+         */
+        public function didRecognizeNewCodes;
         /**
          * @brief Callback that gets invoked whenever the picker changes state, e.g. when the
          * picker changes from stopped to active, or from active to paused. The argument to the
@@ -506,7 +513,7 @@ public class Scandit {
          *    argument.
          */
         public void show(function didScan, function didManualSearch=null, function didCancel=null,
-                         function didRecognizeText=null);
+                         function didRecognizeText=null, function didRecognizeNewCodes=null);
 
         /**
          * Visibly shows the picker to the user. This should be called after the picker has been
@@ -854,6 +861,24 @@ public class Scandit {
         public String deviceName;
 
         /**
+         * @brief Whether MatrixScan should be enabled.
+         *
+         * MatrixScan allows you to show the locations of all localized codes.
+         * In order to get MatrixScan, it is recommended to implement the
+         * {@link Callbacks#didRecognizeNewCodes didRecognizeNewCodes} callback and to use
+         * {@link MatrixScanSession#newlyTrackedCodes newlyTrackedCodes}.
+         * To use the default MatrixScan UI, it is necessary to set
+         * {@link ScanOverlay#setGuiStyle() setGuiStyle()} to
+         * {@link ScanOverlay.GuiStyle.MATRIX_SCAN Scandit.ScanOverlay.GuiStyle.MATRIX_SCAN}.
+         * Implementing a custom MatrixScan UI is not possible.
+         *
+         * @param enabled Whether MatrixScan should be enabled.
+         *
+         * @since 5.5.0
+         */
+        public Boolean matrixScanEnabled;
+
+        /**
          * Hash containing the symbology settings for each available symbology.
          */
         public HashMap<Barcode.Symbology, SymbologySettings> symbologies;
@@ -917,7 +942,7 @@ public class Scandit {
          *
          * The default hotspot is centered on the image (0.5,0.5)
          *
-         * When setting the hot spot to values outside the allowed range, the hot 
+         * When setting the hot spot to values outside the allowed range, the hot
          * spot value is ignored.
          */
         public Point scanningHotSpot;
@@ -1110,7 +1135,9 @@ public class Scandit {
          *
          * @param guiStyle Must be one of
          * {@link ScanOverlay.GuiStyle.DEFAULT Scandit.ScanOverlay.GuiStyle.DEFAULT},
-         * {@link ScanOverlay.GuiStyle.LASER Scandit.ScanOverlay.GuiStyle.LASER} or
+         * {@link ScanOverlay.GuiStyle.LASER Scandit.ScanOverlay.GuiStyle.LASER},
+         * {@link ScanOverlay.GuiStyle.MATRIX_SCAN Scandit.ScanOverlay.GuiStyle.MATRIX_SCAN},
+         * {@link ScanOverlay.GuiStyle.LOCATIONS_ONLY Scandit.ScanOverlay.GuiStyle.LOCATIONS_ONLY} or
          * {@link ScanOverlay.GuiStyle.NONE Scandit.ScanOverlay.GuiStyle.NONE}. By default this is
          * Scandit.ScanOverlay.GuiStyle.DEFAULT.
          *
@@ -1680,5 +1707,35 @@ public class Scandit {
          * @since 4.15.0
          */
         public void rejectCode(Barcode code);
+    }
+
+    /**
+     * The matrix scan session holds all tracked codes that are newly available in the current
+     * session. These codes are available as {@link newlyTrackedCodes()}. It also allows the
+     * rejection of codes, showing a different color when visualizing them.
+     *
+     * <h2>Session Lifetime</h2>
+     *
+     * The session is cleared when either {@link BarcodePicker.startScanning} or ,
+     * {@link BarcodePicker.stopScanning} is called.
+     *
+     * @since 5.5.0
+     */
+    public class MatrixScanSession {
+        /**
+         * List of barcodes that have been successfully recognized in the last frame.
+         *
+         * @since 5.5.0
+         */
+        public Barcode[] newlyTrackedCodes;
+
+        /**
+         * Rejects the specified barcode, showing a different
+         *
+         * @param code The barcode to be rejected (should be inside MatrixScanSession#ewlyTrackedCodes)
+         *
+         * @since 5.5.0
+         */
+        public void rejectTrackedCode(Barcode code);
     }
 }

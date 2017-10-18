@@ -15,7 +15,9 @@ ScanOverlay.GuiStyle = {
 	LASER: 1,
 	NONE: 2,
 	MATRIXSCAN: 3,
-	LOCATIONSONLY: 4
+    MATRIX_SCAN: 3,
+	LOCATIONSONLY: 4,
+    LOCATIONS_ONLY: 4
 }
 
 ScanOverlay.prototype.setGuiStyle = function(guiStyle) {
