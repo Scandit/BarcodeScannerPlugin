@@ -190,9 +190,9 @@ public class Scandit {
              */
             CODE11,
             /**
-             * @brief Code 128 1D barcode symbology, including GS1-Code128.
+             * @brief Code 25 barcode symbology.
              */
-            CODE128,
+            CODE25,
             /**
              * @brief Code39 barcode symbology.
              */
@@ -201,6 +201,10 @@ public class Scandit {
              * @brief Code 93 barcode symbology.
              */
             CODE93,
+            /**
+             * @brief Code 128 1D barcode symbology, including GS1-Code128.
+             */
+            CODE128,
             /**
              * @brief Interleaved-Two-of-Five (ITF) 1D barcode symbology.
              */
