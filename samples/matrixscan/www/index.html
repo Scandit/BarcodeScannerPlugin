@@ -5,20 +5,93 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1,
-            minimum-scale=1, width=device-width, height=device-height" />
+                minimum-scale=1, width=device-width, height=device-height" />
         <title>Scandit Barcode Scanner</title>
+
+        <style>
+            body {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                height: 100vh;
+                width: 100vw;
+                font-family: Helvetica, Arial;
+                background: black;
+            }
+
+            #container {
+                display: flex;
+                flex-direction: column;
+                justify-content: end;
+                align-items: center;
+            }
+
+            input[type="button"] {
+                -webkit-appearance: none;
+                width: 150px;
+                height: 40px;
+                font-size: 20px;
+                color: white;
+                border: none;
+                border-radius: 0;
+                text-transform: uppercase;
+                background: #39C1CC;
+            }
+
+            #scan-button {
+                margin-top: 230px;
+            }
+
+            #done-button {
+                margin-bottom: 30px;
+            }
+
+            span {
+                color: white;
+                margin-bottom: 20px;
+            }
+        </style>
     </head>
-    <body style='background:black'>
+
+    <body>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript">
+            let recognizedCodes = [];
+            var picker;
+
+            function setUI(isScanning, scannedCodes) {
+                document.getElementById("scan-button").style.opacity = isScanning ? 0 : 1;
+                document.getElementById("done-button").style.opacity = isScanning ? 1 : 0;
+
+                if (scannedCodes) {
+                    document.getElementById("scanned-codes").style.opacity = 1;
+                    document.getElementById("scanned-codes").innerText = scannedCodes;
+                } else {
+                    document.getElementById("scanned-codes").style.opacity = 0;
+                }
+            }
+
             function newTrackedCodes(matrixScanSession) {
-                matrixScanSession.newlyTrackedCodes.forEach(function(element) {
+                matrixScanSession.newlyTrackedCodes.forEach(element => {
                     if (element.symbology == Scandit.Barcode.Symbology.EAN8) {
                         matrixScanSession.rejectTrackedCode(element)
                     }
-                }, this);
+                });
             }
+
+            function didScan(scanSession) {
+                scanSession.newlyRecognizedCodes.forEach(barcode => {
+                    if (recognizedCodes.indexOf(barcode.data) < 0) {
+                        recognizedCodes.push(barcode.data)
+                    }
+                });
+            }
+
             function scan() {
+                setUI(true);
+                recognizedCodes = [];
+
                 Scandit.License.setAppKey("-- ENTER YOUR SCANDIT LICENSE KEY HERE --");
 
                 // The scanning behavior of the barcode picker is configured through scan
@@ -42,7 +115,7 @@
                 settings.matrixScanEnabled = true;
                 settings.maxNumberOfCodesPerFrame = 10;
 
-                var picker = new Scandit.BarcodePicker(settings);
+                picker = new Scandit.BarcodePicker(settings);
 
                 // Set continuous mode to not return after the first scan.
                 picker.continuousMode = true;
@@ -54,13 +127,35 @@
                 picker.getOverlayView().setBeepEnabled(false);
                 picker.getOverlayView().setVibrateEnabled(false);
 
-                picker.show(null, null, null, null, newTrackedCodes);
+                var constraints = new Scandit.Constraints();
+                constraints.bottomMargin = '30%';
+                picker.setConstraints(constraints, constraints)
+
+                picker.show(didScan, null, null, null, newTrackedCodes);
                 picker.startScanning();
             }
+
+            function done() {
+                // Stop and hide the scanner
+                picker.cancel()
+
+                // Assemble the text that will be shown
+                barcodes = recognizedCodes.join('\n');
+
+                // Update the UI and show the scanned barcodes
+                setUI(false, barcodes)
+            }
         </script>
-        <div align="center" valign="center">
-            <input type="button" value="scan" onclick="scan()" style="margin-top: 230px;
-                    width: 100px; height: 30px; font-size: 1em"/>
+
+        <input id="scan-button" type="button" value="scan" onclick="scan()" />
+
+        <div id="container">
+            <span id="scanned-codes">No scanned codes yet</span>
+            <input id="done-button" type="button" value="done" onclick="done()" />
         </div>
+
+        <script type="text/javascript">
+            setUI(false)
+        </script>
     </body>
 </html>
