@@ -73,11 +73,13 @@
             }
 
             function newTrackedCodes(matrixScanSession) {
-                matrixScanSession.newlyTrackedCodes.forEach(element => {
-                    if (element.symbology == Scandit.Barcode.Symbology.EAN8) {
-                        matrixScanSession.rejectTrackedCode(element)
-                    }
-                });
+                // If you want to visualy reject a code you should use SBSScanSession's rejectTrackedCode.
+                // For example, the following commented code will reject all EAN8 codes.
+                // matrixScanSession.newlyTrackedCodes.forEach(element => {
+                //     if (element.symbology == Scandit.Barcode.Symbology.EAN8) {
+                //         matrixScanSession.rejectTrackedCode(element)
+                //     }
+                // });
             }
 
             function didScan(scanSession) {
