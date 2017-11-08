@@ -1538,6 +1538,8 @@ public class Scandit {
             REMOVE_LEADING_ZERO
         }
 
+        // Hack to force doxygen to generate a documentation page for this class.
+        public void noop();
 
         /**
          * Enables/disables decoding of dark codes on bright background only. If color-
