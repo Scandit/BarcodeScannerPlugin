@@ -24,8 +24,6 @@
 + (void)setFrameworkIdentifier:(NSString *)frameworkIdentifier;
 @end
 
-static NSString *const DidFailToValidateLicense = @"didFailToValidateLicense";
-
 @interface ScanditSDK () <SBSScanDelegate, SBSOverlayControllerDidCancelDelegate, ScanditSDKSearchBarDelegate,
 SBSPickerStateDelegate, SBSTextRecognitionDelegate, SBSProcessFrameDelegate, SBSPropertyObserver,
 SBSLicenseValidationDelegate>
@@ -616,16 +614,16 @@ SBSLicenseValidationDelegate>
     if (![value isKindOfClass:[NSString class]] && ![value isKindOfClass:[NSNumber class]]) {
         return;
     }
-    auto dictionary = @{@"name": property, @"newState": value};
-    auto pluginResult = [self createResultForEvent:@"didChangeProperty" value:dictionary];
+    const auto dictionary = @{@"name": property, @"newState": value};
+    const auto pluginResult = [self createResultForEvent:@"didChangeProperty" value:dictionary];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
 }
 
 #pragma mark - SBSLicenseValidationDelegate
 
 - (void)barcodePicker:(SBSBarcodePicker *)picker failedToValidateLicense:(NSString *)errorMessage {
-    auto error = @{@"errorMessage": errorMessage};
-    auto pluginResult = [self createResultForEvent:DidFailToValidateLicense value:error];
+    const auto error = @{@"errorMessage": errorMessage};
+    const auto pluginResult = [self createResultForEvent:@"didFailToValidateLicense" value:error];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
 }
 
