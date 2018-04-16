@@ -353,17 +353,11 @@ public class SubViewPickerController extends PickerControllerBase implements
                     ViewParent parentView = ((View) viewObject).getParent();
                     ViewGroup viewGroup = null;
 
-                    while (parentView != null) {
-                        if (parentView instanceof ViewGroup) {
-                            viewGroup = (ViewGroup) parentView;
-                            parentView = viewGroup.getParent();
-                        } else {
-                            break;
-                        }
+                    while (parentView != null && parentView instanceof ViewGroup) {
+                        viewGroup = (ViewGroup) parentView;
+                        parentView = viewGroup.getParent();
                     }
-                    if (viewGroup != null) {
-                        return viewGroup;
-                    }
+                    return viewGroup;
                 }
             } catch (Exception e) {
                 String message = "Unable to fetch the ViewGroup through webView.getView().getParent()";
