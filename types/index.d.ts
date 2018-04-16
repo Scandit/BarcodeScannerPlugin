@@ -109,6 +109,11 @@ declare module 'barcodescanner-sdk-cordova' {
             didRecognizeNewCodes?(matrixScanSession: MatrixScanSession);
             didChangeState?(newState: BarcodePicker.State);
             didChangeProperty?(propertyName: string, newValue: any);
+            didFailToValidateLicense?(error: LicenseError);
+        }
+
+        export class LicenseError {
+            errorMessage: string
         }
     
         export class Constraints {
@@ -351,4 +356,3 @@ declare module 'barcodescanner-sdk-cordova' {
 // or
 // in tsconfig.json, "include" should include the path "path-to-plugin/types/index.d.ts"
 // so one can do `import { Scandit } from "barcodescanner-sdk-cordova"`
-

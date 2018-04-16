@@ -24,8 +24,11 @@
 + (void)setFrameworkIdentifier:(NSString *)frameworkIdentifier;
 @end
 
+static NSString *const DidFailToValidateLicense = @"didFailToValidateLicense";
+
 @interface ScanditSDK () <SBSScanDelegate, SBSOverlayControllerDidCancelDelegate, ScanditSDKSearchBarDelegate,
-SBSPickerStateDelegate, SBSTextRecognitionDelegate, SBSProcessFrameDelegate, SBSPropertyObserver>
+SBSPickerStateDelegate, SBSTextRecognitionDelegate, SBSProcessFrameDelegate, SBSPropertyObserver,
+SBSLicenseValidationDelegate>
 
 @property (nonatomic, copy) NSString *callbackId;
 @property (readwrite, assign) BOOL hasPendingOperation;
@@ -47,10 +50,9 @@ SBSPickerStateDelegate, SBSTextRecognitionDelegate, SBSProcessFrameDelegate, SBS
 @property (nonatomic, assign) BOOL matrixScanEnabled;
 @property (nonatomic, assign) BOOL isDidScanDefined;
 
-@property (nonatomic,strong, readonly) ScanditSDKRotatingBarcodePicker *picker;
+@property (nonatomic, strong, readonly) ScanditSDKRotatingBarcodePicker *picker;
 
 @end
-
 
 @implementation ScanditSDK
 
@@ -156,6 +158,7 @@ SBSPickerStateDelegate, SBSTextRecognitionDelegate, SBSProcessFrameDelegate, SBS
             self.picker.scanDelegate = self;
             [self.picker addPropertyObserver:self];
             self.picker.processFrameDelegate = self;
+            self.picker.licenseValidationDelegate = self;
             if ([self.picker respondsToSelector:@selector(setTextRecognitionDelegate:)]) {
                 self.picker.textRecognitionDelegate = self;
             }
@@ -618,5 +621,12 @@ SBSPickerStateDelegate, SBSTextRecognitionDelegate, SBSProcessFrameDelegate, SBS
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
 }
 
-@end
+#pragma mark - SBSLicenseValidationDelegate
 
+- (void)barcodePicker:(SBSBarcodePicker *)picker failedToValidateLicense:(NSString *)errorMessage {
+    auto error = @{@"errorMessage": errorMessage};
+    auto pluginResult = [self createResultForEvent:DidFailToValidateLicense value:error];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
+}
+
+@end
