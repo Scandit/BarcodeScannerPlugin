@@ -189,11 +189,11 @@ BarcodePicker.prototype.show = function () {
             return;
         } else if (event === 'didChangeProperty') {
             if (callbacks.didChangeProperty) {
-                callbacks.didChangeProperty(args[1].name, args[1].newState)
+                callbacks.didChangeProperty(args[1].name, args[1].newState);
             }
         } else if (event === 'didFailToValidateLicense') {
             if (callbacks.didFailToValidateLicense) {
-                callbacks.didFailToValidateLicense(args[1].errorMessage)
+                callbacks.didFailToValidateLicense(args[1]);
             }
         }
     }, callbacks.didCancel, "ScanditSDK", "show", [this.scanSettings, options, this.getOverlayView()]);
