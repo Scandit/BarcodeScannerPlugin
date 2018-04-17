@@ -113,7 +113,7 @@ declare module 'barcodescanner-sdk-cordova' {
         }
 
         export class LicenseError {
-            errorMessage: string
+            message: string
         }
     
         export class Constraints {

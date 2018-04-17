@@ -622,7 +622,7 @@ SBSLicenseValidationDelegate>
 #pragma mark - SBSLicenseValidationDelegate
 
 - (void)barcodePicker:(SBSBarcodePicker *)picker failedToValidateLicense:(NSString *)errorMessage {
-    const auto error = @{@"errorMessage": errorMessage};
+    const auto error = @{@"message": errorMessage};
     const auto pluginResult = [self createResultForEvent:@"didFailToValidateLicense" value:error];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
 }
