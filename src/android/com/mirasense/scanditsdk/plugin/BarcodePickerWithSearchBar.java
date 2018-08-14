@@ -63,53 +63,63 @@ public class BarcodePickerWithSearchBar extends BarcodePicker {
             oldConstraints = landscapeConstraints;
             newConstraints = newLandscapeConstraints;
         }
-        
-        Animation anim = new Animation() {
-            @Override
-            protected void applyTransformation(float interpolatedTime, Transformation t) {
-                if (newConstraints.getLeftMargin() == null) {
-                    rLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
-                } else {
-                    rLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0);
-                }
-                if (newConstraints.getTopMargin() == null) {
-                    rLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-                } else {
-                    rLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
-                }
 
-                if (newConstraints.getLeftMargin() != null) {
-                    rLayoutParams.leftMargin = calculateInterpolatedValue(
-                            oldConstraints.getLeftMargin(), newConstraints.getLeftMargin(), interpolatedTime);
+        if (animationDuration == 0) {
+            updateLayoutParams(rLayoutParams, oldConstraints, newConstraints, 1);
+        } else {
+            Animation anim = new Animation() {
+                @Override
+                protected void applyTransformation(float interpolatedTime, Transformation t) {
+                    updateLayoutParams(rLayoutParams, oldConstraints, newConstraints, interpolatedTime);
                 }
-                if (newConstraints.getTopMargin() != null) {
-                    rLayoutParams.topMargin = calculateInterpolatedValue(
-                            oldConstraints.getTopMargin(), newConstraints.getTopMargin(), interpolatedTime);
-                }
-                if (newConstraints.getRightMargin() != null) {
-                    rLayoutParams.rightMargin = calculateInterpolatedValue(
-                            oldConstraints.getRightMargin(), newConstraints.getRightMargin(), interpolatedTime);
-                }
-                if (newConstraints.getBottomMargin() != null) {
-                    rLayoutParams.bottomMargin = calculateInterpolatedValue(
-                            oldConstraints.getBottomMargin(), newConstraints.getBottomMargin(), interpolatedTime);
-                }
-                if (newConstraints.getWidth() != null) {
-                    rLayoutParams.width = calculateInterpolatedValue(
-                            oldConstraints.getWidth(), newConstraints.getWidth(), interpolatedTime);
-                }
-                if (newConstraints.getHeight() != null) {
-                    rLayoutParams.height = calculateInterpolatedValue(
-                            oldConstraints.getHeight(), newConstraints.getHeight(), interpolatedTime);
-                }
-                setLayoutParams(rLayoutParams);
-            }
-        };
-        anim.setDuration((int) (animationDuration * 1000));
-        startAnimation(anim);
+            };
+            anim.setDuration((int) (animationDuration * 1000));
+            startAnimation(anim);
+        }
 
         portraitConstraints = newPortraitConstraints;
         landscapeConstraints = newLandscapeConstraints;
+    }
+
+    private void updateLayoutParams(RelativeLayout.LayoutParams rLayoutParams,
+                                    Constraints oldConstraints, Constraints newConstraints,
+                                    float interpolatedTime) {
+        if (newConstraints.getLeftMargin() == null) {
+            rLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+        } else {
+            rLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0);
+        }
+        if (newConstraints.getTopMargin() == null) {
+            rLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+        } else {
+            rLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
+        }
+
+        if (newConstraints.getLeftMargin() != null) {
+            rLayoutParams.leftMargin = calculateInterpolatedValue(
+                    oldConstraints.getLeftMargin(), newConstraints.getLeftMargin(), interpolatedTime);
+        }
+        if (newConstraints.getTopMargin() != null) {
+            rLayoutParams.topMargin = calculateInterpolatedValue(
+                    oldConstraints.getTopMargin(), newConstraints.getTopMargin(), interpolatedTime);
+        }
+        if (newConstraints.getRightMargin() != null) {
+            rLayoutParams.rightMargin = calculateInterpolatedValue(
+                    oldConstraints.getRightMargin(), newConstraints.getRightMargin(), interpolatedTime);
+        }
+        if (newConstraints.getBottomMargin() != null) {
+            rLayoutParams.bottomMargin = calculateInterpolatedValue(
+                    oldConstraints.getBottomMargin(), newConstraints.getBottomMargin(), interpolatedTime);
+        }
+        if (newConstraints.getWidth() != null) {
+            rLayoutParams.width = calculateInterpolatedValue(
+                    oldConstraints.getWidth(), newConstraints.getWidth(), interpolatedTime);
+        }
+        if (newConstraints.getHeight() != null) {
+            rLayoutParams.height = calculateInterpolatedValue(
+                    oldConstraints.getHeight(), newConstraints.getHeight(), interpolatedTime);
+        }
+        setLayoutParams(rLayoutParams);
     }
 
     public void setOnSearchBarListener(SearchBarListener listener) {
@@ -142,9 +152,7 @@ public class BarcodePickerWithSearchBar extends BarcodePicker {
     }
 
     protected void setSearchBarPlaceholderText(String text) {
-        if (mSearchBar != null) {
-            mSearchBar.setHint(text);
-        }
+        mSearchBar.setHint(text);
     }
 
     private void onSearchClicked() {
