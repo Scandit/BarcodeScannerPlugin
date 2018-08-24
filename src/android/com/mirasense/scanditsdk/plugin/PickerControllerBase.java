@@ -98,7 +98,7 @@ abstract class PickerControllerBase implements IPickerController {
     }
 
     public static Map<Long, JSONObject> determineStateObjects(JSONArray data, int dataIndex) {
-        Map<Long, JSONObject> stateObjects = new HashMap<>();
+        Map<Long, JSONObject> stateObjects = new HashMap<Long, JSONObject>();
         if (data != null && data.length() > dataIndex) {
             try {
                 JSONObject jsonObject = data.getJSONObject(dataIndex);
