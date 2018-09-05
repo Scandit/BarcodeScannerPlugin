@@ -53,7 +53,7 @@ SBSLicenseValidationDelegate>
 
 @property (nonatomic, strong, readonly) ScanditSDKRotatingBarcodePicker *picker;
 @property (nonatomic, strong) UINavigationController *pickerContainer;
-@property (nonatomic,strong) id<SBSResizeScannerProtocol> delegate;
+@property (nonatomic, weak) id<SBSResizeScannerProtocol> delegate;
 
 @end
 
