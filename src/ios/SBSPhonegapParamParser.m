@@ -163,7 +163,7 @@
     }
 }
 
-+ (void)updateLayoutOfPicker:(ScanditSDKRotatingBarcodePicker *)picker
++ (NSDictionary *)updateLayoutOfPicker:(ScanditSDKRotatingBarcodePicker *)picker
                  withOptions:(NSDictionary *)options {
     
     CGFloat animationDuration = 0;
@@ -208,6 +208,9 @@
         
         [picker adjustSize:animationDuration];
     }
+    return @{@"portraitConstraints": picker.portraitConstraints,
+             @"landscapeConstraints": picker.landscapeConstraints,
+             @"animationDuration": [NSNumber numberWithFloat:animationDuration]};
 }
 
 + (CGRect)extractMarginsRectFromObject:(NSObject *)margins withWidth:(float)width height:(float)height {

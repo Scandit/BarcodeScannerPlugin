@@ -10,6 +10,8 @@
 //  express or implied. See the License for the specific language governing permissions and
 //  limitations under the License.
 #import "Cordova/CDVPlugin.h"
+#import "SBSResizeScannerProtocol.h"
+#import "SBSConstraints.h"
 
 #define dispatch_main_sync_safe(block)\
 if ([NSThread isMainThread]) {\
@@ -42,5 +44,7 @@ dispatch_sync(dispatch_get_main_queue(), block);\
 - (void)resize:(CDVInvokedUrlCommand *)command;
 
 - (void)torch:(CDVInvokedUrlCommand *)command;
+
++ (void)add:(id <SBSResizeScannerProtocol>)listener to:(ScanditSDK *)scanditSdk;
 
 @end

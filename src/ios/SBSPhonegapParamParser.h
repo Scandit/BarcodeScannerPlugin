@@ -35,7 +35,7 @@
          fromOptions:(NSDictionary *)options
   withSearchDelegate:(id<ScanditSDKSearchBarDelegate>)searchDelegate;
 
-+ (void)updateLayoutOfPicker:(ScanditSDKRotatingBarcodePicker *)picker
++ (NSDictionary *)updateLayoutOfPicker:(ScanditSDKRotatingBarcodePicker *)picker
                  withOptions:(NSDictionary *)options;
 
 + (BOOL)isPausedSpecifiedInOptions:(NSDictionary *)options;
