@@ -53,6 +53,7 @@ SBSLicenseValidationDelegate>
 
 @property (nonatomic, strong, readonly) ScanditSDKRotatingBarcodePicker *picker;
 @property (nonatomic, strong) UINavigationController *pickerContainer;
+
 @property (nonatomic, weak) id<SBSResizeScannerProtocol> delegate;
 
 @end
@@ -479,6 +480,9 @@ SBSLicenseValidationDelegate>
                 [self.picker.view removeFromSuperview];
                 [self.picker didMoveToParentViewController:nil];
             }
+            if (self.delegate != nil) {
+                [self.delegate scannerDismissed];
+            }
             self.pickerStateMachine = nil;
             self.hasPendingOperation = NO;
         });
@@ -635,6 +639,9 @@ SBSLicenseValidationDelegate>
                 [self.picker.view removeFromSuperview];
                 [self.picker didMoveToParentViewController:nil];
             }
+            if (self.delegate != nil) {
+                [self.delegate scannerDismissed];
+            }
             self.pickerStateMachine = nil;
             self.hasPendingOperation = NO;
         });
@@ -676,6 +683,9 @@ SBSLicenseValidationDelegate>
             [self.picker.view removeFromSuperview];
             [self.picker didMoveToParentViewController:nil];
         }
+        if (self.delegate != nil) {
+            [self.delegate scannerDismissed];
+        }
     });
     self.pickerStateMachine = nil;
     [self sendCancelEvent];
@@ -696,6 +706,9 @@ SBSLicenseValidationDelegate>
             [self.picker removeFromParentViewController];
             [self.picker.view removeFromSuperview];
             [self.picker didMoveToParentViewController:nil];
+        }
+        if (self.delegate != nil) {
+            [self.delegate scannerDismissed];
         }
         self.pickerStateMachine = nil;
         self.hasPendingOperation = NO;

@@ -10,4 +10,5 @@
 
 @protocol SBSResizeScannerProtocol <NSObject>
 - (void)scannerResized:(SBSConstraints *)portraitConstraints landscapeConstraints:(SBSConstraints *)landscapeConstraints with:(CGFloat)animationDuration;
+- (void)scannerDismissed;
 @end
