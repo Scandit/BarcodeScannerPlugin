@@ -272,6 +272,12 @@ public class SubViewPickerController extends PickerControllerBase implements
 
     @Override
     public void close() {
+        mPickerStateMachine.getPicker().setOnScanListener(null);
+        mPickerStateMachine.getPicker().setProcessFrameListener(null);
+        mPickerStateMachine.getPicker().setLicenseValidationListener(null);
+        mPickerStateMachine.getPicker().setTextRecognitionListener(null);
+        mPickerStateMachine.getPicker().setPropertyChangeListener(null);
+
         if (mPickerStateMachine == null) {
             // we don't have a picker yet. must be closed when it is created.
             mPendingClose.set(true);

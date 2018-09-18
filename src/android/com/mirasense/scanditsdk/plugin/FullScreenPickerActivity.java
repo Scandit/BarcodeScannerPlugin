@@ -227,6 +227,12 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
     }
 
     public void didCancel() {
+        mPickerStateMachine.getPicker().setOnScanListener(null);
+        mPickerStateMachine.getPicker().setProcessFrameListener(null);
+        mPickerStateMachine.getPicker().setLicenseValidationListener(null);
+        mPickerStateMachine.getPicker().setTextRecognitionListener(null);
+        mPickerStateMachine.getPicker().setPropertyChangeListener(null);
+
         mPickerStateMachine.setState(PickerStateMachine.STOPPED);
         setResult(CANCEL);
         finish();

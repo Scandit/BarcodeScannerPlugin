@@ -204,7 +204,9 @@ public class ScanditSDK extends CordovaPlugin {
                                 options.containsKey(PhonegapParamParser.paramPortraitConstraints) ||
                                 options.containsKey(PhonegapParamParser.paramLandscapeConstraints);
                 if (showPickerAsSubView) {
-                    mPickerController = new SubViewPickerController(ScanditSDK.this, mCallbackContext);
+                    if (mPickerController == null || !(mPickerController instanceof SubViewPickerController)) {
+                        mPickerController = new SubViewPickerController(ScanditSDK.this, mCallbackContext);
+                    }
                 } else {
                     mPickerController = new FullscreenPickerController(ScanditSDK.this, mCallbackContext);
                 }
