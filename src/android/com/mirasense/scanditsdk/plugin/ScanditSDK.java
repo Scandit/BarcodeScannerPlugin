@@ -207,7 +207,7 @@ public class ScanditSDK extends CordovaPlugin {
                 if (showPickerAsSubView) {
                     if (mPickerController == null || !(mPickerController instanceof SubViewPickerController)) {
                         mPickerController = new SubViewPickerController(ScanditSDK.this, mCallbackContext);
-                        ((SubViewPickerController)mPickerController).setResizeListener(resizeListener.get());
+                        ((SubViewPickerController) mPickerController).setResizeListener(resizeListener.get());
                     }
                 } else {
                     mPickerController = new FullscreenPickerController(ScanditSDK.this, mCallbackContext);
@@ -427,7 +427,7 @@ public class ScanditSDK extends CordovaPlugin {
     public void setResizeListener(ResizeScannerInterface listener) {
         resizeListener = new WeakReference<>(listener);
         if (mPickerController instanceof SubViewPickerController) {
-            ((SubViewPickerController)mPickerController).setResizeListener(listener);
+            ((SubViewPickerController) mPickerController).setResizeListener(listener);
         }
     }
 }
