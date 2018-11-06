@@ -1,4 +1,4 @@
-Example code     {#cordova-examples}
+Run the samples {#cordova-examples}
 ===================================
 
 For barcode scanner usage examples, you can either use one of the sample apps included in the plugin archive, or paste one of the samples below into your www/index.html file.
@@ -118,4 +118,3 @@ This shows the simplest way of using the plugin. The scanner is opened full scre
 ## Continuous Scaled/Cropped
 
 For an example of how to display the picker in a scaled/cropped configuration, take a look at the extended sample which is part of the SDK archive.
-

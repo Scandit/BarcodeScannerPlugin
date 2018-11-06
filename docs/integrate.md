@@ -1,8 +1,8 @@
-Integrate the Scandit Barcode Scanner plugin into your app     {#cordova-integrate}
+Integrate the Scandit SDK into your app     {#cordova-integrate}
 ===================================
 
 To integrate the Scandit Barcode Scanner into your Cordova app, follow the simple steps below.
- 
+
 ## Get the Scandit Barcode Scanner SDK
 
 Choose a plan (e.g., “Consumer Apps”, "Professional Apps", or “Enterprise/OEM” plan) at http://www.scandit.com/pricing and download the Scandit Barcode Scanner SDK for Android from your account.
@@ -66,7 +66,7 @@ import { Scandit } from "barcodescanner-sdk-cordova"
 
 ## Instantiate and configure the barcode picker
 
-The scanning process is managed by the {@link Scandit.BarcodePicker BarcodePicker}. Before instantiating the picker, you will have to set your Scandit Barcode Scanner license key. The key is available from your Scandit Barcode Scanner SDK account at http://account.scandit.com in the License Keys section. The barcode scanning is configured through an instance of scan settings that you pass to the BarcodePicker constructor. 
+The scanning process is managed by the {@link Scandit.BarcodePicker BarcodePicker}. Before instantiating the picker, you will have to set your Scandit Barcode Scanner license key. The key is available from your Scandit Barcode Scanner SDK account at http://account.scandit.com in the License Keys section. The barcode scanning is configured through an instance of scan settings that you pass to the BarcodePicker constructor.
 
 ~~~~~~~~~~~~~~~~{.java}
 
@@ -97,26 +97,26 @@ picker.show(success, null, failure);
 For more information on the different ways to add the barcode picker to your view hierarchy, consult \ref android-scanview-options.
 
 
-## Add callbacks to handle the scanning event 
+## Add callbacks to handle the scanning event
 
-You now need to define the functions that are referenced in the show() call. All functions take one argument, the manual 
+You now need to define the functions that are referenced in the show() call. All functions take one argument, the manual
 
 ~~~~~~~~~~~~~~~~{.java}
 
 	function success(session) {
 		alert("Scanned " + session.newlyRecognizedCodes[0].symbology + " code: " + session.newlyRecognizedCodes[0].data);
-		
-		// If you are using continuous scanning you might want to stop here. Please note that 
-		// you will have to use session.stopScanning()/session.pauseScanning() instead of the 
-		// corresponding method on the picker. This will avoid a race condition and immediately stop 
+
+		// If you are using continuous scanning you might want to stop here. Please note that
+		// you will have to use session.stopScanning()/session.pauseScanning() instead of the
+		// corresponding method on the picker. This will avoid a race condition and immediately stop
 		// the scanning process after the success callback has finished executing.
 		session.stopScanning();
 	}
-	
+
 	function manual(content) {
 		alert("Manual: " + content);
 	}
-	
+
 	function failure(error) {
 		alert("Failed: " + error);
 	}
@@ -124,7 +124,7 @@ You now need to define the functions that are referenced in the show() call. All
 ~~~~~~~~~~~~~~~~
 
 
-## Start the scanner 
+## Start the scanner
 
 Start the actual scanning process to start the camera and look for codes.
 

@@ -1,5 +1,5 @@
 
-Restricting the Area Where Barcodes are Scanned {#cordova-restrict-scanning-area}
+Define the scanning area  {#cordova-restrict-scanning-area}
 =========================================================================
 
 By default the Scandit Barcode Scanner searches the entire camera feed for barcodes. Under certain conditions it is helpful to restrict the area in which barcodes are recognized, for example if

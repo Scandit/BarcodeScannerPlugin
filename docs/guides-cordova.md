@@ -12,29 +12,38 @@ Overview                     {#cordova-guides}
 
 ## Getting Started
 
-* \subpage cordova-integrate
 * \subpage cordova-examples
+* \subpage cordova-integrate
 * \subpage cordova-windows
 
 ## Framework Support
 
-The Scandit SDK Cordova plugin works out of the box in the Ionic and IBM MobileFirst (formerly named Worklight) frameworks.
+The Scandit SDK Cordova plugin can be run with any Cordova-based platforms, such as Ionic, SAP Fiori, IBM MobileFirst (formerly named Worklight) and Neptune 9 frameworks.
 How to setup the plugin on Telerik can be found in the \subpage cordova-telerik "Telerik Guide".
 
 ## Guides
 
-### Configuration and presentation
+#### Present the scanner
 
 * \subpage cordova-cropped-or-scaled-picker
+
+#### Basic scanning settings
+
 * \subpage cordova-restrict-scanning-area
 * \subpage cordova-active-symbols-counts
-* \subpage cordova-scan-case
+
+#### Advanced use cases
+
 * \subpage cordova-multiple-scanning
+
+#### Platform-specific guides
+
+* \subpage cordova-scan-case
+* \subpage cordova-features-by-platform
 
 ### Version/edition upgrades
 
 * \subpage cordova-howto-upgrade
-* \subpage cordova-features-by-platform
 
 ### API changes in 4.11
 
@@ -43,8 +52,3 @@ How to setup the plugin on Telerik can be found in the \subpage cordova-telerik 
 ### Troubleshooting
 
 * \subpage cordova-troubleshooting
-
-
-
-
-

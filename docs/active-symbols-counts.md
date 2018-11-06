@@ -1,4 +1,4 @@
-Changing the Length of the Barcodes to Decode {#cordova-active-symbols-counts}
+Change the Length of the Barcodes to Decode {#cordova-active-symbols-counts}
 =========================================================================
 
 By default the Scandit Barcode Scanner scans barcodes with a fixed symbol count range.
@@ -20,7 +20,7 @@ Following an example of changing for Code 128 barcodes the symbol count range (4
 
 ~~~~~~~~~~~~~~~~{.java}
 
-Var symbolcounts = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]; 
+Var symbolcounts = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 settings.getSymbologySettings(Scandit.Barcode.Symbology.CODE128).activeSymbolCounts = symbolcounts;
 
 ~~~~~~~~~~~~~~~~

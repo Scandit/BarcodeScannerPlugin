@@ -1,6 +1,4 @@
-
-
-Troubleshooting Cordova/PhoneGap     {#cordova-troubleshooting}
+Troubleshoot Cordova/PhoneGap     {#cordova-troubleshooting}
 ========================
 
 
@@ -23,5 +21,3 @@ Windows has a maximum file path length which means that it is not possible to cr
 # You were unable to find a solution to your problem {#cordovanosolution}
 
 If your specific problem does not have a solution on this page, contact us at support@scandit.com with a description of the problem (if possible with a code snippet or project) including details about your setup (iOS version, iOS device name, info whether our demo app works correctly).
-
-

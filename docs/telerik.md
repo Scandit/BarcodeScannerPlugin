@@ -1,4 +1,4 @@
-Using Scandit under the Telerik platform {#cordova-telerik}
+Use Scandit under the Telerik platform {#cordova-telerik}
 =========================
 
 Supported Features

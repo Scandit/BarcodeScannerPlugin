@@ -1,5 +1,4 @@
-
-Presenting the Scandit Barcode Scanner Plugin {#cordova-cropped-or-scaled-picker}
+Show the scanner {#cordova-cropped-or-scaled-picker}
 ===================================
 
 ## Displaying the scanner in fullscreen mode
@@ -47,4 +46,3 @@ Since Phonegap does not properly support non-fullscreen display of plugins there
 
 * Under Android touch events are intercepted by the web view even though the scanner is in front of it. This means that it is possible to press buttons/links which are behind the scanner. This is a property of the web view used by Phonegap Android and can not be changed. You should make sure that there are no buttons or links behind the scanner while it is active.
 * It is possible that the implementation of this feature will break with future updates of Phonegap as the view hierarchy might change. Always make sure to use the most recent version of the plugin where such issues will be fixed.
-

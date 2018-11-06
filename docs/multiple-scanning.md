@@ -1,4 +1,4 @@
-Matrix Scan/Scanning Multiple Barcodes {#cordova-multiple-scanning}
+Scan multiple barcodes at once with MatrixScan {#cordova-multiple-scanning}
 ===================================================
 
 ## Motivation
