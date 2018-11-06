@@ -1,6 +1,13 @@
 Run the samples {#cordova-examples}
 ===================================
 
+The Scandit Barcode Scanner SDK (downloadable from https://ssl.scandit.com/sdk) comes with three demos:
+* Simple: shows how to use the barcode scanner in a cordova project
+* Extended: allows the user to configure the barcode scanner as well as the UI from the application itself.
+* MatrixScan: shows how to use MatrixScan.
+
+You will also find additional samples on our <a href="https://github.com/Scandit/barcodescanner-sdk-cordova/tree/master">GitHub repository</a>, in particular the ionic-sample, which shows how to use the barcode scanner in an ionic project.
+
 For barcode scanner usage examples, you can either use one of the sample apps included in the plugin archive, or paste one of the samples below into your www/index.html file.
 
 ## Build the sample apps
@@ -9,112 +16,82 @@ In order to build the sample apps you must import one of them upon creation of y
 
 Note that you will still need to add the platform and plugin as described in {@link cordova-integrate here}. You will also need to replace the license key in the samples with your license key.
 
-### Simple sample
 
+
+### Download the Scandit Barcode Scanner
+
+Download the plugin from your account on https://ssl.scandit.com/sdk. You can sign-up for a free trial if you do not have an account yet. Unzip the plugin.
+
+### Set license key
+
+The samples are inside the sample folder of the SDK zip file. Unzip the SDK zip file (or the repository downloaded from the <a href="https://github.com/Scandit/barcodescanner-sdk-cordova/tree/master">GitHub repository</a>) and set your license key in the following files:
+* Simple Sample: <path-to-plugin>/samples/simple/www/index.html
+* Extended Sample: <path-to-plugin>/samples/extended/src/providers/scanner.ts
+* MatrixScan Sample: <path-to-plugin>/samples/matrixscan/www/index.html
+* OCR Sample: <path-to-repository>/samples/ocr/src/providers/scanner.ts
+* Ionic Sample: <path-to-repository>/samples/ionic-sample/src/providers/scanner-service/scanner.ts
+
+
+### Build the sample
+
+#### Build the Simple or MatrixScan Sample
+
+Go to the folder directory that should contain your project.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
-> cordova create helloworld --id "com.scandit.helloworld" --template <path-to-repository>/samples/simple/www/
+> cd <path-to-folder-to-contain-cordova-project>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-### Extended sample
+Create your app from the plugin's template (do not use the directory, use the plugin from https://ssl.scandit.com/sdk).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
+> cordova create helloworld --id "com.scandit.helloworld" --template <path-to-plugin>/samples/<name of the sample>/www/
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For the extended sample, the license key is in `<path-to-repository>/samples/extended/src/providers/scanner.ts`, in the `setAppKey` method. After setting the license key, running `npm run build` is necessary for the build files in the `www` folder to be updated — the recommendation is to add the license key before running the commands below.
+#### Build the Extended or OCR sample
+
+Run `npm run build` from the sample's folder for the build files in the `www` folder to be updated.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
-> cd <path-to-repository>/samples/extended
+> cd <path-to-repository>/samples/<name of the sample>
 > npm install
 > npm run build
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Go to the folder directory that should contain your project.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
 > cd <path-to-folder-to-contain-cordova-project>
-> cordova create helloworld --id "com.scandit.helloworld" --link-to <path-to-repository>/samples/extended/www
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Create your app from the plugin's template (do not use the directory, use the plugin from https://ssl.scandit.com/sdk).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
+> cordova create helloworld --id "com.scandit.helloworld" --link-to <path-to-plugin>/samples/<name of the sample>/www/
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Note that the `--link-to` option will symlink to the specified www directory without creating a copy. For more information, see https://cordova.apache.org/docs/en/latest/reference/cordova-cli/#cordova-create-command.
 
-### MatrixScan sample
+#### Build the ionic sample
+
+Run `npm install` from the sample's folder.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
-> cordova create helloworld --id "com.scandit.helloworld" --template <path-to-repository>/samples/matrixscan/www/
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-### OCR sample
-
-For the OCR sample, the license key is in `<path-to-repository>/samples/ocr/src/providers/scanner.ts`, in the `setAppKey` method. After setting the license key, running `npm run build` is necessary for the build files in the `www` folder to be updated — the recommendation is to add the license key before running the commands below.
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
-> cd <path-to-repository>/samples/ocr
+> cd <path-to-repository>/samples/ionic-sample
 > npm install
-> npm run build
-> cd <path-to-folder-to-contain-cordova-project>
-> cordova create helloworld --id "com.scandit.helloworld" --link-to <path-to-repository>/samples/ocr/www
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Note that the `--link-to` option will symlink to the specified www directory without creating a copy. For more information, see https://cordova.apache.org/docs/en/latest/reference/cordova-cli/#cordova-create-command.
+### Add the platform(s) and the plugins
 
-## Simple Fullscreen
-
-This shows the simplest way of using the plugin. The scanner is opened full screen and is closed as soon as a barcode is scanned, returning the result to a function specified by you.
+Make sure to use the plugin from https://ssl.scandit.com/sdk (not the one from the GitHub directory).
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1,
-            minimum-scale=1, width=device-width, height=device-height" />
-        <title>Scandit Barcode Scanner</title>
-    </head>
-    <body style='background:black'>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript">
-            // On Windows, the alert function doesn't exist, so we add it.
-            window.alert = window.alert !== undefined ? window.alert : function (message) {
-                var alertBox = new Windows.UI.Popups.MessageDialog(message);
-                alertBox.showAsync();
-            };
-            function success(session) {
-                alert("Scanned " + session.newlyRecognizedCodes[0].symbology
-                        + " code: " + session.newlyRecognizedCodes[0].data);
-            }
-            function failure(error) {
-                alert("Failed: " + error);
-            }
-            function scan() {
-                Scandit.License.setAppKey("-- ENTER YOUR LICENSE KEY HERE --");
-                var settings = new Scandit.ScanSettings();
-                settings.setSymbologyEnabled(Scandit.Barcode.Symbology.EAN13, true);
-                settings.setSymbologyEnabled(Scandit.Barcode.Symbology.UPC12, true);
-                settings.setSymbologyEnabled(Scandit.Barcode.Symbology.EAN8, true);
-                settings.setSymbologyEnabled(Scandit.Barcode.Symbology.CODE39, true);
-
-                // Some 1d barcode symbologies allow you to encode variable-length data. By default, the
-                // Scandit BarcodeScanner SDK only scans barcodes in a certain length range. If your
-                // application requires scanning of one of these symbologies, and the length is falling
-                // outside the default range, you may need to adjust the "active symbol counts" for this
-                // symbology. This is shown in the following few lines of code.
-                var symSettings = settings.getSymbologySettings(Scandit.Barcode.Symbology.CODE39);
-                symSettings.activeSymbolCounts = [
-                    7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
-                ];
-                // For details on defaults and how to calculate the symbol counts for each symbology, take
-                // a look at http://docs.scandit.com/stable/c_api/symbologies.html.
-
-                var picker = new Scandit.BarcodePicker(settings);
-                picker.show(success, null, failure);
-                picker.startScanning();
-            }
-        </script>
-        <div align="center" valign="center">
-            <input type="button" value="scan" onclick="scan()" style="margin-top: 230px;
-                    width: 100px; height: 30px; font-size: 1em"/>
-        </div>
-    </body>
-</html>
+> cordova platform add <ios or android>
+> cordova plugin add <path to downloaded and unzipped plugin>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-<br/>
+Note: add `ionic` in front of the commands if you are using ionic.
 
+### Run the sample
 
-## Continuous Scaled/Cropped
-
-For an example of how to display the picker in a scaled/cropped configuration, take a look at the extended sample which is part of the SDK archive.
+* On iOS, open the project under "project folder"/platforms/ios in XCode and run it.
+* On Android, run the following:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
+> cordova run android --device
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
