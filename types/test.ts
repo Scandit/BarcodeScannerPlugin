@@ -1,7 +1,3 @@
-/// <reference path="index.d.ts"/>
-
-import { Scandit } from "barcodescanner-sdk-cordova";
-
 const barcode = new Scandit.Barcode();
 barcode.isGs1DataCarrier();
 barcode.isRecognized();
@@ -41,7 +37,7 @@ console.log(point.x, point.y);
 const quad = new Scandit.Quadrilateral(point, point, point, point);
 console.log(quad.bottomLeft, quad.bottomRight, quad.topLeft, quad.topRight);
 
-const bp = new Scandit.BarcodePicker();
+const bp = new Scandit.BarcodePicker(new Scandit.ScanSettings());
 const scanSession = new Scandit.ScanSession([barcode], [barcode], [barcode], bp);
 scanSession.pauseScanning();
 scanSession.stopScanning();
@@ -61,7 +57,7 @@ symbologySettings.extensions = [Scandit.SymbologySettings.Extension.TINY];
 symbologySettings.checksums = [Scandit.SymbologySettings.Checksum.MOD_10];
 symbologySettings.activeSymbolCounts = [1, 2];
 
-const barcodePicker = new Scandit.BarcodePicker();
+const barcodePicker = new Scandit.BarcodePicker(new Scandit.ScanSettings());
 barcodePicker.show(console.log, console.log, undefined, undefined, console.log);
 barcodePicker.show(callbacks);
 barcodePicker.cancel();
@@ -131,4 +127,3 @@ scanCase.volumeButtonToScanEnabled(true);
 scanCase.scanBeepEnabled(true);
 scanCase.errorSoundEnabled(true);
 scanCase.setTimeout(20, Scandit.ScanCase.State.ACTIVE, Scandit.ScanCase.State.OFF);
-
