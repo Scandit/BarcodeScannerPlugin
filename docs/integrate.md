@@ -29,11 +29,11 @@ Use the cordova CLI to add the plugin to your already existing project.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
     cd <directory of your project>
-	cordova plugin add <path to downloaded and unzipped plugin>
+	  cordova plugin add <path to downloaded and unzipped plugin>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-## _Add the type definitions (TypeScript only)_
+## Add the type definitions (TypeScript only)
 
 If you have a TypeScript project (e.g. Ionic, Angular, etc), you can import the type definition, just by making sure
 your TypeScript compiler knows about them. To make sure it does, you can either reference the type definition file at
@@ -134,8 +134,6 @@ picker.startScanning();
 
 ~~~~~~~~~~~~~~~~
 
-<br/>
-
 ## Build and run the app
 
 Compile your project. Attach a device and run the app on your desired plattform.
@@ -146,6 +144,18 @@ Compile your project. Attach a device and run the app on your desired plattform.
     cordova run ios
     cordova run windows
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+## Build with PhoneGap Build (cloud service)
+
+Our plugin is not part of the plugins that Phonegap Build supports as it only supports open source plugins. If you want to use PhoneGap Build, you will have to add our plugin yourself.
+
+Steps to use our plugin with Phonegap Build:
+1. Download the Barcode Scanner SDK for Phonegap (https://ssl.scandit.com/sdk)
+2. Add the project on GitHub as a private repository. Make sure the repository is a private repository as we do not allow our plugins to be published.
+3. Link your PhoneGap Build account with your GitHub account to get the private repository. You can do so here: https://build.phonegap.com/apps, by clicking the link suggesting to link your account with a GitHub account.
+4. Add the plugin in the config.xml file:
+<gap:plugin spec="https://<token>@github.com/<username>/scandit-barcodescanner.git" source="git" />
+5. Build the app
 
 ## Next steps
 
