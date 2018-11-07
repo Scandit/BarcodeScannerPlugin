@@ -1,6 +1,8 @@
 Show the scanner {#cordova-cropped-or-scaled-picker}
 ===================================
 
+You can use our samples to get a good overview of how to show the barcode scanner in an app: \ref examples.
+
 ## Displaying the scanner in fullscreen mode
 
 The standard way to display the plugin is in fullscreen mode. The main reason for this is that Phonegap expects plugins to do this and does not provide a friendly way of manipulating the view hierarchy of the web view to display a plugin inside this hierarchy.
