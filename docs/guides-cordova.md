@@ -35,6 +35,7 @@ How to setup the plugin on Telerik can be found in the \subpage cordova-telerik 
 #### Advanced use cases
 
 * \subpage cordova-multiple-scanning
+* \subpage cordova-config-ocr
 
 #### Platform-specific guides
 
