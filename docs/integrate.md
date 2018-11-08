@@ -45,6 +45,8 @@ We suggest inserting this type declaration at the top of the file where you'll u
 
 The `Scandit` namespace is going to be added to the `window` object, so there's no need to import any module, the only requirement for TypeScript projects is just to let the compiler know that `Scandit` exists in the global scope, so your project can compile properly.
 
+_As a more complex solution, you can also drop a type definition file (from `types/index.d.ts`) into your project. Depending on your TypeScript configuration, you might need to specify additional configuration options to make sure the TypeScript compiler is aware of the type definition file._
+
 ## Instantiate and configure the barcode picker
 
 The scanning process is managed by the {@link Scandit.BarcodePicker BarcodePicker}. Before instantiating the picker, you will have to set your Scandit Barcode Scanner license key. The key is available from your Scandit Barcode Scanner SDK account at http://account.scandit.com in the License Keys section. The barcode scanning is configured through an instance of scan settings that you pass to the BarcodePicker constructor. 
