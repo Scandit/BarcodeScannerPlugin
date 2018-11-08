@@ -3,7 +3,7 @@ Use the Scandit Scan Case in your app      {#cordova-scan-case}
 
 This guide show how to scan barcodes with the Scandit scan case using the ScanCase API.
 
-Using the ScanCase API is relatively easy: all you need to do is to create an ScanCase object and implement
+Using the ScanCase API is relatively easy: all you need to do is to create a ScanCase object and implement
 the necessary callbacks.
 
 ## Creating an instance of ScanCase

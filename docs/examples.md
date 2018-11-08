@@ -2,7 +2,7 @@ Run the samples {#cordova-examples}
 ===================================
 
 The Scandit Barcode Scanner SDK (downloadable from https://ssl.scandit.com/sdk) comes with three demos:
-* Simple: shows how to use the barcode scanner in a cordova project
+* Simple: shows how to use the barcode scanner in a cordova project.
 * Extended: allows the user to configure the barcode scanner as well as the UI from the application itself.
 * MatrixScan: shows how to use MatrixScan.
 
@@ -36,7 +36,7 @@ The samples are inside the sample folder of the SDK zip file. Unzip the SDK zip 
 
 #### Build the Simple or MatrixScan Sample
 
-Go to the folder directory that should contain your project.
+Go to the directory that should contain your project.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
 > cd <path-to-folder-to-contain-cordova-project>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -28,8 +28,8 @@ If you do not have a Cordova project yet, you should create a new one.
 Use the cordova CLI to add the plugin to your already existing project.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.java}
-    cd <directory of your project>
-	  cordova plugin add <path to downloaded and unzipped plugin>
+   cd <directory of your project>
+   cordova plugin add <path to downloaded and unzipped plugin>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -99,7 +99,7 @@ For more information on the different ways to add the barcode picker to your vie
 
 ## Add callbacks to handle the scanning event
 
-You now need to define the functions that are referenced in the show() call. All functions take one argument, the manual
+You now need to define the functions that are referenced in the show() call. All functions take one argument.
 
 ~~~~~~~~~~~~~~~~{.java}
 
@@ -124,12 +124,13 @@ You now need to define the functions that are referenced in the show() call. All
 ~~~~~~~~~~~~~~~~
 
 
-## Start the scanner
+## Show the picker and start the scanner
 
 Start the actual scanning process to start the camera and look for codes.
 
 ~~~~~~~~~~~~~~~~{.java}
 
+picker.show(success, manual, failure);
 picker.startScanning();
 
 ~~~~~~~~~~~~~~~~
@@ -147,15 +148,15 @@ Compile your project. Attach a device and run the app on your desired plattform.
 
 ## Build with PhoneGap Build (cloud service)
 
-Our plugin is not part of the plugins that Phonegap Build supports as it only supports open source plugins. If you want to use PhoneGap Build, you will have to add our plugin yourself.
+Phonegap Build only supports open source plugins. If you want to use PhoneGap Build, you will have to add our plugin yourself.
 
 Steps to use our plugin with Phonegap Build:
-1. Download the Barcode Scanner SDK for Phonegap (https://ssl.scandit.com/sdk)
+1. Download the Barcode Scanner SDK for Phonegap (https://ssl.scandit.com/sdk).
 2. Add the project on GitHub as a private repository. Make sure the repository is a private repository as we do not allow our plugins to be published.
 3. Link your PhoneGap Build account with your GitHub account to get the private repository. You can do so here: https://build.phonegap.com/apps, by clicking the link suggesting to link your account with a GitHub account.
 4. Add the plugin in the config.xml file:
-<gap:plugin spec="https://<token>@github.com/<username>/scandit-barcodescanner.git" source="git" />
-5. Build the app
+<gap:plugin spec="https://<token>@github.com/<username>/scandit-barcodescanner.git" source="git" />.
+5. Build the app.
 
 ## Next steps
 
