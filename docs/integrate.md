@@ -35,7 +35,7 @@ Use the cordova CLI to add the plugin to your already existing project.
 
 ## _Add the type definitions (TypeScript only)_
 
-If you have a TypeScript project (e.g. Ionic, Angular, etc), you can declare `Scandit` the following way, so TypeScript knows that `Scandit` exists in the global scope.
+If you have a TypeScript project (e.g. Ionic, Angular, etc), you can declare `Scandit` the following way, so TypeScript knows that `Scandit` exists in the global scope:
 
 ```typescript
 declare let Scandit: any;
