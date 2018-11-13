@@ -287,7 +287,11 @@ public class Scandit {
             /**
              * \brief Royal Mail 4 State Customer Code (RM4SCC).
              */
-            RM4SCC
+            RM4SCC,
+            /**
+             * \brief LAPA 4 State Code (LAPA4SC).
+             */
+            LAPA4SC
         }
 
         /**

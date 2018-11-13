@@ -80,6 +80,9 @@ function ScanSettings() {
     this.symbologies[Barcode.Symbology.CODE32] = new SymbologySettings();
     this.symbologies[Barcode.Symbology.CODE32].activeSymbolCounts = [8];
 
+    this.symbologies[Barcode.Symbology.LAPA4SC] = new SymbologySettings();
+    this.symbologies[Barcode.Symbology.LAPA4SC].activeSymbolCounts = [16];
+
     this.workingRange = ScanSettings.WorkingRange.STANDARD;
 
     this.codeCachingDuration = -1;
