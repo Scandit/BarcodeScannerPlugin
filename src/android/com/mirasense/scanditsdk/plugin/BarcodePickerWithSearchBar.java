@@ -223,13 +223,11 @@ public class BarcodePickerWithSearchBar extends BaseBarcodePicker {
         public void setTopMargin(Integer value) { mTopMargin = value; }
 
         public Integer getRightMargin() {
-            if (mRightMargin == null && mLeftMargin == null) return 0;
             return mRightMargin;
         }
         public void setRightMargin(Integer value) { mRightMargin = value; }
 
         public Integer getBottomMargin() {
-            if (mBottomMargin == null && mTopMargin == null) return 0;
             return mBottomMargin;
         }
         public void setBottomMargin(Integer value) { mBottomMargin = value; }

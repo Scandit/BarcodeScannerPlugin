@@ -157,5 +157,6 @@
         <source-file src="src/android/com/mirasense/scanditsdk/plugin/UIParamParser.java" target-dir="src/com/mirasense/scanditsdk/plugin" />
         <source-file src="src/android/com/mirasense/scanditsdk/plugin/PermissionHelper.java" target-dir="src/com/mirasense/scanditsdk/plugin" />
         <source-file src="src/android/com/mirasense/scanditsdk/plugin/ResizeScannerInterface.java" target-dir="src/com/mirasense/scanditsdk/plugin" />
+        <source-file src="src/android/com/mirasense/scanditsdk/plugin/ScanditCordovaTopView.java" target-dir="src/com/mirasense/scanditsdk/plugin" />
     </platform>
 </plugin>

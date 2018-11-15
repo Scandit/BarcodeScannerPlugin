@@ -400,7 +400,12 @@ public class SubViewPickerController extends PickerControllerBase implements
                     ViewParent parentView = ((View) viewObject).getParent();
                     ViewGroup viewGroup = null;
 
-                    while (parentView != null && parentView instanceof ViewGroup) {
+                    // Continue going up if there is a parent, the parent is a view group and the
+                    // current view group is not our custom view that can be used to force the
+                    // picker to be added at a specific point instead of going all the way up
+                    // to the root.
+                    while (parentView != null && parentView instanceof ViewGroup
+                            && !(viewGroup instanceof ScanditCordovaTopView)) {
                         viewGroup = (ViewGroup) parentView;
                         parentView = viewGroup.getParent();
                     }
