@@ -100,9 +100,7 @@ function ScanSettings() {
     this.relativeZoom = 0.0;
 
     this.maxNumberOfCodesPerFrame = 1;
-    this.properties = {
-        enable_camera2_api : 0
-    }
+    this.properties = {}
 
     this.recognitionMode = ScanSettings.RecognitionMode.CODE;
 
@@ -110,28 +108,29 @@ function ScanSettings() {
 }
 
 ScanSettings.RecognitionMode = {
-	TEXT: 1,
-	CODE: 2
+    TEXT: 1,
+    CODE: 2,
+    CODE_AND_TEXT: 3
 }
 
 ScanSettings.CameraFacing = {
-	BACK: "back",
-	FRONT: "front"
+    BACK: "back",
+    FRONT: "front"
 }
 
 ScanSettings.WorkingRange = {
-	STANDARD: "standard",
-	LONG: "long"
+    STANDARD: "standard",
+    LONG: "long"
 }
 
 ScanSettings.prototype.getSymbologySettings = function(symbology) {
-	return this.symbologies[symbology];
+    return this.symbologies[symbology];
 }
 
 ScanSettings.prototype.setSymbologyEnabled = function(symbology, enabled) {
-	var symbologySettings = this.getSymbologySettings(symbology);
-	symbologySettings.enabled = enabled;
-	this.symbologies[symbology] = symbologySettings;
+    var symbologySettings = this.getSymbologySettings(symbology);
+    symbologySettings.enabled = enabled;
+    this.symbologies[symbology] = symbologySettings;
 }
 
 module.exports = ScanSettings;

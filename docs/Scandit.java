@@ -760,13 +760,17 @@ public class Scandit {
          */
         public enum RecognitionMode {
             /**
-             * Text recognition
+             * Text recognition.
              */
             TEXT,
             /**
-             * Barcode/2d code recognition
+             * Barcode/2d code recognition.
              */
-            CODE
+            CODE,
+            /**
+             * Barcode/2d code recognition and text recognition.
+             */
+            CODE_AND_TEXT
         }
 
         /**
@@ -854,6 +858,16 @@ public class Scandit {
          * \see #codeCachingDuration
          */
         public int codeDuplicateFilter;
+
+        /**
+         * A dictionary containing hidden properties.
+         * <p>
+         * This dictionary is for internal use only and any functionality that can be
+         * accessed through it can and will vanish without public notice from one
+         * version to the next. Do not call this function unless you specifically
+         * have to.
+         */
+        public Map<String, Object> properties;
 
         /**
          * @}
@@ -1025,19 +1039,6 @@ public class Scandit {
          * The value is set to 1 if a negative value is supplied.
          */
         public int maxNumberOfCodesPerFrame;
-
-        /**
-         * Sets a property.
-         * <p>
-         * This function is for internal use only and any functionality that can be
-         * accessed through it can and will vanish without public notice from one
-         * version to the next. Do not call this function unless you specifically
-         * have to.
-         *
-         * \param key The property's name.
-         * \param value The property's value.
-         */
-        public void setProperty(String key, Object value);
 
         /**
          * \brief Whether code rejection is enabled
