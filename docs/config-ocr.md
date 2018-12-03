@@ -59,4 +59,17 @@ settings.textRecognition.areaPortrait = settings.activeScanningAreaPortrait;
 
 #### Instantiate the barcode picker
 
-Please refer to \ref cordova-integrate.
+- Instantiate the barcode picker with the previously created settings.
+- Show the picker and set the appropriate callbacks.
+- Start scanning.
+
+~~~~~~~~~~~~~~~~{.java}
+var picker = new Scandit.BarcodePicker(settings);
+
+picker.show({
+  didRecognizeText: success,
+  didCancel: failure,
+  didManualSearch: null,
+});
+picker.startScanning();
+~~~~~~~~~~~~~~~~
