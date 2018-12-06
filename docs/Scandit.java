@@ -1115,7 +1115,17 @@ public class Scandit {
          *
          * \since 5.3.0
          */
-        public String characterWhitelist;
+        public CharacterSet characterWhitelist;
+    }
+
+    /**
+     * A set of characters.
+     */
+    public class CharacterSet {
+        /**
+         * A string of all characters in the set.
+         */
+        public String characters;
     }
 
 
