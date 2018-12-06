@@ -299,17 +299,18 @@ public class SubViewPickerController extends PickerControllerBase implements
 
     @Override
     public void close() {
+        if (mPickerStateMachine == null) {
+            // we don't have a picker yet. must be closed when it is created.
+            mPendingClose.set(true);
+            return;
+        }
+
         mPickerStateMachine.getPicker().setOnScanListener(null);
         mPickerStateMachine.getPicker().setProcessFrameListener(null);
         mPickerStateMachine.getPicker().setLicenseValidationListener(null);
         mPickerStateMachine.getPicker().setTextRecognitionListener(null);
         mPickerStateMachine.getPicker().setPropertyChangeListener(null);
 
-        if (mPickerStateMachine == null) {
-            // we don't have a picker yet. must be closed when it is created.
-            mPendingClose.set(true);
-            return;
-        }
         if (isResultCallbackInFlight()) {
             // we get here if the didScan callback is still in progress. We need to delay
             // processing the cancel call to avoid a dead-lock. The picker will be closed
