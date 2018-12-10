@@ -204,7 +204,7 @@
 #pragma mark - Search Bar
 
 - (void)showSearchBar:(BOOL)show {
-    void (^block)() = ^void() {
+    void (^block)(void) = ^void() {
         if (!show && self.manualSearchBar) {
             [self.manualSearchBar removeFromSuperview];
             self.manualSearchBar = nil;
@@ -269,7 +269,7 @@
 }
 
 - (void)setSearchBarKeyboardType:(UIKeyboardType)keyboardType {
-    void (^block)() = ^void() {
+    void (^block)(void) = ^void() {
         if (self.manualSearchBar) {
             [self.manualSearchBar setKeyboardType:keyboardType];
         }
