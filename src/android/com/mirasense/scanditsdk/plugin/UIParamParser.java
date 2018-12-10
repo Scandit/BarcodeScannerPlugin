@@ -61,7 +61,7 @@ public class UIParamParser {
 
     public static final String paramTextRecognitionSwitchVisible = "textRecognitionSwitchVisible".toLowerCase();
 
-    public static final String paramMatrixScanHighlightingColor = "matrixScanHighlightingColor".toLowerCase();
+    public static final String paramMatrixScanHighlightingColors = "matrixScanHighlightingColors".toLowerCase();
 
 
     public static void updatePickerUI(BarcodePicker picker, Bundle bundle) {
@@ -227,8 +227,8 @@ public class UIParamParser {
             picker.getOverlayView().setTextRecognitionSwitchVisible(bundle.getBoolean(paramTextRecognitionSwitchVisible));
         }
         
-        if (bundleContainsBundleKey(bundle, paramMatrixScanHighlightingColor)) {
-            Bundle colors = bundle.getBundle(paramMatrixScanHighlightingColor);
+        if (bundleContainsBundleKey(bundle, paramMatrixScanHighlightingColors)) {
+            Bundle colors = bundle.getBundle(paramMatrixScanHighlightingColors);
             for (String key : colors.keySet()) {
                 try {
                     int color = Integer.parseInt(colors.getString(key), 16);
