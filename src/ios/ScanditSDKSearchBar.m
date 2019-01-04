@@ -12,11 +12,9 @@
 
 #import "ScanditSDKSearchBar.h"
 
-
 @interface ScanditSDKSearchBar ()
 @property (nonatomic, strong) UIToolbar *keyboardToolbar;
 @end
-
 
 @implementation ScanditSDKSearchBar
 
@@ -43,10 +41,6 @@
     self.text = @"";
     [self setPlaceholder:placeholder];
     [self setKeyboardType:keyboardType];
-    
-    if (NSFoundationVersionNumber < NSFoundationVersionNumber_iOS_7_0) {
-        [self setBarStyle:UIBarStyleBlack];
-    }
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self
                                                      attribute:NSLayoutAttributeHeight
@@ -104,21 +98,14 @@
  * whether the length of the entered text is long enough for a valid barcode.
  */
 - (void)updateCancelButton {
-    id barButtonAppearanceInSearchBar = [UIBarButtonItem appearanceWhenContainedIn:
-                                         [ScanditSDKSearchBar class], nil];
-    
-    // The button is only now added to the hierarchy so we update its caption.
-    if (NSFoundationVersionNumber < NSFoundationVersionNumber_iOS_7_0) {
-        UIButton *cancelButton = nil;
-        for (UIView *subView in self.subviews) {
-            if ([subView isKindOfClass:[UIButton class]]) {
-                cancelButton = (UIButton *)subView;
-                break;
-            }
-        }
-        if (cancelButton) {
-            [cancelButton setTitle:self.cancelButtonCaption forState:UIControlStateNormal];
-        }
+    id barButtonAppearanceInSearchBar;
+    if (@available(iOS 9.0, *)) {
+        barButtonAppearanceInSearchBar = [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[ScanditSDKSearchBar class]]];
+    } else {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+        barButtonAppearanceInSearchBar = [UIBarButtonItem appearanceWhenContainedIn:[ScanditSDKSearchBar class], nil];
+#pragma GCC diagnostic pop
     }
     
     // Adjust whether the "Go" button can be clicked.
