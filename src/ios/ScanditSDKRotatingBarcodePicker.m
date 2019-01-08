@@ -235,17 +235,15 @@
     [self.manualSearchBar setDelegate:self];
     [self.manualSearchBar setTranslucent:YES];
     
-    if (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_7_0) {
-        self.statusBarBackground = [[UIView alloc] init];
-        self.statusBarBackground.backgroundColor = [UIColor whiteColor];
-    }
-    
+    self.statusBarBackground = [[UIView alloc] init];
+    self.statusBarBackground.backgroundColor = [UIColor whiteColor];
+
     [self.view addSubview:self.manualSearchBar];
     
     [self setConstraintsForView:self.manualSearchBar toHorizontallyMatch:self.view];
     [self.view addConstraint:[self topGuideConstraintForView:self.manualSearchBar
                                                      toMatch:self
-                                                withConstant:[self navigationBarOffset]]];
+                                                withConstant:0.0f]];
     
     if (self.statusBarBackground) {
         [self.view addSubview:self.statusBarBackground];
@@ -281,41 +279,16 @@
     }
 }
 
-- (CGFloat)navigationBarOffset {
-    if ((self.navigationController && !self.navigationController.navigationBar.hidden)
-        && NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1
-        && NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_7_0) {
-        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-        if (UIInterfaceOrientationIsLandscape(orientation)) {
-            return 32;
-        } else {
-            return 44;
-        }
-    } else {
-        return 0.0;
-    }
-}
-
 - (NSLayoutConstraint *)topGuideConstraintForView:(UIView *)view
                                           toMatch:(UIViewController *)controller
                                      withConstant:(CGFloat)constant {
-    if (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_7_0) {
-        return [NSLayoutConstraint constraintWithItem:view
-                                            attribute:NSLayoutAttributeTop
-                                            relatedBy:NSLayoutRelationEqual
-                                               toItem:controller.topLayoutGuide
-                                            attribute:NSLayoutAttributeBottom
-                                           multiplier:1.0
-                                             constant:constant];
-    } else {
-        return [NSLayoutConstraint constraintWithItem:view
-                                            attribute:NSLayoutAttributeTop
-                                            relatedBy:NSLayoutRelationEqual
-                                               toItem:controller.view
-                                            attribute:NSLayoutAttributeTop
-                                           multiplier:1.0
-                                             constant:constant];
-    }
+    return [NSLayoutConstraint constraintWithItem:view
+                                        attribute:NSLayoutAttributeTop
+                                        relatedBy:NSLayoutRelationEqual
+                                           toItem:controller.topLayoutGuide
+                                        attribute:NSLayoutAttributeBottom
+                                       multiplier:1.0
+                                         constant:constant];
 }
 
 - (void)setConstraintsForView:(UIView *)view
