@@ -13,6 +13,7 @@
 package com.mirasense.scanditsdk.plugin;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -231,9 +232,10 @@ public class UIParamParser {
             Bundle colors = bundle.getBundle(paramMatrixScanHighlightingColors);
             for (String key : colors.keySet()) {
                 try {
-                    int color = Integer.parseInt(colors.getString(key), 16);
+                    int color = Color.parseColor("#" + colors.getString(key));
                     picker.getOverlayView().setMatrixScanHighlightingColor(Integer.parseInt(key), color);
                 } catch (NumberFormatException e) {
+                    e.printStackTrace();
                 }
             }
         }
