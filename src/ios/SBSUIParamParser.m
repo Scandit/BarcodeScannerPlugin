@@ -308,10 +308,9 @@
     if (matrixScanHighlightingColors) {
         if ([matrixScanHighlightingColors isKindOfClass:[NSDictionary class]]) {
             NSDictionary *colors = (NSDictionary *)matrixScanHighlightingColors;
-            for (NSNumber *stateKey in colors) {
+            for (NSString *stateKey in colors) {
                 NSString *colorString = colors[stateKey];
                 if ([colorString isKindOfClass:[NSString class]]
-                    && [stateKey isKindOfClass:[NSNumber class]]
                     && [colorString length] == 8) {
                     float argbComponents[4] = {0.0f, 0.0f, 0.0f, 0.0f};
                     for (int i = 0; i < 4; i++) {
