@@ -1562,9 +1562,11 @@ public class Scandit {
          * \since 5.7
          *
          * \param state The state that uses the specified color.
-         * \param color The color to use for tracked barcodes in the specified state.
+         * \param hexColor The color to use for tracked barcodes in the specified state. The color
+         * is an 8 character hex in the sequence ARGB (alpha, red, green, blue). For example
+         * "AAFF00FF" for a slightly transparent purple.
          */
-        public void setMatrixScanHighlightingColor(ScanOverlay.MatrixScanState state, String color);
+        public void setMatrixScanHighlightingColor(ScanOverlay.MatrixScanState state, String hexColor);
         ///@}
     }
 
