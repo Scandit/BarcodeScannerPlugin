@@ -70,7 +70,7 @@ BarcodePicker.prototype.show = function () {
     }
     // copy to options object. Previously we were directly passing 'this' to cordova,
     // but this caused the complete picker instance to be serialized.
-    var options = { continuousMode : this.continuousMode };
+    var options = { "continuousMode": this.continuousMode };
 
     if (this.portraitConstraints != null) {
         options.portraitConstraints = this.portraitConstraints;
@@ -243,10 +243,12 @@ BarcodePicker.prototype.startScanning = function(paused) {
         return;
     }
     var options = {
-        paused : paused !== undefined ? !!paused : false
+        "paused": force_to_bool(paused)
     };
     cordova.exec(null, null, "ScanditSDK", "start", [options]);
 }
+
+function force_to_bool(value) { return !!value; }
 
 BarcodePicker.prototype.stopScanning = function() {
     if (this.isShown) {
