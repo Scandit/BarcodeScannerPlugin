@@ -193,14 +193,14 @@ public class SubViewPickerController extends PickerControllerBase implements
     }
 
     @Override
-    public void startScanning() {
+    public void startScanning(final boolean paused) {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (mPickerStateMachine == null) {
                     return;
                 }
-                mPickerStateMachine.startScanning();
+                mPickerStateMachine.startScanning(paused);
                 setStateOnParent(PickerStateMachine.ACTIVE);
             }
         });

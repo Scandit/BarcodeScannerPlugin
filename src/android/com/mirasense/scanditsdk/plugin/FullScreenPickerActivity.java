@@ -87,9 +87,9 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
         sActiveActivity.mPickerStateMachine.applyScanSettings(scanSettings);
     }
 
-    public static void startScanning() {
+    public static void startScanning(boolean paused) {
         if (sActiveActivity == null || sActiveActivity.mPickerStateMachine == null) return;
-        sActiveActivity.mPickerStateMachine.startScanning();
+        sActiveActivity.mPickerStateMachine.startScanning(paused);
     }
 
     public static void setRejectedCodeIds(List<Long> rejectedCodeIds) {
