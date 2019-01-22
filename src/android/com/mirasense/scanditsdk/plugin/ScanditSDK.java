@@ -129,7 +129,7 @@ public class ScanditSDK extends CordovaPlugin {
         } else if (action.equals(START_COMMAND)) {
             // can't use setPickerState(PickerStateMachine.ACTIVE), because we need to call
             // startScanning, even if the picker was in paused state.
-            startScanning();
+            startScanning(args);
         } else if (action.equals(RESIZE_COMMAND)) {
             resize(args);
         } else if (action.equals(UPDATE_OVERLAY_COMMAND)) {
@@ -294,12 +294,23 @@ public class ScanditSDK extends CordovaPlugin {
         });
     }
 
-    private void startScanning() {
+    private void startScanning(JSONArray data) {
         mWorker.getHandler().post(new Runnable() {
             @Override
             public void run() {
                 if (mPickerController == null) return;
-                mPickerController.startScanning();
+                boolean startPaused = false;
+                if (data.length() > 0) {
+                    try {
+                        JSONObject options = data.getJSONObject(0);
+                        if (options.has("paused")) {
+                            startPaused = options.getBoolean("paused");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                mPickerController.startScanning(startPaused);
             }
         });
     }
