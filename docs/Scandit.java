@@ -635,7 +635,9 @@ public class Scandit {
 
 
         /**
-         * \brief Sets the orientations to which the barcode picker is allowed to rotate to.
+         * \brief Sets the orientations to which the barcode picker is allowed to rotate to. This
+         * only affects the iOS platform. To change the orientation on Android the orientation
+         * should be specified in the AndroidManifest.xml.
          *
          * \param orientations An array of BarcodePicker.Orientation objects.
          *
