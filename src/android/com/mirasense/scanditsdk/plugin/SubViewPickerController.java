@@ -65,6 +65,7 @@ public class SubViewPickerController extends PickerControllerBase implements
     private RelativeLayout mLayout;
 
     private PickerStateMachine mPickerStateMachine = null;
+    private int mStateBeforeSuspend = PickerStateMachine.ACTIVE;
 
     private SubViewPickerOrientationHandler mOrientationHandler = null;
     private boolean mContinuousMode = false;
@@ -193,14 +194,14 @@ public class SubViewPickerController extends PickerControllerBase implements
     }
 
     @Override
-    public void startScanning() {
+    public void startScanning(final boolean paused) {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (mPickerStateMachine == null) {
                     return;
                 }
-                mPickerStateMachine.startScanning();
+                mPickerStateMachine.startScanning(paused);
                 setStateOnParent(PickerStateMachine.ACTIVE);
             }
         });
@@ -338,6 +339,7 @@ public class SubViewPickerController extends PickerControllerBase implements
             mOrientationHandler.stop();
         }
         if (mPickerStateMachine != null) {
+            mStateBeforeSuspend = mPickerStateMachine.getState();
             mPickerStateMachine.setState(PickerStateMachine.STOPPED);
         }
     }
@@ -348,7 +350,7 @@ public class SubViewPickerController extends PickerControllerBase implements
             mOrientationHandler.start(false);
         }
         if (mPickerStateMachine != null) {
-            mPickerStateMachine.setState(PickerStateMachine.ACTIVE);
+            mPickerStateMachine.setState(mStateBeforeSuspend);
         }
     }
 

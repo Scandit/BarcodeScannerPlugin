@@ -102,16 +102,21 @@ class PickerStateMachine {
         mPicker.setTrackedCodeStates(trackedCodeStates);
     }
 
-    public void startScanning() {
+    public void startScanning(boolean paused) {
         if (mCurrentState == ACTIVE) {
             return;
         }
-        transitionToActiveState(true);
+        if (!paused) {
+            transitionToActiveState(true);
+            mCurrentState = ACTIVE;
+        } else {
+            transitionToPausedState();
+            mCurrentState = PAUSED;
+        }
         Callback cb = mCallback.get();
         if (cb != null) {
-            cb.pickerEnteredState(mPicker, ACTIVE);
+            cb.pickerEnteredState(mPicker, mCurrentState);
         }
-        mCurrentState = ACTIVE;
     }
 
     private void transitionToStoppedState() {

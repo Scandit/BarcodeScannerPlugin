@@ -106,5 +106,5 @@ public interface IPickerController {
      */
     void finishDidRecognizeNewCodesCallback(final JSONArray data);
 
-    void startScanning();
+    void startScanning(boolean paused);
 }
