@@ -284,7 +284,7 @@ public class ScanditSDK extends CordovaPlugin {
         });
     }
 
-    private void cancel(JSONArray data) {
+    private void cancel(final JSONArray data) {
         mWorker.getHandler().post(new Runnable() {
             @Override
             public void run() {
@@ -294,7 +294,7 @@ public class ScanditSDK extends CordovaPlugin {
         });
     }
 
-    private void startScanning(JSONArray data) {
+    private void startScanning(final JSONArray data) {
         mWorker.getHandler().post(new Runnable() {
             @Override
             public void run() {
