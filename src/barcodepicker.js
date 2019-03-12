@@ -151,7 +151,7 @@ BarcodePicker.prototype.show = function () {
             } else if (picker.pausedDuringCallback) {
                 nextStep = BarcodePicker.State.PAUSED;
             }
-            var rejectedCodes;
+            var rejectedCodes = [];
             if (recognizedText.rejected) {
                 rejectedCodes = [1];
             }
