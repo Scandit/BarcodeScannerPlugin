@@ -131,20 +131,30 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        JSONObject settings = null;
-        Bundle options = null;
-        Bundle overlayOptions = null;
+        JSONObject settings = new JSONObject();
+        Bundle options = new Bundle();
+        Bundle overlayOptions = new Bundle();
 
-        try {
-            settings = new JSONObject(getIntent().getExtras().getString("settings"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        if (getIntent().getExtras().containsKey("options")) {
-            options = getIntent().getExtras().getBundle("options");
-        }
-        if (getIntent().getExtras().containsKey("overlayOptions")) {
-            overlayOptions = getIntent().getExtras().getBundle("overlayOptions");
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String settingsString = extras.getString("settings");
+            try {
+                if (settingsString != null) {
+                    settings = new JSONObject(settingsString);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Bundle optionsBundle = extras.getBundle("options");
+            if (optionsBundle != null) {
+                options = optionsBundle;
+            }
+
+            Bundle overlayOptionsBundle = extras.getBundle("overlayOptions");
+            if (overlayOptionsBundle != null) {
+                overlayOptions = overlayOptionsBundle;
+            }
         }
 
         initializeAndStartBarcodeRecognition(settings, options, overlayOptions);
