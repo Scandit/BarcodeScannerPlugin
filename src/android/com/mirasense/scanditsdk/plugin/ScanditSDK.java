@@ -213,7 +213,7 @@ public class ScanditSDK extends CordovaPlugin {
                     mPickerController = new FullscreenPickerController(ScanditSDK.this, mCallbackContext);
                 }
 
-                mPickerController.show(settings, options, overlayOptions, legacyMode);
+                mPickerController.show(settings, options, overlayOptions, legacyMode, mCallbackContext);
             }
         });
     }

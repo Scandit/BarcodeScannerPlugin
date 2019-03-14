@@ -40,7 +40,8 @@ class FullscreenPickerController extends PickerControllerBase implements ResultR
     }
 
     @Override
-    public void show(JSONObject settings, Bundle options, Bundle overlayOptions, boolean legacyMode) {
+    public void show(JSONObject settings, Bundle options, Bundle overlayOptions, boolean legacyMode, CallbackContext callbacks) {
+        mCallbackContext = callbacks;
         int flags = mPlugin.cordova.getActivity().getWindow().getAttributes().flags;
         if ((flags & WindowManager.LayoutParams.FLAG_SECURE) != 0) {
             options.putBoolean("secure", true);
