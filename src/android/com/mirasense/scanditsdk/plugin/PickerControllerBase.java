@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 abstract class PickerControllerBase implements IPickerController {
 
     final CordovaPlugin mPlugin;
-    final CallbackContext mCallbackContext;
+    CallbackContext mCallbackContext;
 
     // Indicates whether a result callback (any of didScan, didRecognizeNewCodes, didRecognizeText)
     // is in process.

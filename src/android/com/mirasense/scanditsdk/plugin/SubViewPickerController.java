@@ -102,7 +102,8 @@ public class SubViewPickerController extends PickerControllerBase implements
 
     @Override
     public void show(final JSONObject settings, final Bundle options, final Bundle overlayOptions,
-                     boolean legacyMode) {
+                     boolean legacyMode, CallbackContext callbacks) {
+        mCallbackContext = callbacks;
         mPendingClose.set(false);
         mContinuousMode = PhonegapParamParser.shouldRunInContinuousMode(options);
         mIsDidScanDefined = PhonegapParamParser.isDidScanDefined(options);

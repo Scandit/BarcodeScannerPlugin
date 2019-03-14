@@ -16,6 +16,7 @@ import android.os.Bundle;
 
 import com.scandit.barcodepicker.ScanSettings;
 
+import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -33,7 +34,7 @@ public interface IPickerController {
      */
     void setState(int state);
 
-    void show(JSONObject settings, Bundle options, Bundle overlayOptions, boolean legacyMode);
+    void show(JSONObject settings, Bundle options, Bundle overlayOptions, boolean legacyMode, CallbackContext callbacks);
 
     /**
      * @brief Apply new scan settings to the picker
