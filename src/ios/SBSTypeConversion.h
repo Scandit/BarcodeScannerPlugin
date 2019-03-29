@@ -16,6 +16,12 @@
 extern "C" {
 #endif
 
+@interface SBSTrackedCode (Identifier)
+
+@property (nonatomic, readonly) NSNumber *identifier;
+
+@end
+
 @interface SBSCode (UniqueId)
 
 @property (readonly, nonatomic) long uniqueId;
