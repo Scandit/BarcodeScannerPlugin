@@ -19,12 +19,6 @@
 
 @end
 
-@interface SBSTrackedCode (Identifier)
-
-@property (nonatomic, readonly) NSNumber *identifier;
-
-@end
-
 @implementation SBSCode (UniqueId)
 
 - (long)uniqueId {

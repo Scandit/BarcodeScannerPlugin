@@ -526,13 +526,8 @@ SBSLicenseValidationDelegate>
 
         // Visually reject codes
         for (NSNumber *codeId in self.visuallyRejectedCodeIds) {
-            long value = [codeId longValue];
-            for (SBSTrackedCode *code in [trackedCodes allValues]) {
-                if (code.uniqueId == value) {
-                    [session rejectTrackedCode:code];
-                    break;
-                }
-            }
+            SBSTrackedCode *code = trackedCodes[codeId];
+            [session rejectTrackedCode:code];
         }
 
         // Send the frame
