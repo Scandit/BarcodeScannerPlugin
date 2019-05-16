@@ -85,3 +85,29 @@ ionic cordova run ios --device
 
 Use the `--livereload`` option if you want to keep watching the source for changes and preview those on the device.  
 _If you choose this option, please note that only the WebView contents are reloaded, which does not include native components, e.g. the barcode picker._
+
+# App structure and logic
+
+The purpose of the sample is to demonstrate using the Scandit SDK for Cordova inside an Ionic project.
+
+The two main files of interest are `home.ts` and `scanner-service.ts`:
+- `home.ts` is the only page used in the app and it shows a scanner as well as the scanned results.
+- `scanner-service.ts` contains code related to interacting with the Scandit Cordova plugin, including the picker as well as handling the sizing of the barcode picker.
+
+## Sizing
+The barcode picker is shown as a platform native element and not an HTML element, so we need to be able to constrain it properly in the context of an Ionic page. As the page we're showing the scanner on includes a navigation bar, which has a size and position dependent on device and platform, we need to know it's size to position the picker correctly (right under the navigation bar). To achieve this, we're getting a reference to the Ionic content object in `home.ts` and as soon as the page is shown, we set it's `contentTop` as the scanner's `contentTop`. Keep in mind that `scanner` at this point is an instance of the `ScannerServiceProvider` that's wrapping the barcode picker.
+
+When the `contentTop` is set for the scanner, the constraints for the picker are adjusted (`setScannerConstraints`), aligning it to the top and leaving some space between the bottom of the picker and the bottom of the screen. In addition, the height of the picker is also calculated (`contentHeight`), so that value can be used back on the home page to position the rest of the page relative to the picker, so it doesn't overlay any of the content.
+
+## Scanning
+
+The home page (`home.ts`) is where the picker and the results are shown and the scanning can be resumed, as well as the continuous mode can be turned on and off.
+
+As soon as the page is shown, the scanner is set up: the delegate is specified and scanning is started. The delegate is necessary in this app to get notified of new scan results, this could potentially be achieved in different ways and is specific to this app only and not the SDK.
+
+The picker is set up when the `ScannerServiceProvider` instance is created, this is when the license key is set and the specific settings are defined and passed to the picker that the `ScannerServiceProvider` is wrapping.  
+As continuous mode is handled by the app itself, we set the picker to be always in continuous mode and later take care of pausing ourselves if necessary.
+
+When the scanner is started, the picker is shown and scanning is started. We also specify calling the delegate if available when a barcode is scanned.
+
+If continuous mode is disabled on the home page, scanning is paused as soon as something is scanned and is resumed if the user taps a button, which triggers calling the `resumeScanning` function (`home.ts`), which resumes the scanner and any results that the page was keeping track of.
