@@ -58,20 +58,20 @@ declare module Scandit {
         orientations: BarcodePicker.Orientation[];
 
         show(
-            didScan: Function,
-            didManualSearch?: Function,
-            didCancel?: Function,
-            didRecognizeText?: Function,
-            didRecognizeNewCodes?: Function,
-            didChangeProperty?: Function,
+            didScan: (scanSession: ScanSession) => void,
+            didManualSearch?: (text: string) => void,
+            didCancel?: (reason: any) => void,
+            didRecognizeText?: (recognizedText: RecognizedText) => void,
+            didRecognizeNewCodes?: (matrixScanSession: MatrixScanSession) => void,
+            didChangeProperty?: (propertyName: string, newValue: any) => void,
         ): void;
         show(callbacks: Callbacks): void;
 
         cancel(): void;
         applyScanSettings(scanSettings: ScanSettings): void;
         setOrientations(orientations: BarcodePicker.Orientation[]): void;
-        setConstraints(portraitConstraints: Constraints, landscapeConstraints: Constraints, animationDuration: number): void;
-        setMargins(portraitMargins: Margins, landscapeMargins: Margins, animationDuration: number): void;
+        setConstraints(portraitConstraints?: Constraints, landscapeConstraints?: Constraints, animationDuration?: number): void;
+        setMargins(portraitMargins?: Margins, landscapeMargins?: Margins, animationDuration?: number): void;
         pauseScanning(): void;
         resumeScanning(): void;
         stopScanning(): void;
