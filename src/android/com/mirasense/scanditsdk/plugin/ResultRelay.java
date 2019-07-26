@@ -18,6 +18,7 @@ import com.scandit.barcodepicker.PropertyChangeListener;
 import com.scandit.barcodepicker.ScanSession;
 import com.scandit.barcodepicker.ocr.RecognizedText;
 import com.scandit.recognition.Barcode;
+import com.scandit.recognition.Quadrilateral;
 import com.scandit.recognition.TrackedBarcode;
 
 import org.json.JSONArray;
@@ -122,9 +123,11 @@ public class ResultRelay {
                 object.put("gs1DataCarrier", code.isGs1DataCarrier());
                 object.put("recognized", code.isRecognized());
                 object.put("data", code.getData());
+                object.put("location", jsonForQuadrilateral(code.getLocation()));
                 object.put("compositeFlag", code.getCompositeFlag());
                 if (code instanceof TrackedBarcode) {
                     object.put("uniqueId", ((TrackedBarcode) code).getId());
+                    object.put("predictedLocation", jsonForQuadrilateral(((TrackedBarcode) code).getPredictedLocation()));
                 } else {
                     object.put("uniqueId", code.getHandle());
                 }
@@ -142,6 +145,35 @@ public class ResultRelay {
             }
         }
         return array;
+    }
+
+    private static JSONObject jsonForQuadrilateral(Quadrilateral quadrilateral) {
+        JSONObject obj = new JSONObject();
+        try {
+            JSONArray array = new JSONArray();
+            array.put(quadrilateral.top_left.x);
+            array.put(quadrilateral.top_left.y);
+            obj.put("topLeft", array);
+
+            array = new JSONArray();
+            array.put(quadrilateral.top_right.x);
+            array.put(quadrilateral.top_right.y);
+            obj.put("topRight", array);
+
+            array = new JSONArray();
+            array.put(quadrilateral.bottom_left.x);
+            array.put(quadrilateral.bottom_left.y);
+            obj.put("bottomLeft", array);
+
+            array = new JSONArray();
+            array.put(quadrilateral.bottom_right.x);
+            array.put(quadrilateral.bottom_right.y);
+            obj.put("bottomRight", array);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return obj;
     }
 
     public static JSONObject jsonForRecognizedText(RecognizedText recognizedText) {

@@ -395,7 +395,7 @@ public class Scandit {
         public CompositeFlag compositeFlag;
 
         /**
-         * \brief The location of the code in the image.
+         * \brief The location of the code in the frame.
          *
          * The location is returned as a a polygon with 4 corners. The corners are in the
          * coordinate system of the raw preview image. In order to be displayed they must be
@@ -403,11 +403,22 @@ public class Scandit {
          * topRight etc is such that the topLeft point corresponds to the top-left corner of the
          * barcode  regardless of how it is oriented in the image.
          *
-         * \return The location of the code as a quadrilateral.
-         *
          * \see Scandit.BarcodePicker#convertPointToPickerCoordinates(Point)
          */
         public Quadrilateral location;
+
+        /**
+         * \brief The predicted location of the barcode in the frame. (Only available for tracked codes if MatrixScan is enabled.)
+         *
+         * The location is returned as a a polygon with 4 corners. The corners are in the
+         * coordinate system of the raw preview image. In order to be displayed they must be
+         * transformed to the coordinate system of the view. The meaning of the values of topLeft,
+         * topRight etc is such that the topLeft point corresponds to the top-left corner of the
+         * barcode  regardless of how it is oriented in the image.
+         *
+         * \see Scandit.BarcodePicker#convertPointToPickerCoordinates(Point)
+         */
+        public Quadrilateral predictedLocation;
     }
 
     /**

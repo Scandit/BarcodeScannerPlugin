@@ -8,6 +8,7 @@ declare module Scandit {
         rawData: number[];
         compositeFlag: Barcode.CompositeFlag;
         location: Quadrilateral;
+        predictedLocation: Quadrilateral;
     }
     export module Barcode {
         export enum Symbology {
