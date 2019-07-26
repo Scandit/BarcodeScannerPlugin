@@ -401,7 +401,7 @@ public class Scandit {
          * coordinate system of the raw preview image. In order to be displayed they must be
          * transformed to the coordinate system of the view. The meaning of the values of topLeft,
          * topRight etc is such that the topLeft point corresponds to the top-left corner of the
-         * barcode  regardless of how it is oriented in the image.
+         * barcode regardless of how it is oriented in the image.
          */
         public Quadrilateral location;
 
@@ -412,19 +412,19 @@ public class Scandit {
          * coordinate system of the raw preview image. In order to be displayed they must be
          * transformed to the coordinate system of the view. The meaning of the values of topLeft,
          * topRight etc is such that the topLeft point corresponds to the top-left corner of the
-         * barcode  regardless of how it is oriented in the image.
+         * barcode regardless of how it is oriented in the image.
          */
         public Quadrilateral predictedLocation;
+
+        /**
+         * @brief The converted location of the barcode in the coordinate system of the picker.
+         */
+        public Quadrilateral convertedLocation;
 
         /**
          * @brief The converted predicted location of the barcode in the coordinate system of the picker. (Only available for tracked codes if MatrixScan is enabled.)
          */
         public Quadrilateral convertedPredictedLocation;
-
-        /**
-         * @brief The converted location of the barcode in the coordinate system of the picker. (Only available for tracked codes if MatrixScan is enabled.)
-         */
-        public Quadrilateral convertedLocation;
     }
 
     /**
@@ -747,24 +747,6 @@ public class Scandit {
          * \since 4.11.0
          */
         public ScanOverlay getOverlayView();
-
-        /**
-         * \brief Converts a point of an Barcode's location into this picker's coordinate system.
-         *
-         * The conversion takes the current resolution of the camera feed into consideration which means
-         * that if the resolution should change, converting a previously retrieved point successfully is
-         * no longer possible. A change in resolution happens for example if
-         * {\link ScanSettings.setHighDensityModeEnabled(boolean)} is changed
-         * or the camera is switched from back to front or vice versa.
-         *
-         * \param point The point to be converted.
-         * \return The point in this picker's coordinate system. Can be null if an error occurs.
-         *
-         * \since 4.11.0
-         *
-         * \see {\link Scandit.Barcode.location}
-         */
-        public Point convertPointToPickerCoordinates(Point point);
     }
 
     /**

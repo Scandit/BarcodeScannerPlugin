@@ -128,13 +128,15 @@ public class ResultRelay {
                 object.put("recognized", code.isRecognized());
                 object.put("data", code.getData());
                 object.put("location", jsonForQuadrilateral(code.getLocation()));
+                // XXX The JS layer expects the value to be in dp instead of pixels, hence we need the extra
+                // scaling for the converted locations.
+                object.put("convertedLocation", jsonForQuadrilateral(convertQuadrilateral(picker, code.getLocation())));
                 object.put("compositeFlag", code.getCompositeFlag());
                 if (code instanceof TrackedBarcode) {
                     object.put("uniqueId", ((TrackedBarcode) code).getId());
                     object.put("predictedLocation", jsonForQuadrilateral(((TrackedBarcode) code).getPredictedLocation()));
                     // XXX The JS layer expects the value to be in dp instead of pixels, hence we need the extra
                     // scaling for the converted locations.
-                    object.put("convertedLocation", jsonForQuadrilateral(convertQuadrilateral(picker, code.getLocation())));
                     object.put("convertedPredictedLocation", jsonForQuadrilateral(convertQuadrilateral(picker, ((TrackedBarcode) code).getPredictedLocation())));
                 } else {
                     object.put("uniqueId", code.getHandle());

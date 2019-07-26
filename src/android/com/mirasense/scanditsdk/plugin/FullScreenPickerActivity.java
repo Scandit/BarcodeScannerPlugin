@@ -181,7 +181,7 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
             e.printStackTrace();
             scanSettings = ScanSettings.create();
         }
-        BarcodePickerWithSearchBar mPicker = new BarcodePickerWithSearchBar(this, scanSettings);
+        mPicker = new BarcodePickerWithSearchBar(this, scanSettings);
         mPicker.setOnScanListener(this);
         mPicker.setProcessFrameListener(this);
         mPicker.setLicenseValidationListener(this);
