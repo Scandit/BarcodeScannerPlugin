@@ -14,6 +14,10 @@ package com.mirasense.scanditsdk.plugin;
 
 import android.os.Bundle;
 
+import android.content.Context;
+import android.graphics.Point;
+
+import com.scandit.barcodepicker.BarcodePicker;
 import com.scandit.barcodepicker.PropertyChangeListener;
 import com.scandit.barcodepicker.ScanSession;
 import com.scandit.barcodepicker.ocr.RecognizedText;
@@ -91,29 +95,29 @@ public class ResultRelay {
         return json;
     }
 
-    public static JSONObject jsonForSession(ScanSession session) {
+    public static JSONObject jsonForSession(ScanSession session, BarcodePicker picker) {
         JSONObject json = new JSONObject();
         try {
-            json.put("newlyRecognizedCodes", jsonForCodes(session.getNewlyRecognizedCodes()));
-            json.put("newlyLocalizedCodes", jsonForCodes(session.getNewlyLocalizedCodes()));
-            json.put("allRecognizedCodes", jsonForCodes(session.getAllRecognizedCodes()));
+            json.put("newlyRecognizedCodes", jsonForCodes(session.getNewlyRecognizedCodes(), picker));
+            json.put("newlyLocalizedCodes", jsonForCodes(session.getNewlyLocalizedCodes(), picker));
+            json.put("allRecognizedCodes", jsonForCodes(session.getAllRecognizedCodes(), picker));
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return json;
     }
 
-    public static JSONObject jsonForTrackedCodes(List<TrackedBarcode> trackedCodes) {
+    public static JSONObject jsonForTrackedCodes(List<TrackedBarcode> trackedCodes, BarcodePicker picker) {
         JSONObject json = new JSONObject();
         try {
-            json.put("newlyTrackedCodes", jsonForCodes(trackedCodes));
+            json.put("newlyTrackedCodes", jsonForCodes(trackedCodes, picker));
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return json;
     }
 
-    public static JSONArray jsonForCodes(List<? extends Barcode> codes) {
+    public static JSONArray jsonForCodes(List<? extends Barcode> codes, BarcodePicker picker) {
         JSONArray array = new JSONArray();
 
         for (Barcode code : codes) {
@@ -128,6 +132,10 @@ public class ResultRelay {
                 if (code instanceof TrackedBarcode) {
                     object.put("uniqueId", ((TrackedBarcode) code).getId());
                     object.put("predictedLocation", jsonForQuadrilateral(((TrackedBarcode) code).getPredictedLocation()));
+                    // XXX The JS layer expects the value to be in dp instead of pixels, hence we need the extra
+                    // scaling for the converted locations.
+                    object.put("convertedLocation", jsonForQuadrilateral(convertQuadrilateral(picker, code.getLocation())));
+                    object.put("convertedPredictedLocation", jsonForQuadrilateral(convertQuadrilateral(picker, ((TrackedBarcode) code).getPredictedLocation())));
                 } else {
                     object.put("uniqueId", code.getHandle());
                 }
@@ -145,6 +153,23 @@ public class ResultRelay {
             }
         }
         return array;
+    }
+
+    private static Quadrilateral convertQuadrilateral(BarcodePicker picker, Quadrilateral rect) {
+        return new Quadrilateral(
+                dpFromPx(picker.getContext(), picker.convertPointToPickerCoordinates(rect.top_left)),
+                dpFromPx(picker.getContext(), picker.convertPointToPickerCoordinates(rect.top_right)),
+                dpFromPx(picker.getContext(), picker.convertPointToPickerCoordinates(rect.bottom_left)),
+                dpFromPx(picker.getContext(), picker.convertPointToPickerCoordinates(rect.bottom_right))
+        );
+    }
+
+    private static Point dpFromPx(Context context, Point point) {
+        float displayDensity = context.getResources().getDisplayMetrics().density;
+        return new Point(
+                (int) (point.x / displayDensity),
+                (int) (point.y / displayDensity)
+        );
     }
 
     private static JSONObject jsonForQuadrilateral(Quadrilateral quadrilateral) {

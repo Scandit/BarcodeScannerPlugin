@@ -65,6 +65,7 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
     private static AtomicBoolean sPendingClose = new AtomicBoolean(false);
     private static AtomicBoolean sBufferedTorchEnabled = new AtomicBoolean(false);
 
+    private BarcodePickerWithSearchBar mPicker = null;
     private PickerStateMachine mPickerStateMachine = null;
     private boolean mContinuousMode = false;
     private boolean mIsDidScanDefined = false;
@@ -180,26 +181,26 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
             e.printStackTrace();
             scanSettings = ScanSettings.create();
         }
-        BarcodePickerWithSearchBar picker = new BarcodePickerWithSearchBar(this, scanSettings);
-        picker.setOnScanListener(this);
-        picker.setProcessFrameListener(this);
-        picker.setLicenseValidationListener(this);
-        picker.setTextRecognitionListener(this);
-        picker.setPropertyChangeListener(this);
+        BarcodePickerWithSearchBar mPicker = new BarcodePickerWithSearchBar(this, scanSettings);
+        mPicker.setOnScanListener(this);
+        mPicker.setProcessFrameListener(this);
+        mPicker.setLicenseValidationListener(this);
+        mPicker.setTextRecognitionListener(this);
+        mPicker.setPropertyChangeListener(this);
 
-        this.setContentView(picker);
-        mPickerStateMachine = new PickerStateMachine(picker, scanSettings, this);
+        this.setContentView(mPicker);
+        mPickerStateMachine = new PickerStateMachine(mPicker, scanSettings, this);
 
         // Set all the UI options.
-        PhonegapParamParser.updatePicker(picker, options, this);
+        PhonegapParamParser.updatePicker(mPicker, options, this);
 
         // Check buffered torch state and apply if needed.
         if (sBufferedTorchEnabled.compareAndSet(true, false)) {
-            picker.switchTorchOn(true);
+            mPicker.switchTorchOn(true);
         }
 
-        UIParamParser.updatePickerUI(picker, overlayOptions);
-        PhonegapParamParser.updatePicker(picker, overlayOptions, this);
+        UIParamParser.updatePickerUI(mPicker, overlayOptions);
+        PhonegapParamParser.updatePicker(mPicker, overlayOptions, this);
 
         mContinuousMode = PhonegapParamParser.shouldRunInContinuousMode(options);
         mIsDidScanDefined = PhonegapParamParser.isDidScanDefined(options);
@@ -281,7 +282,7 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
     private Bundle bundleForScanResult(ScanSession session) {
         Bundle bundle = new Bundle();
         JSONArray eventArgs = Marshal.createEventArgs(ScanditSDK.DID_SCAN_EVENT,
-                ResultRelay.jsonForSession(session));
+                ResultRelay.jsonForSession(session, mPicker));
         bundle.putString("jsonString", eventArgs.toString());
         return bundle;
     }
@@ -353,7 +354,7 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
     private Bundle bundleForProcessResult(List<TrackedBarcode> newylTrackedCodes) {
         Bundle bundle = new Bundle();
         JSONArray eventArgs = Marshal.createEventArgs(ScanditSDK.DID_RECOGNIZE_NEW_CODES,
-                ResultRelay.jsonForTrackedCodes(newylTrackedCodes));
+                ResultRelay.jsonForTrackedCodes(newylTrackedCodes, mPicker));
         bundle.putString("jsonString", eventArgs.toString());
         return bundle;
     }

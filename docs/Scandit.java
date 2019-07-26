@@ -402,8 +402,6 @@ public class Scandit {
          * transformed to the coordinate system of the view. The meaning of the values of topLeft,
          * topRight etc is such that the topLeft point corresponds to the top-left corner of the
          * barcode  regardless of how it is oriented in the image.
-         *
-         * \see Scandit.BarcodePicker#convertPointToPickerCoordinates(Point)
          */
         public Quadrilateral location;
 
@@ -415,10 +413,18 @@ public class Scandit {
          * transformed to the coordinate system of the view. The meaning of the values of topLeft,
          * topRight etc is such that the topLeft point corresponds to the top-left corner of the
          * barcode  regardless of how it is oriented in the image.
-         *
-         * \see Scandit.BarcodePicker#convertPointToPickerCoordinates(Point)
          */
         public Quadrilateral predictedLocation;
+
+        /**
+         * @brief The converted predicted location of the barcode in the coordinate system of the picker. (Only available for tracked codes if MatrixScan is enabled.)
+         */
+        public Quadrilateral convertedPredictedLocation;
+
+        /**
+         * @brief The converted location of the barcode in the coordinate system of the picker. (Only available for tracked codes if MatrixScan is enabled.)
+         */
+        public Quadrilateral convertedLocation;
     }
 
     /**

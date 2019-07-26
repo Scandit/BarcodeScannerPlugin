@@ -64,6 +64,7 @@ public class SubViewPickerController extends PickerControllerBase implements
 
     private RelativeLayout mLayout;
 
+    private BarcodePickerWithSearchBar mPicker = null;
     private PickerStateMachine mPickerStateMachine = null;
     private int mStateBeforeSuspend = PickerStateMachine.ACTIVE;
 
@@ -131,21 +132,21 @@ public class SubViewPickerController extends PickerControllerBase implements
                             ". Falling back to default scan settings.");
                     scanSettings = ScanSettings.create();
                 }
-                BarcodePickerWithSearchBar picker =
+                mPicker =
                         new BarcodePickerWithSearchBar(pluginActivity, scanSettings);
-                picker.setOnScanListener(SubViewPickerController.this);
-                picker.setProcessFrameListener(SubViewPickerController.this);
-                picker.setLicenseValidationListener(SubViewPickerController.this);
-                picker.setTextRecognitionListener(SubViewPickerController.this);
-                picker.setPropertyChangeListener(SubViewPickerController.this);
+                mPicker.setOnScanListener(SubViewPickerController.this);
+                mPicker.setProcessFrameListener(SubViewPickerController.this);
+                mPicker.setLicenseValidationListener(SubViewPickerController.this);
+                mPicker.setTextRecognitionListener(SubViewPickerController.this);
+                mPicker.setPropertyChangeListener(SubViewPickerController.this);
                 mPickerStateMachine = new PickerStateMachine(
-                        picker, scanSettings, SubViewPickerController.this);
+                        mPicker, scanSettings, SubViewPickerController.this);
                 mOrientationHandler.setScreenDimensions(mScreenDimensions);
                 mOrientationHandler.setPicker(mPickerStateMachine.getPicker());
                 // Set all the UI options.
-                PhonegapParamParser.updatePicker(picker, options, SubViewPickerController.this);
+                PhonegapParamParser.updatePicker(mPicker, options, SubViewPickerController.this);
                 internalUpdateUI(overlayOptions, options);
-                // Create the layout to add the picker to and add it on top of the web view.
+                // Create the layout to add the mPicker to and add it on top of the web view.
                 mLayout = new RelativeLayout(pluginActivity);
                 ViewGroup viewGroup = getPickerParent();
                 if (viewGroup == null) return; // couldn't determine view group, nothing to be done.
@@ -159,7 +160,7 @@ public class SubViewPickerController extends PickerControllerBase implements
                 callPickerShownListener(options);
 
                 if (mPendingClose.compareAndSet(true, false)) {
-                    // picker was closed(canceled) in the meantime. close it now.
+                    // mPicker was closed(canceled) in the meantime. close it now.
                     SubViewPickerController.this.close();
                 }
             }
@@ -434,7 +435,7 @@ public class SubViewPickerController extends PickerControllerBase implements
             return;
         }
         JSONArray eventArgs = Marshal.createEventArgs(ScanditSDK.DID_SCAN_EVENT,
-                ResultRelay.jsonForSession(session));
+                ResultRelay.jsonForSession(session, mPicker));
         PluginResult result = Marshal.createOkResult(eventArgs);
 
         int nextState = sendPluginResultBlocking(result);
@@ -488,7 +489,7 @@ public class SubViewPickerController extends PickerControllerBase implements
 
         if (newlyTrackedCodes.size() > 0) {
             JSONArray eventArgs = Marshal.createEventArgs(ScanditSDK.DID_RECOGNIZE_NEW_CODES,
-                    ResultRelay.jsonForTrackedCodes(newlyTrackedCodes));
+                    ResultRelay.jsonForTrackedCodes(newlyTrackedCodes, mPicker));
             PluginResult result = Marshal.createOkResult(eventArgs);
             sendPluginResultBlocking(result);
             Marshal.rejectTrackedCodes(session, mRejectedTrackedCodeIds);
