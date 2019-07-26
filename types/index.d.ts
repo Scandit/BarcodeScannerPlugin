@@ -8,6 +8,9 @@ declare module Scandit {
         rawData: number[];
         compositeFlag: Barcode.CompositeFlag;
         location: Quadrilateral;
+        predictedLocation: Quadrilateral;
+        convertedLocation: Quadrilateral;
+        convertedPredictedLocation: Quadrilateral;
     }
     export module Barcode {
         export enum Symbology {
@@ -79,7 +82,6 @@ declare module Scandit {
         startScanning(startInPausedState: boolean): void;
         switchTorchOn(on: boolean): void;
         getOverlayView(): ScanOverlay;
-        convertPointToPickerCoordinates(point: Point): Point;
     }
     export module BarcodePicker {
         export enum Orientation {

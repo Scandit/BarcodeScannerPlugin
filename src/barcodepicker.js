@@ -218,6 +218,10 @@ BarcodePicker.codeArrayFromGenericArray = function(genericArray) {
         code.rawData = src.rawData;
         code.compositeFlag = src.compositeFlag;
         code.uniqueId = src.uniqueId || 0;
+        code.location = src.location;
+        code.predictedLocation = src.predictedLocation;
+        code.convertedLocation = src.convertedLocation;
+        code.convertedPredictedLocation = src.convertedPredictedLocation;
         codeArray.push(code);
     }
     return codeArray;
