@@ -545,15 +545,15 @@ SBSLicenseValidationDelegate>
 
 - (CDVPluginResult *)resultForSession:(SBSScanSession *)session {
     NSDictionary *result = @{
-                             @"newlyRecognizedCodes": SBSJSObjectsFromCodeArray(session.newlyRecognizedCodes),
-                             @"newlyLocalizedCodes" : SBSJSObjectsFromCodeArray(session.newlyLocalizedCodes),
-                             @"allRecognizedCodes" : SBSJSObjectsFromCodeArray(session.allRecognizedCodes)
+                             @"newlyRecognizedCodes": SBSJSObjectsFromCodeArray(session.newlyRecognizedCodes, self.picker),
+                             @"newlyLocalizedCodes" : SBSJSObjectsFromCodeArray(session.newlyLocalizedCodes, self.picker),
+                             @"allRecognizedCodes" : SBSJSObjectsFromCodeArray(session.allRecognizedCodes, self.picker)
                              };
     return [self createResultForEvent:@"didScan" value:result];
 }
 
 - (CDVPluginResult *)trackingResultWithTrackedCodes:(NSArray<SBSTrackedCode *> *)newlyTrackedCodes {
-    NSDictionary *result = @{@"newlyTrackedCodes": SBSJSObjectsFromCodeArray(newlyTrackedCodes)};
+    NSDictionary *result = @{@"newlyTrackedCodes": SBSJSObjectsFromCodeArray(newlyTrackedCodes, self.picker)};
     return [self createResultForEvent:@"didRecognizeNewCodes" value:result];
 }
 

@@ -18,6 +18,10 @@ const static NSString *kSBSScanCaseDidChangeStateEvent = @"didChangeState";
 const static NSString *kSBSScanCaseDidInitializeEvent = @"didInitialize";
 const static NSString *kSBSScanCaseDidScanEvent = @"didScan";
 
+@interface SBSScanCase (Private)
+@property (nonatomic, strong, nonnull) SBSBarcodePicker *barcodePicker;
+@end
+
 @interface SBSScanCasePlugin () <SBSScanCaseDelegate>
 
 // Id for master callback The callback is provided by us and dispatches
@@ -119,9 +123,9 @@ const static NSString *kSBSScanCaseDidScanEvent = @"didScan";
 - (SBSScanCaseState)scanCase:(SBSScanCase *)scanCase
                      didScan:(SBSScanCaseSession *)session {
     NSArray *resultArray = @[kSBSScanCaseDidScanEvent, @{
-                                 @"newlyRecognizedCodes" : SBSJSObjectsFromCodeArray(session.newlyRecognizedCodes),
-                                 @"newlyLocalizedCodes" : SBSJSObjectsFromCodeArray(session.newlyLocalizedCodes),
-                                 @"allRecognizedCodes" : SBSJSObjectsFromCodeArray(session.allRecognizedCodes),
+                                 @"newlyRecognizedCodes" : SBSJSObjectsFromCodeArray(session.newlyRecognizedCodes, scanCase.barcodePicker),
+                                 @"newlyLocalizedCodes" : SBSJSObjectsFromCodeArray(session.newlyLocalizedCodes, scanCase.barcodePicker),
+                                 @"allRecognizedCodes" : SBSJSObjectsFromCodeArray(session.allRecognizedCodes, scanCase.barcodePicker),
                                  }];
     CDVPluginResult  *result =
     [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:resultArray];

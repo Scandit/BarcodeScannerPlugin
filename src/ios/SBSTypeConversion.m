@@ -27,7 +27,26 @@
 
 @end
 
-static NSMutableDictionary *SBSJSObjectsFromCode(SBSCode *code) {
+static NSDictionary *SBSJSObjectFromPoint(CGPoint point, SBSBarcodePicker *picker, BOOL convert) {
+    if (convert) {
+        point = [picker convertPointToPickerCoordinates:point];
+    }
+    return @{
+             @"x": @(point.x),
+             @"y": @(point.y),
+             };
+}
+
+static NSDictionary *SBSJSObjectFromQuadrilateral(SBSQuadrilateral quadrilateral, SBSBarcodePicker *picker, BOOL convert) {
+    return @{
+             @"topLeft": SBSJSObjectFromPoint(quadrilateral.topLeft, picker, convert),
+             @"topRight": SBSJSObjectFromPoint(quadrilateral.topRight, picker, convert),
+             @"bottomLeft": SBSJSObjectFromPoint(quadrilateral.bottomLeft, picker, convert),
+             @"bottomRight": SBSJSObjectFromPoint(quadrilateral.bottomRight, picker, convert)
+             };
+}
+
+static NSMutableDictionary *SBSJSObjectFromCode(SBSCode *code, SBSBarcodePicker *picker) {
     NSInteger identifier = code.uniqueId;
     if ([code isKindOfClass:[SBSTrackedCode class]]) {
         identifier = ((SBSTrackedCode *)code).identifier.integerValue;
@@ -38,6 +57,13 @@ static NSMutableDictionary *SBSJSObjectsFromCode(SBSCode *code) {
                                  [NSNumber numberWithBool:[code isGs1DataCarrier]], @"gs1DataCarrier",
                                  [NSNumber numberWithBool:[code isRecognized]], @"recognized", nil];
     [dict setObject:@(code.compositeFlag) forKey:@"compositeFlag"];
+    [dict setObject:SBSJSObjectFromQuadrilateral(code.location, picker, NO) forKey:@"location"];
+    [dict setObject:SBSJSObjectFromQuadrilateral(code.location, picker, YES) forKey:@"convertedLocation"];
+    if ([code isKindOfClass:[SBSTrackedCode class]]) {
+        SBSQuadrilateral predictedLocation = ((SBSTrackedCode *)code).predictedLocation;
+        [dict setObject:SBSJSObjectFromQuadrilateral(predictedLocation, picker, NO) forKey:@"predictedLocation"];
+        [dict setObject:SBSJSObjectFromQuadrilateral(predictedLocation, picker, YES) forKey:@"convertedPredictedLocation"];
+    }
     if ([code isRecognized]) {
         if (code.data == nil) {
             [dict setObject:@"" forKey:@"data"];
@@ -57,26 +83,10 @@ static NSMutableDictionary *SBSJSObjectsFromCode(SBSCode *code) {
     return dict;
 }
 
-//static NSDictionary *SBSJsonObjectFromPoint(CGPoint point) {
-//    return @{
-//             @"x": @(point.x),
-//             @"y": @(point.y),
-//             };
-//}
-//
-//static NSDictionary *SBSJsonObjectFromQuadrilateral(SBSQuadrilateral quadrilateral) {
-//    return @{
-//             @"topLeft": SBSJsonObjectFromPoint(quadrilateral.topLeft),
-//             @"topRight": SBSJsonObjectFromPoint(quadrilateral.topRight),
-//             @"bottomLeft": SBSJsonObjectFromPoint(quadrilateral.bottomLeft),
-//             @"bottomRight": SBSJsonObjectFromPoint(quadrilateral.bottomRight)
-//             };
-//}
-
-NSArray *SBSJSObjectsFromCodeArray(NSArray *codes) {
+NSArray *SBSJSObjectsFromCodeArray(NSArray *codes, SBSBarcodePicker *picker) {
     NSMutableArray *finalArray = [[NSMutableArray alloc] initWithCapacity:codes.count];
     for (SBSCode *code in codes) {
-        [finalArray addObject:SBSJSObjectsFromCode(code)];
+        [finalArray addObject:SBSJSObjectFromCode(code, picker)];
     }
     return finalArray;
 }
