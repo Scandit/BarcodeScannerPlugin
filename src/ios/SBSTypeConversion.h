@@ -28,8 +28,7 @@ extern "C" {
 
 @end
     
-NSArray *SBSJSObjectsFromCodeArray(NSArray *codes);
-NSDictionary *SBSJSObjectsFromTrackedCodes(NSDictionary<NSNumber *, SBSTrackedCode *> *trackedCodes);
+NSArray *SBSJSObjectsFromCodeArray(NSArray *codes, SBSBarcodePicker *picker);
 NSString *SBSScanStateToString(SBSScanCaseState state);
 SBSScanCaseState SBSScanStateFromString(NSString *state);
 NSString *SBSScanStateChangeReasonToString(SBSScanCaseStateChangeReason reason);
