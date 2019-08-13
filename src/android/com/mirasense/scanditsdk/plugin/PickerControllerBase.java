@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -144,12 +146,26 @@ abstract class PickerControllerBase implements IPickerController {
     protected abstract void setRejectedTrackedCodeIds(List<Long> rejectedCodeIds);
 
     int sendPluginResultBlocking(PluginResult result) {
-        int currentId = mLastResultCallbackId.incrementAndGet();
+        final int currentId = mLastResultCallbackId.incrementAndGet();
         mInFlightResultCallbackId.set(currentId);
         mNextState = 0;
 
         try {
             mCallbackContext.sendPluginResult(result);
+            // Very rarely it can happen that cordova does not invoke the native layer again from
+            // javascript after the callback ended. As a result the engine thread is not released.
+            // To prevent this deadlock, we release the engine thread in a delayed runnable below.
+            new ScheduledThreadPoolExecutor(1).schedule(new Runnable() {
+                @Override
+                public void run() {
+                    synchronized (mSync) {
+                        if (mInFlightResultCallbackId.get() == currentId) {
+                            mInFlightResultCallbackId.set(0);
+                            mSync.notifyAll();
+                        }
+                    }
+                }
+            }, 600, TimeUnit.MILLISECONDS);
             synchronized (mSync) {
                 while (mInFlightResultCallbackId.get() == currentId &&
                         mShouldBlockForDidScan.get()) {
