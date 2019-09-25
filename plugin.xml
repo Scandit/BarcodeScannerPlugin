@@ -116,6 +116,7 @@
             <framework src="libiconv.dylib"/>
             <framework src="libz.dylib"/>
             <framework src="libc++.dylib"/>
+            <framework src="libsqlite3.tbd"/>
     </platform>
     <platform name="android">
         <!-- register plugin -->
