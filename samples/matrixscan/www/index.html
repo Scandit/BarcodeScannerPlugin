@@ -111,6 +111,9 @@
                 settings.matrixScanEnabled = true;
                 settings.maxNumberOfCodesPerFrame = 10;
 
+                // Enable HD resolution for better MatrixScan performance
+                settings.highDensityModeEnabled = true;
+
                 picker = new Scandit.BarcodePicker(settings);
 
                 // Set continuous mode to not return after the first scan.
