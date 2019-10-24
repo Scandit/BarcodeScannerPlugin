@@ -121,6 +121,10 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
         }
     }
 
+    public static void reset() {
+        sPendingClose.set(false);
+    }
+
     public static void close() {
         sPendingClose.set(true);
         if (sActiveActivity != null) {

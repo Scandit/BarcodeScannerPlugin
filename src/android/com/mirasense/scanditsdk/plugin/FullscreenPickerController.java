@@ -57,6 +57,8 @@ class FullscreenPickerController extends PickerControllerBase implements ResultR
         if (overlayOptions != null) {
             intent.putExtra("overlayOptions", overlayOptions);
         }
+
+        FullScreenPickerActivity.reset();
         mPlugin.cordova.startActivityForResult(mPlugin, intent, 1);
     }
 
