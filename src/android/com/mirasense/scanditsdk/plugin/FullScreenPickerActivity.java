@@ -432,7 +432,15 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
     @Override
     public void onBackPressed() {
         sPendingClose.set(true);
-        didCancel();
+
+        // Run stopping of the picker on a non-UI thread to avoid a deadlock as stopping will wait
+        // for the engine thread which might be blocked waiting on the UI thread.
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                didCancel();
+            }
+        }).start();
     }
 
     @Override
