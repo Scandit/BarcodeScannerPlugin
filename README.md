@@ -1,3 +1,9 @@
+**Important Note**
+
+The Scandit Barcode Scanner SDK for Cordova (5.x) has been _replaced_ by the new and improved 6.x version, the [Scandit Data Capture SDK for Cordova](https://docs.scandit.com/data-capture-sdk/cordova/index.html). It's the primary supported and maintained plugin for Cordova and we encourage everyone to upgrade and use the new version going forward.
+
+To learn more about the Scandit Data Capture SDK for Cordova, go to https://docs.scandit.com/data-capture-sdk/cordova/index.html.
+
 Scandit Barcode Scanner SDK Plugin for Cordova/PhoneGap
 ===================================
 
