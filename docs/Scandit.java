@@ -291,7 +291,11 @@ public class Scandit {
             /**
              * \brief LAPA 4 State Code (LAPA4SC).
              */
-            LAPA4SC
+            LAPA4SC,
+            /**
+             * \brief IATA 2 of 5 barcode symbology.
+             */
+            IATATwoOfFive
         }
 
         /**
