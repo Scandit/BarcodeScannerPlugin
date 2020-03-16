@@ -11,11 +11,6 @@
     <body style='background:black'>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript">
-            // On Windows, the alert function doesn't exist, so we add it.
-            window.alert = window.alert !== undefined ? window.alert : function (message) {
-                var alertBox = new Windows.UI.Popups.MessageDialog(message);
-                alertBox.showAsync();
-            };
             function success(session) {
                 alert("Scanned " + session.newlyRecognizedCodes[0].symbology
                         + " code: " + session.newlyRecognizedCodes[0].data);
