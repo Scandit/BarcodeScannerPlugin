@@ -39,8 +39,7 @@ Barcode.Symbology = {
     KIX: "kix",
     RM4SCC: "rm4scc",
     MICRO_QR: "microqr",
-    LAPA4SC: "lapa4sc",
-    IATATwoOfFive: "iata2of5",
+    LAPA4SC: "lapa4sc"
 }
 
 module.exports = Barcode;
