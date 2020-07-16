@@ -27,17 +27,17 @@ function ScanSettings() {
     this.symbologies[Barcode.Symbology.CODE25].activeSymbolCounts = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
     this.symbologies[Barcode.Symbology.CODE128] = new SymbologySettings();
-    this.symbologies[Barcode.Symbology.CODE128].activeSymbolCounts = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+    this.symbologies[Barcode.Symbology.CODE128].activeSymbolCounts = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40];
     this.symbologies[Barcode.Symbology.CODE128].extensions = ["strip_leading_fnc1"];
 
     this.symbologies[Barcode.Symbology.CODE39] = new SymbologySettings();
-    this.symbologies[Barcode.Symbology.CODE39].activeSymbolCounts = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+    this.symbologies[Barcode.Symbology.CODE39].activeSymbolCounts = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40];
 
     this.symbologies[Barcode.Symbology.CODE93] = new SymbologySettings();
-    this.symbologies[Barcode.Symbology.CODE93].activeSymbolCounts = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
+    this.symbologies[Barcode.Symbology.CODE93].activeSymbolCounts = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40];
 
     this.symbologies[Barcode.Symbology.ITF] = new SymbologySettings();
-    this.symbologies[Barcode.Symbology.ITF].activeSymbolCounts = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+    this.symbologies[Barcode.Symbology.ITF].activeSymbolCounts = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40];
 
     this.symbologies[Barcode.Symbology.QR] = new SymbologySettings();
 
@@ -48,7 +48,7 @@ function ScanSettings() {
     this.symbologies[Barcode.Symbology.MICRO_PDF417] = new SymbologySettings();
 
     this.symbologies[Barcode.Symbology.MSI_PLESSEY] = new SymbologySettings();
-    this.symbologies[Barcode.Symbology.MSI_PLESSEY].activeSymbolCounts = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+    this.symbologies[Barcode.Symbology.MSI_PLESSEY].activeSymbolCounts = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
 
     this.symbologies[Barcode.Symbology.GS1_DATABAR] = new SymbologySettings();
 
