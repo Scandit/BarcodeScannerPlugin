@@ -93,10 +93,10 @@ public class SubViewPickerController extends PickerControllerBase implements
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (mPickerStateMachine == null) {
-                    return;
+                PickerStateMachine stateMachine = mPickerStateMachine;
+                if (stateMachine != null) {
+                    stateMachine.setState(state);
                 }
-                mPickerStateMachine.setState(state);
             }
         });
     }
@@ -139,8 +139,9 @@ public class SubViewPickerController extends PickerControllerBase implements
                 mPicker.setLicenseValidationListener(SubViewPickerController.this);
                 mPicker.setTextRecognitionListener(SubViewPickerController.this);
                 mPicker.setPropertyChangeListener(SubViewPickerController.this);
-                mPickerStateMachine = new PickerStateMachine(
+                PickerStateMachine stateMachine = new PickerStateMachine(
                         mPicker, scanSettings, SubViewPickerController.this);
+                mPickerStateMachine = stateMachine;
                 mOrientationHandler.setScreenDimensions(mScreenDimensions);
                 mOrientationHandler.setPicker(mPickerStateMachine.getPicker());
                 // Set all the UI options.
@@ -154,8 +155,8 @@ public class SubViewPickerController extends PickerControllerBase implements
                 RelativeLayout.LayoutParams rLayoutParams =
                         new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                                 RelativeLayout.LayoutParams.MATCH_PARENT);
-                mLayout.addView(mPickerStateMachine.getPicker(), rLayoutParams);
-                PhonegapParamParser.updateLayout(pluginActivity, mPickerStateMachine.getPicker(),
+                mLayout.addView(stateMachine.getPicker(), rLayoutParams);
+                PhonegapParamParser.updateLayout(pluginActivity, stateMachine.getPicker(),
                         options, mScreenDimensions);
                 callPickerShownListener(options);
 
@@ -200,11 +201,11 @@ public class SubViewPickerController extends PickerControllerBase implements
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (mPickerStateMachine == null) {
-                    return;
+                PickerStateMachine stateMachine = mPickerStateMachine;
+                if (stateMachine != null) {
+                    stateMachine.startScanning(paused);
+                    setStateOnParent(PickerStateMachine.ACTIVE);
                 }
-                mPickerStateMachine.startScanning(paused);
-                setStateOnParent(PickerStateMachine.ACTIVE);
             }
         });
     }
@@ -218,8 +219,10 @@ public class SubViewPickerController extends PickerControllerBase implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (mPickerStateMachine == null) return;
-                mPickerStateMachine.applyScanSettings(scanSettings);
+                PickerStateMachine stateMachine = mPickerStateMachine;
+                if (stateMachine != null) {
+                    stateMachine.applyScanSettings(scanSettings);
+                }
             }
         });
     }
@@ -240,9 +243,12 @@ public class SubViewPickerController extends PickerControllerBase implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                PhonegapParamParser.updateLayout(pluginActivity, mPickerStateMachine.getPicker(),
-                        layoutOptions, mScreenDimensions);
-                callPickerResizedListener(layoutOptions);
+                PickerStateMachine stateMachine = mPickerStateMachine;
+                if (stateMachine != null) {
+                    PhonegapParamParser.updateLayout(pluginActivity, stateMachine.getPicker(),
+                            layoutOptions, mScreenDimensions);
+                    callPickerResizedListener(layoutOptions);
+                }
             }
         });
     }
@@ -252,11 +258,14 @@ public class SubViewPickerController extends PickerControllerBase implements
     }
 
     private void internalUpdateUI(Bundle overlayOptions, Bundle options) {
-        BarcodePickerWithSearchBar picker = mPickerStateMachine.getPicker();
+        PickerStateMachine stateMachine = mPickerStateMachine;
+        if (stateMachine == null) return;
+
+        BarcodePickerWithSearchBar picker = stateMachine.getPicker();
         UIParamParser.updatePickerUI(picker, overlayOptions);
         PhonegapParamParser.updatePicker(picker, overlayOptions, this);
     }
-    
+
     private void callPickerResizedListener(Bundle bundle) {
         ResizeScannerInterface listener = resizeListener.get();
         if (listener != null) {
@@ -284,8 +293,10 @@ public class SubViewPickerController extends PickerControllerBase implements
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (mPickerStateMachine == null) return;
-                mPickerStateMachine.getPicker().switchTorchOn(enabled);
+                PickerStateMachine stateMachine = mPickerStateMachine;
+                if (stateMachine != null) {
+                    mPickerStateMachine.getPicker().switchTorchOn(enabled);
+                }
             }
         });
     }
@@ -302,17 +313,18 @@ public class SubViewPickerController extends PickerControllerBase implements
 
     @Override
     public void close() {
-        if (mPickerStateMachine == null) {
+        PickerStateMachine stateMachine = mPickerStateMachine;
+        if (stateMachine == null) {
             // we don't have a picker yet. must be closed when it is created.
             mPendingClose.set(true);
             return;
         }
 
-        mPickerStateMachine.getPicker().setOnScanListener(null);
-        mPickerStateMachine.getPicker().setProcessFrameListener(null);
-        mPickerStateMachine.getPicker().setLicenseValidationListener(null);
-        mPickerStateMachine.getPicker().setTextRecognitionListener(null);
-        mPickerStateMachine.getPicker().setPropertyChangeListener(null);
+        stateMachine.getPicker().setOnScanListener(null);
+        stateMachine.getPicker().setProcessFrameListener(null);
+        stateMachine.getPicker().setLicenseValidationListener(null);
+        stateMachine.getPicker().setTextRecognitionListener(null);
+        stateMachine.getPicker().setPropertyChangeListener(null);
 
         if (isResultCallbackInFlight()) {
             // we get here if the didScan callback is still in progress. We need to delay
@@ -340,9 +352,10 @@ public class SubViewPickerController extends PickerControllerBase implements
         if (mOrientationHandler != null) {
             mOrientationHandler.stop();
         }
-        if (mPickerStateMachine != null) {
-            mStateBeforeSuspend = mPickerStateMachine.getState();
-            mPickerStateMachine.setState(PickerStateMachine.STOPPED);
+        PickerStateMachine stateMachine = mPickerStateMachine;
+        if (stateMachine != null) {
+            mStateBeforeSuspend = stateMachine.getState();
+            stateMachine.setState(PickerStateMachine.STOPPED);
         }
     }
 
@@ -351,8 +364,9 @@ public class SubViewPickerController extends PickerControllerBase implements
         if (mOrientationHandler != null) {
             mOrientationHandler.start(false);
         }
-        if (mPickerStateMachine != null) {
-            mPickerStateMachine.setState(mStateBeforeSuspend);
+        PickerStateMachine stateMachine = mPickerStateMachine;
+        if (stateMachine != null) {
+            stateMachine.setState(mStateBeforeSuspend);
         }
     }
 
@@ -365,10 +379,11 @@ public class SubViewPickerController extends PickerControllerBase implements
         if (Looper.myLooper() == null || Looper.myLooper() != Looper.getMainLooper()) {
             throw new RuntimeException("must be called on main thread");
         }
-        if (mPickerStateMachine == null) {
+        PickerStateMachine stateMachine = mPickerStateMachine;
+        if (stateMachine == null) {
             return;
         }
-        mPickerStateMachine.setState(PickerStateMachine.STOPPED);
+        stateMachine.setState(PickerStateMachine.STOPPED);
         ViewGroup viewGroup = getPickerParent();
         if (viewGroup != null) {
             viewGroup.removeView(mLayout);
@@ -442,7 +457,10 @@ public class SubViewPickerController extends PickerControllerBase implements
         if (!mContinuousMode) {
             nextState = PickerStateMachine.PAUSED;
         }
-        mPickerStateMachine.switchToNextScanState(nextState, session);
+        PickerStateMachine stateMachine = mPickerStateMachine;
+        if (stateMachine != null) {
+            stateMachine.switchToNextScanState(nextState, session);
+        }
         Marshal.rejectCodes(session, mRejectedCodeIds);
         if (!mContinuousMode) {
             removeSubviewPicker();
@@ -456,7 +474,8 @@ public class SubViewPickerController extends PickerControllerBase implements
             return;
         }
 
-        if ((mPickerStateMachine != null && !mPickerStateMachine.isMatrixScanEnabled())) {
+        PickerStateMachine stateMachine = mPickerStateMachine;
+        if (stateMachine != null && !stateMachine.isMatrixScanEnabled()) {
             // Call didProcessFrame only when new codes have been recognized.
             if (session.getNewlyRecognizedCodes().size() > 0) {
                 returnFrameBufferIfWanted(bytes, width, height);
@@ -528,7 +547,10 @@ public class SubViewPickerController extends PickerControllerBase implements
             removeSubviewPicker();
         }
 
-        mPickerStateMachine.setState(nextState);
+        PickerStateMachine stateMachine = mPickerStateMachine;
+        if (stateMachine != null) {
+            stateMachine.setState(nextState);
+        }
         Marshal.rejectRecognizedTexts(recognizedText, mRejectedCodeIds);
         if (nextState == PickerStateMachine.STOPPED) {
             return TextRecognitionListener.PICKER_STATE_STOPPED;
@@ -565,7 +587,7 @@ public class SubViewPickerController extends PickerControllerBase implements
         PluginResult result = Marshal.createOkResult(args);
         mCallbackContext.sendPluginResult(result);
     }
-    
+
     public void setResizeListener(ResizeScannerInterface listener) {
         resizeListener = new WeakReference<ResizeScannerInterface>(listener);
     }
