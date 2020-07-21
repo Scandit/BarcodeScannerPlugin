@@ -79,43 +79,59 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
 
 
     public static void setState(int state) {
-        if (sActiveActivity == null) return;
-        sActiveActivity.mPickerStateMachine.setState(state);
+        FullScreenPickerActivity activity = sActiveActivity;
+        if (activity == null) return;
+        PickerStateMachine stateMachine = activity.mPickerStateMachine;
+        if (stateMachine == null) return;
+        stateMachine.setState(state);
     }
 
     public static void applyScanSettings(ScanSettings scanSettings) {
-        if (sActiveActivity == null || sActiveActivity.mPickerStateMachine == null) return;
-        sActiveActivity.mPickerStateMachine.applyScanSettings(scanSettings);
+        FullScreenPickerActivity activity = sActiveActivity;
+        if (activity == null) return;
+        PickerStateMachine stateMachine = activity.mPickerStateMachine;
+        if (stateMachine == null) return;
+        stateMachine.applyScanSettings(scanSettings);
     }
 
     public static void startScanning(boolean paused) {
-        if (sActiveActivity == null || sActiveActivity.mPickerStateMachine == null) return;
-        sActiveActivity.mPickerStateMachine.startScanning(paused);
+        FullScreenPickerActivity activity = sActiveActivity;
+        if (activity == null) return;
+        PickerStateMachine stateMachine = activity.mPickerStateMachine;
+        if (stateMachine == null) return;
+        stateMachine.startScanning(paused);
     }
 
     public static void setRejectedCodeIds(List<Long> rejectedCodeIds) {
-        if (sActiveActivity == null) return;
-        sActiveActivity.mRejectedCodeIds = rejectedCodeIds;
+        FullScreenPickerActivity activity = sActiveActivity;
+        if (activity == null) return;
+        activity.mRejectedCodeIds = rejectedCodeIds;
     }
 
     public static void setRejectedTrackedCodeIds(List<Long> rejectedCodeIds) {
-        if (sActiveActivity == null) return;
-        sActiveActivity.mRejectedTrackedCodeIds = rejectedCodeIds;
+        FullScreenPickerActivity activity = sActiveActivity;
+        if (activity == null) return;
+        activity.mRejectedTrackedCodeIds = rejectedCodeIds;
     }
 
     public static void setTrackedCodeStates(Map<Long, JSONObject> trackedCodeStates) {
-        if (sActiveActivity == null) return;
-        sActiveActivity.mPickerStateMachine.setTrackedCodeStates(trackedCodeStates);
+        FullScreenPickerActivity activity = sActiveActivity;
+        if (activity == null) return;
+        activity.mPickerStateMachine.setTrackedCodeStates(trackedCodeStates);
     }
 
     public static void updateUI(Bundle overlayOptions) {
-        if (sActiveActivity == null || sActiveActivity.mPickerStateMachine == null) return;
-        UIParamParser.updatePickerUI(sActiveActivity.mPickerStateMachine.getPicker(), overlayOptions);
+        FullScreenPickerActivity activity = sActiveActivity;
+        if (activity == null) return;
+        PickerStateMachine stateMachine = activity.mPickerStateMachine;
+        if (stateMachine == null) return;
+        UIParamParser.updatePickerUI(stateMachine.getPicker(), overlayOptions);
     }
 
     public static void setTorchEnabled(boolean enabled) {
-        if (sActiveActivity != null) {
-            sActiveActivity.switchTorchOn(enabled);
+        FullScreenPickerActivity activity = sActiveActivity;
+        if (activity != null) {
+            activity.switchTorchOn(enabled);
         } else {
             sBufferedTorchEnabled.set(enabled);
         }
@@ -220,8 +236,12 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
         // When the activity is in the background immediately stop the scanning to save resources
         // and free the camera. Remember the last state, so we can put the picker into the same
         // state in onResume.
-        mStateBeforeSuspend = mPickerStateMachine.getState();
-        mPickerStateMachine.setState(PickerStateMachine.STOPPED);
+
+        PickerStateMachine stateMachine = mPickerStateMachine;
+        if (stateMachine != null) {
+            mStateBeforeSuspend = stateMachine.getState();
+            stateMachine.setState(PickerStateMachine.STOPPED);
+        }
         super.onPause();
     }
 
@@ -233,8 +253,11 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
             // close has been issued before we had the chance to start the picker.
             didCancel();
         }
-        // Once the activity is in the foreground again, restore previous picker state.
-        mPickerStateMachine.setState(mStateBeforeSuspend);
+        PickerStateMachine stateMachine = mPickerStateMachine;
+        if (stateMachine != null) {
+            // Once the activity is in the foreground again, restore previous picker state.
+            stateMachine.setState(mStateBeforeSuspend);
+        }
     }
 
     public void switchTorchOn(boolean enabled) {
@@ -242,13 +265,16 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
     }
 
     public void didCancel() {
-        mPickerStateMachine.getPicker().setOnScanListener(null);
-        mPickerStateMachine.getPicker().setProcessFrameListener(null);
-        mPickerStateMachine.getPicker().setLicenseValidationListener(null);
-        mPickerStateMachine.getPicker().setTextRecognitionListener(null);
-        mPickerStateMachine.getPicker().setPropertyChangeListener(null);
+        PickerStateMachine stateMachine = mPickerStateMachine;
+        if (stateMachine != null) {
+            stateMachine.getPicker().setOnScanListener(null);
+            stateMachine.getPicker().setProcessFrameListener(null);
+            stateMachine.getPicker().setLicenseValidationListener(null);
+            stateMachine.getPicker().setTextRecognitionListener(null);
+            stateMachine.getPicker().setPropertyChangeListener(null);
 
-        mPickerStateMachine.setState(PickerStateMachine.STOPPED);
+            stateMachine.setState(PickerStateMachine.STOPPED);
+        }
         setResult(CANCEL);
         finish();
         sPendingClose.set(false);
@@ -263,9 +289,12 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
             return;
         }
 
+        PickerStateMachine stateMachine = mPickerStateMachine;
         Bundle bundle = bundleForScanResult(session);
         if (!mContinuousMode) {
-            mPickerStateMachine.switchToNextScanState(PickerStateMachine.PAUSED, session);
+            if (stateMachine != null) {
+                stateMachine.switchToNextScanState(PickerStateMachine.PAUSED, session);
+            }
             final Intent intent = new Intent();
             bundle.putBoolean("waitForResult", false);
             intent.putExtras(bundle);
@@ -279,7 +308,9 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
             return;
         }
         int nextState = ResultRelay.relayResult(bundle);
-        mPickerStateMachine.switchToNextScanState(nextState, session);
+        if (stateMachine != null) {
+            stateMachine.switchToNextScanState(nextState, session);
+        }
         Marshal.rejectCodes(session, mRejectedCodeIds);
     }
 
@@ -298,7 +329,8 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
             return;
         }
 
-        if ((mPickerStateMachine != null && !mPickerStateMachine.isMatrixScanEnabled())) {
+        PickerStateMachine stateMachine = mPickerStateMachine;
+        if (stateMachine != null && !stateMachine.isMatrixScanEnabled()) {
             // Call didProcessFrame only when new codes have been recognized.
             if (session.getNewlyRecognizedCodes().size() > 0) {
                 returnFrameBufferIfWanted(bytes, width, height);
@@ -393,6 +425,7 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
             // return if there is a pending close. Otherwise we might deadlock
             return TextRecognitionListener.PICKER_STATE_STOPPED;
         }
+        PickerStateMachine stateMachine = mPickerStateMachine;
         Bundle bundle = bundleForTextRecognitionResult(recognizedText);
         if (!mContinuousMode) {
             final Intent intent = new Intent();
@@ -405,12 +438,16 @@ public class FullScreenPickerActivity extends Activity implements OnScanListener
                     finish();
                 }
             });
-            mPickerStateMachine.setState(PickerStateMachine.PAUSED);
+            if (stateMachine != null) {
+                stateMachine.setState(PickerStateMachine.PAUSED);
+            }
             return TextRecognitionListener.PICKER_STATE_PAUSED;
         }
         int nextState = ResultRelay.relayResult(bundle);
 
-        mPickerStateMachine.setState(nextState);
+        if (stateMachine != null) {
+            stateMachine.setState(nextState);
+        }
         Marshal.rejectRecognizedTexts(recognizedText, mRejectedCodeIds);
         if (nextState == PickerStateMachine.STOPPED) {
             return TextRecognitionListener.PICKER_STATE_STOPPED;
