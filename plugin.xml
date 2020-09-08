@@ -113,6 +113,7 @@
             <framework src="OpenGLES.framework"/>
             <framework src="SystemConfiguration.framework"/>
             <framework src="MediaPlayer.framework"/>
+            <framework src="CoreML.framework"/>
             <framework src="libiconv.dylib"/>
             <framework src="libz.dylib"/>
             <framework src="libc++.dylib"/>
