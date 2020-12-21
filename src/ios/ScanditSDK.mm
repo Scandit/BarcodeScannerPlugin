@@ -231,6 +231,7 @@ SBSLicenseValidationDelegate>
                 self.scanditWindowForModal = [[UIWindow alloc] initWithFrame:frame];
                 const auto scanditController = [[UIViewController alloc] init];
                 scanditController.view.backgroundColor = [UIColor clearColor];
+                self.picker.modalPresentationStyle = UIModalPresentationFullScreen;
                 [self.scanditWindowForModal setRootViewController:scanditController];
                 [self.scanditWindowForModal setWindowLevel:UIWindowLevelNormal];
                 [self.scanditWindowForModal makeKeyAndVisible];
